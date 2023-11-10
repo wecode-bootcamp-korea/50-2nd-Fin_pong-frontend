@@ -1,0 +1,307 @@
+.buttonClick {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+
+  .createdBtn,
+  .recordBtn {
+    width: 150px;
+    padding: 15px;
+    margin-right: 17px;
+    font-weight: 600;
+    border: none;
+    color: white;
+    border-radius: 5px;
+    background-color: #028174;
+    cursor: pointer;
+  }
+}
+
+.helloTextFrame {
+  .helloText {
+    position: relative;
+    bottom: -10px;
+    right: -10px;
+    font-size: 20px;
+    font-weight: 700;
+  }
+  .wantMenuText {
+    position: relative;
+    bottom: -20px;
+    right: -10px;
+    font-size: 16px;
+    font-weight: 300;
+  }
+}
+
+.mainFrame {
+  display: flex;
+  flex-direction: row;
+  margin-top: 100px;
+
+  .particFrame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    height: 270px;
+    border: 1px solid #7777;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    margin-left: 12px;
+
+    .clickBox01 {
+      margin-top: 20px;
+    }
+    .clickText {
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .verifiInput {
+      position: relative;
+      bottom: -130px;
+      left: -3px;
+      width: 200px;
+      height: 34px;
+      margin-left: 10px;
+    }
+  }
+
+  .creatingFrame {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 250px;
+    height: 270px;
+    border: 1px solid #7777;
+    background-color: #f8f8f8;
+    border-radius: 5px;
+    margin-left: 15px;
+
+    .clickBox02 {
+      margin-top: 20px;
+    }
+
+    .creatingText {
+      margin-top: 10px;
+      font-weight: 600;
+    }
+
+    .settingText {
+      position: relative;
+      bottom: -145px;
+    }
+  }
+}
+
+.complieteBtnFrame {
+  display: flex;
+  justify-content: flex-end;
+
+  .complieteButton {
+    position: relative;
+    bottom: -70px;
+    width: 120px;
+    padding: 13px;
+    margin-right: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #028174;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .disableButton {
+    position: relative;
+    bottom: -70px;
+    width: 120px;
+    padding: 13px;
+    margin-right: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #7777;
+    font-weight: 600;
+    color: #fff;
+  }
+}
+
+.textMain01 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  .divideText {
+    font-weight: 700;
+    position: relative;
+    bottom: -30px;
+    left: -90px;
+  }
+
+  .categoryText {
+    font-weight: 700;
+    position: relative;
+    bottom: -30px;
+    left: -85px;
+  }
+}
+
+.textMain02 {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+
+  .dayText {
+    font-weight: 700;
+    position: relative;
+    bottom: -30px;
+    left: -97px;
+  }
+
+  .priceText {
+    font-weight: 700;
+    position: relative;
+    bottom: -30px;
+    left: -105px;
+  }
+}
+
+.textMain03 {
+  display: flex;
+  justify-content: flex-start;
+
+  .memoText {
+    font-weight: 700;
+    position: relative;
+    bottom: -30px;
+    right: -25px;
+  }
+}
+
+.textMain04 {
+  display: flex;
+  justify-content: space-between;
+
+  .yearText {
+    font-weight: 700;
+    position: relative;
+    bottom: -30px;
+    right: -25px;
+  }
+
+  .optionalText {
+    font-weight: 500;
+    font-size: 14px;
+    color: rgb(55, 156, 251);
+    position: relative;
+    bottom: -35px;
+    right: 23px;
+  }
+}
+
+.buttonFrame {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 50px;
+
+  .complieteBtn {
+    width: 120px;
+    padding: 13px;
+    margin-right: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #028174;
+    font-weight: 600;
+    color: #fff;
+    cursor: pointer;
+  }
+
+  .disabledBtn {
+    width: 120px;
+    padding: 13px;
+    margin-right: 16px;
+    border: none;
+    border-radius: 5px;
+    background-color: #7777;
+    font-weight: 600;
+    color: #fff;
+  }
+}
+
+.divideFrame {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
+  margin-top: 45px;
+
+  .incomeSelectBox,
+  .categorySelectBox,
+  .daySelectBox,
+  .yearSelectBox,
+  .monthSelectBox {
+    width: 245px;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid gray;
+    color: gray;
+  }
+
+  .priceInput {
+    width: 245px;
+    padding: 15px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+
+  .memoInput {
+    width: 508px;
+    padding: 15px;
+    border: 1px solid gray;
+    border-radius: 5px;
+  }
+}
+
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  transform: translate(-50%, -50%);
+  background-color: #fff;
+  border: none;
+  padding: 30px;
+  border-radius: 10px;
+}
+
+.closeBtn {
+  position: absolute;
+  top: 15px;
+  right: 10px;
+  font-size: 16px;
+  padding: 18px;
+  border: none;
+  background: none;
+  cursor: pointer;
+
+  img {
+    position: absolute;
+    top: 1px;
+    right: 1px;
+    width: 35px;
+    height: 35px;
+  }
+}
+
+.overlay {
+  background-color: rgba(196, 196, 196, 0.7);
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
