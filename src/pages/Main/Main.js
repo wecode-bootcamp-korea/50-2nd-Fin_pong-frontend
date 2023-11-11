@@ -159,7 +159,7 @@ const Main = () => {
         <button className="closeBtn" onClick={closeModal}>
           <img src={close} alt="닫기버튼" />
         </button>
-        <div className="textMain01">
+        <div className="requiredTextMain">
           <p className="divideText">구분</p>
           <p className="categoryText">카테고리</p>
         </div>
@@ -187,7 +187,7 @@ const Main = () => {
             ))}
           </select>
         </div>
-        <div className="textMain02">
+        <div className="requiredTextMain">
           <p className="dayText">일자</p>
           <p className="priceText">금액</p>
         </div>
@@ -209,7 +209,7 @@ const Main = () => {
             onChange={(event) => handleInputChange('price', event.target.value)}
           />
         </div>
-        <div className="textMain03">
+        <div className="memoTextMain">
           <p className="memoText">메모</p>
         </div>
         <div className="divideFrame">
@@ -221,7 +221,7 @@ const Main = () => {
             onChange={(event) => handleInputChange('memo', event.target.value)}
           />
         </div>
-        <div className="textMain04">
+        <div className="yearTextMain">
           <p className="yearText">반복 종료 년/월</p>
           <p className="optionalText">선택 입력</p>
         </div>

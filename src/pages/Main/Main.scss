@@ -143,7 +143,7 @@
   }
 }
 
-.textMain01 {
+.requiredTextMain {
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -161,12 +161,6 @@
     bottom: -30px;
     left: -85px;
   }
-}
-
-.textMain02 {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-around;
 
   .dayText {
     font-weight: 700;
@@ -183,7 +177,7 @@
   }
 }
 
-.textMain03 {
+.memoTextMain {
   display: flex;
   justify-content: flex-start;
 
@@ -195,7 +189,7 @@
   }
 }
 
-.textMain04 {
+.yearTextMain {
   display: flex;
   justify-content: space-between;
 
