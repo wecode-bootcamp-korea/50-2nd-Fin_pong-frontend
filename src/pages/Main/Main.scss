@@ -50,17 +50,25 @@
     border-radius: 5px;
     margin-left: 12px;
 
-    .clickBox01 {
+    .clickBox {
       margin-top: 20px;
     }
+
     .clickText {
       margin-top: 10px;
       font-weight: 600;
     }
 
+    .womanEmoji {
+      position: relative;
+      bottom: -40px;
+      right: -8px;
+      font-size: 80px;
+    }
+
     .verifiInput {
       position: relative;
-      bottom: -130px;
+      bottom: -65px;
       left: -3px;
       width: 200px;
       height: 34px;
@@ -81,7 +89,7 @@
     border-radius: 5px;
     margin-left: 15px;
 
-    .clickBox02 {
+    .clickBox {
       margin-top: 20px;
     }
 
@@ -90,20 +98,26 @@
       font-weight: 600;
     }
 
+    .manEmoji {
+      position: relative;
+      bottom: -40px;
+      font-size: 80px;
+    }
+
     .settingText {
       position: relative;
-      bottom: -145px;
+      bottom: -75px;
     }
   }
 }
 
-.complieteBtnFrame {
+.buttonFrame {
   display: flex;
   justify-content: flex-end;
 
   .complieteButton {
     position: relative;
-    bottom: -70px;
+    bottom: -15px;
     width: 120px;
     padding: 13px;
     margin-right: 16px;
@@ -117,7 +131,7 @@
 
   .disableButton {
     position: relative;
-    bottom: -70px;
+    bottom: -15px;
     width: 120px;
     padding: 13px;
     margin-right: 16px;

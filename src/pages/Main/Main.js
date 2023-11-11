@@ -87,166 +87,164 @@ const Main = () => {
   };
 
   return (
-    <div>
-      <div className="buttonClick">
-        <button className="createdBtn" onClick={() => setIsModalOpen('참여')}>
-          참여 & 생성하기
+    <div className="buttonClick">
+      <button className="createdBtn" onClick={() => setIsModalOpen('참여')}>
+        참여 & 생성하기
+      </button>
+      <Modal
+        isOpen={isModalOpen === '참여' || isModalOpen === '생성'}
+        overlayClassName="overlay"
+        className="modal"
+      >
+        <div className="helloTextFrame">
+          <h1 className="helloText">안녕하세요:)</h1>
+          <p className="wantMenuText">원하시는 메뉴를 선택해주세요.😊</p>
+        </div>
+        <button className="closeBtn" onClick={closeModal}>
+          <img src={close} alt="닫기버튼" />
         </button>
-        <Modal
-          isOpen={isModalOpen === '참여' || isModalOpen === '생성'}
-          overlayClassName="overlay"
-          className="modal"
-        >
-          <div className="helloTextFrame">
-            <h1 className="helloText">안녕하세요:)</h1>
-            <p className="wantMenuText">원하시는 메뉴를 선택해주세요.😊</p>
-          </div>
-          <button className="closeBtn" onClick={closeModal}>
-            <img src={close} alt="닫기버튼" />
-          </button>
-          <div className="mainFrame">
-            <div className="partic" style={particFrameStyle}>
-              <input
-                className="clickBox01"
-                type="checkbox"
-                onChange={() => handleCheckboxChange('partic')}
-                checked={isParticChecked}
-              ></input>
-              <p className="clickText">참여하기</p>
-              <input
-                className="verifiInput"
-                type="text"
-                placeholder="계정인증번호를 입력해주세요"
-                maxLength={6}
-                disabled={!isParticChecked}
-                onChange={(event) =>
-                  handleInputChange('verifiInput', event.target.value)
-                }
-              ></input>
-            </div>
-            <div className="creating" style={creatingFrameStyle}>
-              <input
-                className="clickBox02"
-                type="checkbox"
-                onChange={() => handleCheckboxChange('creating')}
-                checked={isCreatingChecked}
-              />
-              <p className="creatingText">생성하기</p>
-              <p className="settingText">설정페이지로 이동합니다.</p>
-            </div>
-          </div>
-          <div className="complieteBtnFrame">
-            <button
-              className={
-                isCompleteEnabled ? 'complieteButton' : 'disableButton'
+        <div className="mainFrame">
+          <div className="partic" style={particFrameStyle}>
+            <input
+              className="clickBox"
+              type="checkbox"
+              onChange={() => handleCheckboxChange('partic')}
+              checked={isParticChecked}
+            ></input>
+            <p className="clickText">참여하기</p>
+            <span className="womanEmoji" role="img" aria-label="Emoji">
+              💁🏻‍♀️
+            </span>
+            <input
+              className="verifiInput"
+              type="text"
+              placeholder="계정인증번호를 입력해주세요"
+              maxLength={6}
+              disabled={!isParticChecked}
+              onChange={(event) =>
+                handleInputChange('verifiInput', event.target.value)
               }
-            >
-              완료
-            </button>
+            ></input>
           </div>
-        </Modal>
-        <button className="recordBtn" onClick={() => setIsModalOpen('수입')}>
-          수입/지출 등록하기
+          <div className="creating" style={creatingFrameStyle}>
+            <input
+              className="clickBox"
+              type="checkbox"
+              onChange={() => handleCheckboxChange('creating')}
+              checked={isCreatingChecked}
+            />
+            <p className="creatingText">생성하기</p>
+            <span className="manEmoji" role="img" aria-label="Emoji">
+              🙋🏻‍♂️
+            </span>
+            <p className="settingText">설정페이지로 이동합니다.</p>
+          </div>
+        </div>
+        <div className="buttonFrame">
+          <button
+            className={isCompleteEnabled ? 'complieteButton' : 'disableButton'}
+          >
+            완료
+          </button>
+        </div>
+      </Modal>
+      <button className="recordBtn" onClick={() => setIsModalOpen('수입')}>
+        수입/지출 등록하기
+      </button>
+      <Modal
+        isOpen={isModalOpen === '수입'}
+        overlayClassName="overlay"
+        className="modal"
+      >
+        <button className="closeBtn" onClick={closeModal}>
+          <img src={close} alt="닫기버튼" />
         </button>
-        <Modal
-          isOpen={isModalOpen === '수입'}
-          overlayClassName="overlay"
-          className="modal"
-        >
-          <button className="closeBtn" onClick={closeModal}>
-            <img src={close} alt="닫기버튼" />
+        <div className="textMain01">
+          <p className="divideText">구분</p>
+          <p className="categoryText">카테고리</p>
+        </div>
+        <div className="divideFrame">
+          <select
+            className="incomeSelectBox"
+            value={inputValues.divide}
+            onChange={(event) =>
+              handleInputChange('divide', event.target.value)
+            }
+          >
+            {DIVIDE_LIST.map((divide, index) => (
+              <option key={index}>{divide}</option>
+            ))}
+          </select>
+          <select
+            className="categorySelectBox"
+            value={inputValues.category}
+            onChange={(event) =>
+              handleInputChange('category', event.target.value)
+            }
+          >
+            {CATEGORY_LIST.map((category, index) => (
+              <option key={index}>{category}</option>
+            ))}
+          </select>
+        </div>
+        <div className="textMain02">
+          <p className="dayText">일자</p>
+          <p className="priceText">금액</p>
+        </div>
+        <div className="divideFrame">
+          <select
+            className="daySelectBox"
+            value={inputValues.day}
+            onChange={(event) => handleInputChange('day', event.target.value)}
+          >
+            {DAY_LIST.map((day, index) => (
+              <option key={index}>{day}</option>
+            ))}
+          </select>
+          <input
+            type="text"
+            className="priceInput"
+            placeholder="금액을 입력해주세요"
+            value={inputValues.price}
+            onChange={(event) => handleInputChange('price', event.target.value)}
+          />
+        </div>
+        <div className="textMain03">
+          <p className="memoText">메모</p>
+        </div>
+        <div className="divideFrame">
+          <input
+            className="memoInput"
+            type="text"
+            placeholder="25자 내외로 작성해주세요"
+            value={inputValues.memo}
+            onChange={(event) => handleInputChange('memo', event.target.value)}
+          />
+        </div>
+        <div className="textMain04">
+          <p className="yearText">반복 종료 년/월</p>
+          <p className="optionalText">선택 입력</p>
+        </div>
+        <div className="divideFrame">
+          <select className="yearSelectBox">
+            {YEAR_LIST.map((year, index) => (
+              <option key={index}>{year}</option>
+            ))}
+          </select>
+          <select className="monthSelectBox">
+            {MONTH_LIST.map((month, index) => (
+              <option key={index}>{month}</option>
+            ))}
+          </select>
+        </div>
+        <div className="buttonFrame">
+          <button
+            className={isCompleteEnabled ? 'complieteBtn' : 'disabledBtn'}
+          >
+            완료
           </button>
-          <div className="textMain01">
-            <p className="divideText">구분</p>
-            <p className="categoryText">카테고리</p>
-          </div>
-          <div className="divideFrame">
-            <select
-              className="incomeSelectBox"
-              value={inputValues.divide}
-              onChange={(event) =>
-                handleInputChange('divide', event.target.value)
-              }
-            >
-              {DIVIDE_LIST.map((divide, index) => (
-                <option key={index}>{divide}</option>
-              ))}
-            </select>
-            <select
-              className="categorySelectBox"
-              value={inputValues.category}
-              onChange={(event) =>
-                handleInputChange('category', event.target.value)
-              }
-            >
-              {CATEGORY_LIST.map((category, index) => (
-                <option key={index}>{category}</option>
-              ))}
-            </select>
-          </div>
-          <div className="textMain02">
-            <p className="dayText">일자</p>
-            <p className="priceText">금액</p>
-          </div>
-          <div className="divideFrame">
-            <select
-              className="daySelectBox"
-              value={inputValues.day}
-              onChange={(event) => handleInputChange('day', event.target.value)}
-            >
-              {DAY_LIST.map((day, index) => (
-                <option key={index}>{day}</option>
-              ))}
-            </select>
-            <input
-              type="text"
-              className="priceInput"
-              placeholder="금액을 입력해주세요"
-              value={inputValues.price}
-              onChange={(event) =>
-                handleInputChange('price', event.target.value)
-              }
-            />
-          </div>
-          <div className="textMain03">
-            <p className="memoText">메모</p>
-          </div>
-          <div className="divideFrame">
-            <input
-              className="memoInput"
-              type="text"
-              placeholder="25자 내외로 작성해주세요"
-              value={inputValues.memo}
-              onChange={(event) =>
-                handleInputChange('memo', event.target.value)
-              }
-            />
-          </div>
-          <div className="textMain04">
-            <p className="yearText">반복 종료 년/월</p>
-            <p className="optionalText">선택 입력</p>
-          </div>
-          <div className="divideFrame">
-            <select className="yearSelectBox">
-              {YEAR_LIST.map((year, index) => (
-                <option key={index}>{year}</option>
-              ))}
-            </select>
-            <select className="monthSelectBox">
-              {MONTH_LIST.map((month, index) => (
-                <option key={index}>{month}</option>
-              ))}
-            </select>
-          </div>
-          <div className="buttonFrame">
-            <button
-              className={isCompleteEnabled ? 'complieteBtn' : 'disabledBtn'}
-            >
-              완료
-            </button>
-          </div>
-        </Modal>
-      </div>
+        </div>
+      </Modal>
     </div>
   );
 };
