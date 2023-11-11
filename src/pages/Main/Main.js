@@ -17,11 +17,11 @@ const Main = () => {
   const [verificationCode, setVerificationCode] = useState('');
   // particFrame 스타일 변경 여부 확인
   const [particFrameStyle, setParticFrameStyle] = useState({
-    border: '1px solid #ccc',
+    border: '2px solid #7777',
   });
   // creatingFrame 스타일 변경 여부 확인
   const [creatingFrameStyle, setCreatingFrameStyle] = useState({
-    border: '1px solid #ccc',
+    border: '2px solid #7777',
   });
   // 필수 입력 값 여부 확인
   const [inputValues, setInputValues] = useState({
@@ -66,18 +66,18 @@ const Main = () => {
     if (checkboxType === 'partic') {
       setIsParticChecked((prevIsChecked) => !prevIsChecked);
       setParticFrameStyle({
-        border: !isParticChecked ? '1px solid #028174' : '1px solid #ccc',
+        border: !isParticChecked ? '2px solid #028174' : '2px solid #7777',
       });
-      setCreatingFrameStyle({ border: '1px solid #ccc' });
+      setCreatingFrameStyle({ border: '2px solid #7777' });
       // 생성하기 체크박스가 활성화된 상태에서 참여하기 체크박스를 선택하면 자동으로 해제
       if (isCreatingChecked) {
         setIsCreatingChecked(false);
       }
     } else if (checkboxType === 'creating') {
       setIsCreatingChecked((prevIsChecked) => !prevIsChecked);
-      setParticFrameStyle({ border: '1px solid #ccc' });
+      setParticFrameStyle({ border: '2px solid #7777' });
       setCreatingFrameStyle({
-        border: !isCreatingChecked ? '1px solid #028174' : '1px solid #ccc',
+        border: !isCreatingChecked ? '2px solid #028174' : '2px solid #7777',
       });
       // 참여하기 체크박스가 활성화된 상태에서 생성하기 체크박스를 선택하면 자동으로 해제
       if (isParticChecked) {
@@ -105,7 +105,7 @@ const Main = () => {
             <img src={close} alt="닫기버튼" />
           </button>
           <div className="mainFrame">
-            <div className="particFrame" style={particFrameStyle}>
+            <div className="partic" style={particFrameStyle}>
               <input
                 className="clickBox01"
                 type="checkbox"
@@ -124,7 +124,7 @@ const Main = () => {
                 }
               ></input>
             </div>
-            <div className="creatingFrame" style={creatingFrameStyle}>
+            <div className="creating" style={creatingFrameStyle}>
               <input
                 className="clickBox02"
                 type="checkbox"
