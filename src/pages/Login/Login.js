@@ -1,5 +1,4 @@
 import React from 'react';
-// import KakaoLogin from 'react-kakao-login';
 import KakaoLogin from './KakaoLogin/KakaoLogin';
 
 import './Login.scss';

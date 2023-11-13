@@ -1,33 +1,33 @@
-import React from 'react';
-import { useState } from 'react';
-import './UserDetail.scss';
+import React, { useState } from 'react';
+import './UserSignUp.scss';
 // import DropDown from './Dropdown';
 
 const UserDetail = () => {
   const [userInfo, setUserInfo] = useState({
     userNameme: '',
     userPhoneNumber: '',
-    userBirthDate: '', // 문자열인지 체크
+    userBirthDate: '',
     userAuth: '',
   });
 
-  const handleSubmit = () => {
-    fetch(api, {
-      method: 'POST',
-      headers: {
-        'Content-type': 'application/json',
-      },
-      body: JSON.stringify(userInfo),
-    })
-      .then((res) => res.json())
-      .then((response) => {
-        if (response.message === 'SIGN_IN_COMPLETED') {
-          alert('환영합니다!');
-        } else {
-          alert('빠진 정보가 있는지 확인해보세요!');
-        }
-      });
-  };
+  // const handleSubmit = () => {
+  //   fetch(api
+  //     , {
+  //     method: 'POST',
+  //     headers: {
+  //       'Content-type': 'application/json',
+  //     },
+  //     body: JSON.stringify(userInfo),
+  //   })
+  //     .then((res) => res.json())
+  //     .then((response) => {
+  //       if (response.message === 'SIGN_IN_COMPLETED') {
+  //         alert('환영합니다!');
+  //       } else {
+  //         alert('빠진 정보가 있는지 확인해보세요!');
+  //       }
+  //     });
+  // };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -57,7 +57,7 @@ const UserDetail = () => {
         </select>
       </div>
       <div className="buttonSignUp">
-        <button>회원 등록 완료</button>
+        <button onClick={handleInputChange}>회원 등록 완료</button>
       </div>
     </div>
   );
