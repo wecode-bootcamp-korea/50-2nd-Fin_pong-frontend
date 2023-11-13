@@ -1,14 +1,14 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import MenuBar from './components/MenuBar/MenuBar';
 import Main from './pages/Main/Main';
-import MenuBar from './pages/MenuBar/MenuBar';
 
 const Router = () => {
   return (
     <BrowserRouter>
+      <MenuBar />
       <Routes>
         <Route path="/" element={<Main />} />
-        <Route path="/menubar" element={<MenuBar />} />
       </Routes>
     </BrowserRouter>
   );
