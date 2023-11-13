@@ -1,28 +1,17 @@
-import React from 'react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import close from './close.svg';
 import './Main.scss';
 
 const Main = () => {
   // 모달창 노출 여부 확인
-  const [isModalOpen, setIsModalOpen] = useState('');
+  const [currentModal, setCurrentModal] = useState('');
   // 완료 버튼 활성화, 비활성화 여부 확인
   const [isCompleteEnabled, setIsCompleteEnabled] = useState(false);
-  // 참여하기 체크박스 체크시 입력창 활성화 여부 확인
-  const [isParticChecked, setIsParticChecked] = useState(false);
-  // 생성하기 체크박스 체크시 입력창 활성화 여부 확인
-  const [isCreatingChecked, setIsCreatingChecked] = useState(false);
+  // 선택된 메뉴 상태 저장
+  const [checkedMenu, setCheckedMenu] = useState('');
   // 인증번호 입력값 상태 추가
   const [verificationCode, setVerificationCode] = useState('');
-  // particFrame 스타일 변경 여부 확인
-  const [particFrameStyle, setParticFrameStyle] = useState({
-    border: '2px solid #7777',
-  });
-  // creatingFrame 스타일 변경 여부 확인
-  const [creatingFrameStyle, setCreatingFrameStyle] = useState({
-    border: '2px solid #7777',
-  });
   // 필수 입력 값 여부 확인
   const [inputValues, setInputValues] = useState({
     divide: '',
@@ -33,12 +22,12 @@ const Main = () => {
   });
   // 모달창 닫기
   const closeModal = () => {
-    setIsModalOpen(false);
+    setCurrentModal('');
   };
   // 생성하기 체크박스가 활성화되면 완료 버튼 활성화
   useEffect(() => {
-    setIsCompleteEnabled(isCreatingChecked);
-  }, [isCreatingChecked]);
+    setIsCompleteEnabled(checkedMenu === 'creating');
+  }, [checkedMenu]);
 
   // input, selectBox 값 변경 여부
   const handleInputChange = (fieldName, value) => {
@@ -46,7 +35,8 @@ const Main = () => {
       // 인증번호 입력값 업데이트
       setVerificationCode(value);
       // 참여하기 체크박스가 활성화되면서 인증번호를 입력되면 완료 버튼 활성화
-      const isVerificationCodeValid = isParticChecked && value.length === 6;
+      const isVerificationCodeValid =
+        checkedMenu === 'partic' && value.length === 6;
       setIsCompleteEnabled(isVerificationCodeValid);
     } else {
       // 다른 필드의 입력값 업데이트
@@ -61,38 +51,13 @@ const Main = () => {
     }
   };
 
-  // 체크박스 비활성화/활성화 여부
-  const handleCheckboxChange = (checkboxType) => {
-    if (checkboxType === 'partic') {
-      setIsParticChecked((prevIsChecked) => !prevIsChecked);
-      setParticFrameStyle({
-        border: !isParticChecked ? '2px solid #028174' : '2px solid #7777',
-      });
-      setCreatingFrameStyle({ border: '2px solid #7777' });
-      // 생성하기 체크박스가 활성화된 상태에서 참여하기 체크박스를 선택하면 자동으로 해제
-      if (isCreatingChecked) {
-        setIsCreatingChecked(false);
-      }
-    } else if (checkboxType === 'creating') {
-      setIsCreatingChecked((prevIsChecked) => !prevIsChecked);
-      setParticFrameStyle({ border: '2px solid #7777' });
-      setCreatingFrameStyle({
-        border: !isCreatingChecked ? '2px solid #028174' : '2px solid #7777',
-      });
-      // 참여하기 체크박스가 활성화된 상태에서 생성하기 체크박스를 선택하면 자동으로 해제
-      if (isParticChecked) {
-        setIsParticChecked(false);
-      }
-    }
-  };
-
   return (
-    <div className="buttonClick">
-      <button className="createdBtn" onClick={() => setIsModalOpen('참여')}>
+    <div className="main">
+      <button className="createBtn" onClick={() => setCurrentModal('참여')}>
         참여 & 생성하기
       </button>
       <Modal
-        isOpen={isModalOpen === '참여' || isModalOpen === '생성'}
+        isOpen={currentModal === '참여'}
         overlayClassName="overlay"
         className="modal"
       >
@@ -104,13 +69,15 @@ const Main = () => {
           <img src={close} alt="닫기버튼" />
         </button>
         <div className="mainFrame">
-          <div className="partic" style={particFrameStyle}>
+          <div
+            className={`partic${checkedMenu === 'partic' ? ' selected' : ''}`}
+          >
             <input
               className="clickBox"
               type="checkbox"
-              onChange={() => handleCheckboxChange('partic')}
-              checked={isParticChecked}
-            ></input>
+              onChange={() => setCheckedMenu('partic')}
+              checked={checkedMenu === 'partic'}
+            />
             <p className="clickText">참여하기</p>
             <span className="womanEmoji" role="img" aria-label="Emoji">
               💁🏻‍♀️
@@ -120,18 +87,22 @@ const Main = () => {
               type="text"
               placeholder="계정인증번호를 입력해주세요"
               maxLength={6}
-              disabled={!isParticChecked}
+              disabled={checkedMenu !== 'partic'}
               onChange={(event) =>
                 handleInputChange('verifiInput', event.target.value)
               }
-            ></input>
+            />
           </div>
-          <div className="creating" style={creatingFrameStyle}>
+          <div
+            className={`creating${
+              checkedMenu === 'creating' ? ' selected' : ''
+            }`}
+          >
             <input
               className="clickBox"
               type="checkbox"
-              onChange={() => handleCheckboxChange('creating')}
-              checked={isCreatingChecked}
+              onChange={() => setCheckedMenu('creating')}
+              checked={checkedMenu === 'creating'}
             />
             <p className="creatingText">생성하기</p>
             <span className="manEmoji" role="img" aria-label="Emoji">
@@ -148,11 +119,11 @@ const Main = () => {
           </button>
         </div>
       </Modal>
-      <button className="recordBtn" onClick={() => setIsModalOpen('수입')}>
+      <button className="recordBtn" onClick={() => setCurrentModal('수입')}>
         수입/지출 등록하기
       </button>
       <Modal
-        isOpen={isModalOpen === '수입'}
+        isOpen={currentModal === '수입'}
         overlayClassName="overlay"
         className="modal"
       >
@@ -165,7 +136,7 @@ const Main = () => {
         </div>
         <div className="divideFrame">
           <select
-            className="incomeSelectBox"
+            className="selectBox"
             value={inputValues.divide}
             onChange={(event) =>
               handleInputChange('divide', event.target.value)
@@ -176,7 +147,7 @@ const Main = () => {
             ))}
           </select>
           <select
-            className="categorySelectBox"
+            className="selectBox"
             value={inputValues.category}
             onChange={(event) =>
               handleInputChange('category', event.target.value)
@@ -193,7 +164,7 @@ const Main = () => {
         </div>
         <div className="divideFrame">
           <select
-            className="daySelectBox"
+            className="selectBox"
             value={inputValues.day}
             onChange={(event) => handleInputChange('day', event.target.value)}
           >
@@ -226,12 +197,12 @@ const Main = () => {
           <p className="optionalText">선택 입력</p>
         </div>
         <div className="divideFrame">
-          <select className="yearSelectBox">
+          <select className="selectBox">
             {YEAR_LIST.map((year, index) => (
               <option key={index}>{year}</option>
             ))}
           </select>
-          <select className="monthSelectBox">
+          <select className="selectBox">
             {MONTH_LIST.map((month, index) => (
               <option key={index}>{month}</option>
             ))}
