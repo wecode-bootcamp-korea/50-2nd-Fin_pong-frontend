@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React from 'react';
 import wonBookLogo1 from './onebooklogo_preview_rev_1.png';
 import adminImage from './adminImage.png';
 import './MenuBar.scss';
