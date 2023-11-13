@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import Modal from 'react-modal';
 import close from './close.svg';
-import './Main.scss';
+import './DashBoard.scss';
 
-const Main = () => {
+const DashBoard = () => {
   // 모달창 노출 여부 확인
   const [currentModal, setCurrentModal] = useState('');
   // 완료 버튼 활성화, 비활성화 여부 확인
@@ -220,7 +220,7 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default DashBoard;
 
 const DIVIDE_LIST = ['-', '수입', '지출'];
 const CATEGORY_LIST = ['-', '생활비', '식비', '고정비', '기타'];
