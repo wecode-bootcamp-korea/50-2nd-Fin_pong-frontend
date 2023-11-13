@@ -6,8 +6,11 @@ const Auth = () => {
 
   const navigate = useNavigate();
 
-  fetch('http://10.58.52.208:3000/users/kakao-sign-up', {
+  fetch('http://10.58.52.208:3000/users/login', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
     body: JSON.stringify({
       codeKakao,
     }),
