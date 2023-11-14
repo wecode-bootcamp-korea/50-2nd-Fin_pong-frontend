@@ -5,11 +5,11 @@
 
 .modal.open {
   display: block;
+  z-index: 1000;
   position: absolute;
   top: 50px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
   background-color: #fff;
 }
 
@@ -25,9 +25,11 @@
   .allowanceContentName {
     font-size: 20px;
   }
+
   .allowanceContentList {
     display: flex;
     flex-direction: row;
+
     .allowance {
       display: flex;
       flex-direction: column;
@@ -37,8 +39,9 @@
         font-size: 20px;
         padding: 10px;
       }
+
       .allowanceInput {
-        width: 100%;
+        width: 200px;
         height: 50px;
         border: 2px solid #777;
         border-radius: 6px;

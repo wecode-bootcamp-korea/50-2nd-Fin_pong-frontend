@@ -1,19 +1,46 @@
-import React from 'react';
-// import { useNavigate } from 'react-router-dom';
-import SelectDropdown from './SelectDropdown';
+import React, { useEffect, useState } from 'react';
+import CalenderInput from './calenderInput';
 import CompleteBtn from './completeBtn';
 import './BudgetModal.scss';
 
 const BudgetModal = ({ isOpen, onClose }) => {
+  const [budget, setBudget] = useState();
+
+  const handleBudget = (e) => {
+    setBudget(e.target.value);
+  };
+
+  const token = localStorage.getItem('token');
+  useEffect(() => {
+    fetch('API', {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        date: '',
+        budget: '',
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => result);
+  }, [token]);
+
   return (
-    <div className={`modal ${isOpen ? 'open' : ''}`}>
+    <div className={`modal ${isOpen ? 'modal open' : 'modal'}`}>
       <div className="budgetInfo">
         <h2 className="budgetContentName">🗓️ 예산 등록</h2>
         <div className="budgetContentList">
-          <SelectDropdown text="일자" />
+          <CalenderInput text="일자" />
           <div className="budget">
             <label className="budgetName">금액</label>
-            <input className="budgetInput" />
+            <input
+              className="budgetInput"
+              type="text"
+              onChange={(e) => handleBudget(e)}
+              value={budget}
+            />
           </div>
         </div>
         <div className="btn">

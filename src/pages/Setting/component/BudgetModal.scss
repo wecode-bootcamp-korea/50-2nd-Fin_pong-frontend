@@ -3,14 +3,16 @@
 }
 
 .modal.open {
-  display: block;
+  // display: block;
+  // z-index: 1000; //체계에 따라 관리하기 어려움(순서꼬일 수 있다.)
   position: absolute;
   width: max-content;
   top: 50px;
   left: 50%;
   transform: translateX(-50%);
-  z-index: 1000;
   background-color: #fff;
+  display: flex;
+  flex-direction: column;
 }
 
 .budgetInfo {

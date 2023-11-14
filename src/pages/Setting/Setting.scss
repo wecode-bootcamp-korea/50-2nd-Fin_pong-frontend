@@ -80,25 +80,27 @@
       }
 
       .fixContentList {
+        margin: 10px;
+        width: 100%;
         .contentListDate,
         .contentListSort {
           display: flex;
-        }
+          width: 100%;
 
-        .contentListAmount {
-          display: flex;
-
-          .amountInput {
+          .amountInput,
+          .selectYearMonth {
             display: flex;
             flex-direction: column;
             margin: 5px;
 
-            .amountName {
+            .amountName,
+            .selectName {
               font-size: 20px;
               padding: 10px;
             }
-            .amount {
-              width: 100%;
+            .amount,
+            .yearMonth {
+              width: 200px;
               height: 50px;
               border: 2px solid #777;
               border-radius: 6px;
@@ -109,6 +111,7 @@
         .memoInput {
           display: flex;
           flex-direction: column;
+          margin-right: 10px;
 
           .memoName {
             font-size: 20px;

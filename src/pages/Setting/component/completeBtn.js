@@ -20,7 +20,7 @@ const CompleteBtn = () => {
   })
     .then((response) => response.json())
     .then((data) => {
-      if (data.message === 'login success') {
+      if (data.message === 'SUCCESS') {
         alert(' 내역 등록이 완료되었습니다! ');
         navigate('/Setting');
       } else {
