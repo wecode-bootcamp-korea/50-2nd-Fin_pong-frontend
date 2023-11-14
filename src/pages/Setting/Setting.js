@@ -9,7 +9,9 @@ const Setting = () => {
         <h2 className="groupText">🔖 그룹관리 인증번호 : </h2>
         <input className="groupInput" type="text" />
       </div>
-      <div className="fixedIncomeFrame"></div>
+      <div className="fixedIncomeFrame">
+        <p className="fixedIncomeText">🗓️ 고정 수입 & 지출 내역 등록</p>
+      </div>
     </div>
   );
 };
