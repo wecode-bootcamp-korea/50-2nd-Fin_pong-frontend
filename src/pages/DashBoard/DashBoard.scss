@@ -1,10 +1,9 @@
-.main {
+.dashboard {
   display: flex;
   flex-direction: row;
   justify-content: flex-end;
 
-  .createBtn,
-  .recordBtn {
+  .actionButton {
     width: 150px;
     padding: 15px;
     margin-right: 17px;
@@ -147,9 +146,9 @@
       display: flex;
       justify-content: flex-end;
 
-      .complieteButton {
+      .completeButton {
         position: relative;
-        bottom: -15px;
+        bottom: -45px;
         width: 120px;
         padding: 13px;
         margin-right: 16px;
@@ -159,19 +158,11 @@
         font-weight: 600;
         color: #fff;
         cursor: pointer;
-      }
 
-      .disableButton {
-        position: relative;
-        bottom: -15px;
-        width: 120px;
-        padding: 13px;
-        margin-right: 16px;
-        border: none;
-        border-radius: 5px;
-        background-color: #7777;
-        font-weight: 600;
-        color: #fff;
+        &:disabled {
+          background-color: #7777;
+          cursor: default;
+        }
       }
     }
 
@@ -239,35 +230,6 @@
         position: relative;
         bottom: -35px;
         right: 23px;
-      }
-    }
-
-    .buttonFrame {
-      display: flex;
-      justify-content: flex-end;
-      margin-top: 50px;
-
-      .complieteBtn {
-        width: 120px;
-        padding: 13px;
-        margin-right: 16px;
-        border: none;
-        border-radius: 5px;
-        background-color: #028174;
-        font-weight: 600;
-        color: #fff;
-        cursor: pointer;
-      }
-
-      .disabledBtn {
-        width: 120px;
-        padding: 13px;
-        margin-right: 16px;
-        border: none;
-        border-radius: 5px;
-        background-color: #7777;
-        font-weight: 600;
-        color: #fff;
       }
     }
 

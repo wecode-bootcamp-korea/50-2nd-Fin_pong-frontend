@@ -17,22 +17,22 @@ const MenuBar = () => {
       <div className="menuBarButtonFrame">
         <ul>
           <li className="buttonList">
-            <button className="mainButton">Main</button>
+            <button className="menuBarButton">Main</button>
           </li>
           <li className="buttonList">
-            <button className="accountButton">가계부</button>
+            <button className="menuBarButton">가계부</button>
           </li>
           <li className="buttonList">
-            <button className="communityButton">커뮤니티</button>
+            <button className="menuBarButton">커뮤니티</button>
           </li>
           <li className="buttonList">
-            <button className="productInfoButton">상품 안내(가입)</button>
+            <button className="menuBarButton">상품 안내(가입)</button>
           </li>
           <li className="buttonList">
-            <button className="settingButton">설정</button>
+            <button className="menuBarButton">설정</button>
           </li>
-          <li className="logoutList">
-            <button className="logoutButton">로그아웃</button>
+          <li className="buttonList">
+            <button className="menuBarButton red">로그아웃</button>
           </li>
         </ul>
       </div>

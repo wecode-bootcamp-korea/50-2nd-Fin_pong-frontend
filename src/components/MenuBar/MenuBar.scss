@@ -1,7 +1,6 @@
 .menuBarFrame {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
   width: 279px;
   height: 100vh;
   background-color: #94ad9f;
@@ -58,42 +57,26 @@
       flex-direction: column;
       align-items: center;
 
-      .mainButton,
-      .accountButton,
-      .communityButton,
-      .productInfoButton,
-      .settingButton {
+      &:last-child {
+        margin-top: 80px;
+      }
+
+      .menuBarButton {
         width: 170px;
         height: 40px;
-        margin-top: 15px;
-        margin-bottom: 15px;
         font-size: 16px;
         font-weight: 700;
         color: #94ad9f;
         background-color: white;
         border: 1px solid white;
         border-radius: 10px;
+        margin-top: 15px;
+        margin-bottom: 15px;
         cursor: pointer;
-      }
-    }
 
-    .logoutList {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      margin-top: 80px;
-
-      .logoutButton {
-        width: 170px;
-        height: 40px;
-        border: none;
-        border-radius: 10px;
-        font-size: 16px;
-        font-weight: 700;
-        color: red;
-        background-color: white;
-        border: 1px solid white;
-        cursor: pointer;
+        &.red {
+          color: red;
+        }
       }
     }
   }

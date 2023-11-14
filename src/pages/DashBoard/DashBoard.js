@@ -52,8 +52,8 @@ const DashBoard = () => {
   };
 
   return (
-    <div className="main">
-      <button className="createBtn" onClick={() => setCurrentModal('참여')}>
+    <div className="dashboard">
+      <button className="actionButton" onClick={() => setCurrentModal('참여')}>
         참여 & 생성하기
       </button>
       <Modal
@@ -112,14 +112,12 @@ const DashBoard = () => {
           </div>
         </div>
         <div className="buttonFrame">
-          <button
-            className={isCompleteEnabled ? 'complieteButton' : 'disableButton'}
-          >
+          <button className={'completeButton'} disabled={!isCompleteEnabled}>
             완료
           </button>
         </div>
       </Modal>
-      <button className="recordBtn" onClick={() => setCurrentModal('수입')}>
+      <button className="actionButton" onClick={() => setCurrentModal('수입')}>
         수입/지출 등록하기
       </button>
       <Modal
@@ -209,9 +207,7 @@ const DashBoard = () => {
           </select>
         </div>
         <div className="buttonFrame">
-          <button
-            className={isCompleteEnabled ? 'complieteBtn' : 'disabledBtn'}
-          >
+          <button className="completeButton" disabled={!isCompleteEnabled}>
             완료
           </button>
         </div>
