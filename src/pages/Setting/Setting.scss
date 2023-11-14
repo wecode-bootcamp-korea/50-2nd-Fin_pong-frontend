@@ -1,34 +1,26 @@
 .setting {
   height: 100vh;
+  padding: 15px;
 
-  .settingFrame {
-    margin-top: 15px;
-    margin-left: 15px;
-
-    .settingText {
-      font-size: 30px;
-      font-weight: 800;
-    }
+  .title {
+    font-size: 30px;
+    font-weight: 800;
   }
 
   .groupNumberFrame {
     display: flex;
-    flex-direction: row;
+    align-items: center;
     margin-top: 65px;
-    margin-left: 15px;
 
     .groupText {
-      position: relative;
-      bottom: -10px;
       font-size: 20px;
       font-weight: 800;
     }
 
     .groupInput {
-      position: relative;
-      right: -10px;
       width: 200px;
       height: 35px;
+      margin-left: 10px;
       background-color: #d9d9d9;
       border: none;
       border-radius: 5px;
@@ -37,7 +29,6 @@
 
   .fixedIncomeFrame {
     margin-top: 20px;
-    margin-left: 15px;
     width: 790px;
     height: 425px;
     border: 1px solid black;

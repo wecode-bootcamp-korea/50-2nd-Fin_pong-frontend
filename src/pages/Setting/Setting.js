@@ -4,9 +4,7 @@ import './Setting.scss';
 const Setting = () => {
   return (
     <div className="setting">
-      <div className="settingFrame">
-        <h1 className="settingText">설정 ✏️</h1>
-      </div>
+      <h1 className="title">설정 ✏️</h1>
       <div className="groupNumberFrame">
         <h2 className="groupText">🔖 그룹관리 인증번호 : </h2>
         <input className="groupInput" type="text" />
