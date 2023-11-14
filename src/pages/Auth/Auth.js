@@ -6,7 +6,7 @@ const Auth = () => {
 
   const navigate = useNavigate();
 
-  fetch('http://10.58.52.208:3000/users/login', {
+  fetch('http://10.58.52.156:3000/users/auth', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

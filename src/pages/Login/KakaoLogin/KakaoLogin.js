@@ -13,6 +13,7 @@ const KakaoLogin = () => {
 
   return (
     <img
+      className="kakaoLoginBtn"
       src="../../images/kakao_login_large_narrow.png"
       onClick={kakaoLoginHandler}
       alt="kakao"

@@ -5,8 +5,17 @@ import './Login.scss';
 
 const Login = () => {
   return (
-    <div>
-      <KakaoLogin />
+    <div className="Login">
+      <div className="loginWrapper">
+        <KakaoLogin />
+      </div>
+      <div className="serviceInfoContainer">
+        <img
+          className="onebookLogo"
+          src="../images/OneBook_Logo.png"
+          alt="OneBook"
+        />
+      </div>
     </div>
   );
 };
