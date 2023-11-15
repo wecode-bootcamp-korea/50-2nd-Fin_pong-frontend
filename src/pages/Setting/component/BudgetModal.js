@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { splitDate } from '../../../utils/convert';
 import CalenderInput from './calenderInput';
 import CompleteBtn from './completeBtn';
 import './BudgetModal.scss';
@@ -9,6 +10,8 @@ const BudgetModal = ({ isOpen, onClose }) => {
   const handleBudget = (e) => {
     setBudget(e.target.value);
   };
+
+  const { year, month, date } = splitDate(new Date());
 
   const token = localStorage.getItem('token');
   useEffect(() => {
@@ -28,7 +31,7 @@ const BudgetModal = ({ isOpen, onClose }) => {
   }, [token]);
 
   return (
-    <div className={`modal ${isOpen ? 'modal open' : 'modal'}`}>
+    <div className={`modal${isOpen ? ' open' : ''}`}>
       <div className="budgetInfo">
         <h2 className="budgetContentName">🗓️ 예산 등록</h2>
         <div className="budgetContentList">

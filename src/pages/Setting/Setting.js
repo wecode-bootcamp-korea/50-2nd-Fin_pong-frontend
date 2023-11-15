@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ko } from 'date-fns/esm/locale';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
@@ -18,6 +19,7 @@ const Setting = () => {
   const [userList, setUserList] = useState([]);
   const [amount, setAmount] = useState();
   const [memo, setMemo] = useState('');
+  const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
   const [filteredCategoryList, setFilteredCategoryList] = useState([]);
   const [settingInfo, setSettingInfo] = useState({
@@ -53,7 +55,6 @@ const Setting = () => {
 
   const handleSort = () => {
     if (!settingInfo.type) {
-      //'구분 값을 선택하지 않았다면'
       alert('구분을 먼저 선택해 주세요!');
       // 안 열리게 막아주면 더 좋음.
       return;
@@ -67,10 +68,58 @@ const Setting = () => {
   };
 
   // 항목을 state에 저장하는 로직!
+  const navigate = useNavigate();
+
+  const handleDateChange = (date) => {
+    const startYear = date.getFullYear();
+    const startMonth = date.getMonth();
+    const startDate = date.getDate();
+
+    setSettingInfo({
+      ...settingInfo,
+      date: `${startYear}-${startMonth}-${startDate}`,
+    });
+    setStartDate(date);
+  };
+
+  const handleClick = () => {
+    const endYear = endDate.getFullYear();
+    const endMonth = endDate.getMonth();
+    const startYear = startDate.getFullYear();
+    const startMonth = startDate.getMonth() + 1;
+    const startDay = startDate.getDate();
+
+    fetch('http://10.58.52.92:8000/flow/fixed', {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        userId: 5,
+        type: settingInfo.type,
+        category: settingInfo.category,
+        memo: memo,
+        amount: amount,
+        startYear: startYear,
+        startMonth: startMonth,
+        startDate: startDay,
+        endYear: endYear,
+        endMonth: endMonth,
+      }),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message === 'POST_SUCCESS') {
+          alert(' 내역 등록이 완료되었습니다! ');
+          navigate('/Setting');
+        }
+      });
+  };
 
   //구분, 대상 옵션 데이터를 받아오기
   useEffect(() => {
-    fetch('/data/type.json', {
+    fetch('http://10.58.52.92:8000/flow-type', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -80,7 +129,7 @@ const Setting = () => {
       .then((res) => res.json())
       .then((result) => setTypeList(result.type));
 
-    fetch('/data/userList.json', {
+    fetch('http://10.58.52.92:8000/family/user', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -95,7 +144,7 @@ const Setting = () => {
   useEffect(() => {
     if (!settingInfo.type) return;
 
-    fetch('/data/category.json', {
+    fetch('http://10.58.52.92:8000/category', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -150,7 +199,10 @@ const Setting = () => {
             <h2 className="settingContentName">🗓️ 고정 수입&지출 내역 등록</h2>
             <div className="fixContentList">
               <div className="contentListDate">
-                <CalenderInput text="일자" />
+                <CalenderInput
+                  text="일자"
+                  handleDateChange={handleDateChange}
+                />
                 <SelectDropdown
                   text="구분"
                   name="type"
@@ -182,9 +234,7 @@ const Setting = () => {
                   />
                 </div>
                 <div className="selectYearMonth">
-                  <label className="selectName">
-                    반복 종료 년/월(선택사항)
-                  </label>
+                  <label className="selectName">반복 종료 년/월</label>
                   <DatePicker
                     className="yearMonth"
                     selected={endDate}
@@ -192,7 +242,7 @@ const Setting = () => {
                     onChange={(date) => setEndDate(date)}
                     selectsEnd
                     endDate={endDate}
-                    dateFormat="yyyy/MM"
+                    dateFormat="yyyy년MM월"
                     showMonthYearPicker
                   />
                 </div>
@@ -209,7 +259,10 @@ const Setting = () => {
                 />
               </div>
             </div>
-            <CompleteBtn className="completeBtnContainer" />
+            <CompleteBtn
+              className="completeBtnContainer"
+              onClick={handleClick}
+            />
           </div>
         </div>
       </div>
