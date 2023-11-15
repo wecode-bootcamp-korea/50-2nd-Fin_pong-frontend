@@ -1,0 +1,22 @@
+[
+  {
+    "id": 1,
+    "category": "생활비",
+    "spending": "98%"
+  },
+  {
+    "id": 2,
+    "category": "공과금",
+    "spending": "0%"
+  },
+  {
+    "id": 3,
+    "category": "용돈",
+    "spending": "2%"
+  },
+  {
+    "id": 4,
+    "category": "기타",
+    "spending": "0%"
+  }
+]
