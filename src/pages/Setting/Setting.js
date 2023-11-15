@@ -9,19 +9,18 @@ import CompleteBtn from './component/completeBtn';
 import BudgetModal from './component/BudgetModal'; // 예산 모달 컴포넌트 import
 import AllowanceModal from './component/AllowanceModal'; // 용돈 모달 컴포넌트 import
 import './Setting.scss';
+import { id } from 'date-fns/locale';
 
 const Setting = () => {
-  const [budgetModalOpen, setBudgetModalOpen] = useState(false);
-  const [allowanceModalOpen, setAllowanceModalOpen] = useState(false);
+  const [currentModal, setCurrentModal] = useState('');
   const [authCode, setAuthCode] = useState('');
   const [typeList, setTypeList] = useState([]);
   const [categoryList, setCategoryList] = useState([]);
-  const [userList, setUserList] = useState([]);
+  // const [userList, setUserList] = useState([]);
   const [amount, setAmount] = useState();
   const [memo, setMemo] = useState('');
   const [startDate, setStartDate] = useState(new Date());
   const [endDate, setEndDate] = useState(new Date());
-  const [filteredCategoryList, setFilteredCategoryList] = useState([]);
   const [settingInfo, setSettingInfo] = useState({
     date: '',
     type: '',
@@ -34,6 +33,7 @@ const Setting = () => {
   const token = localStorage.getItem('token');
 
   const handleInfo = (name, value) => {
+    // console.log(name, value);
     setSettingInfo({ ...settingInfo, [name]: value });
   };
 
@@ -43,28 +43,6 @@ const Setting = () => {
 
   const handleMemo = (e) => {
     setMemo(e.target.value);
-  };
-
-  const toggleBudgetModal = () => {
-    setBudgetModalOpen((prev) => !prev);
-  };
-
-  const toggleAllowanceModal = () => {
-    setAllowanceModalOpen((prev) => !prev);
-  };
-
-  const handleSort = () => {
-    if (!settingInfo.type) {
-      alert('구분을 먼저 선택해 주세요!');
-      // 안 열리게 막아주면 더 좋음.
-      return;
-    }
-
-    const filteredCategories = categoryList.filter(
-      (category) => category.type === settingInfo.type,
-    );
-
-    setCategoryList(filteredCategories);
   };
 
   // 항목을 state에 저장하는 로직!
@@ -96,7 +74,7 @@ const Setting = () => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        userId: 5,
+        userId: id,
         type: settingInfo.type,
         category: settingInfo.category,
         memo: memo,
@@ -117,9 +95,10 @@ const Setting = () => {
       });
   };
 
-  //구분, 대상 옵션 데이터를 받아오기
+  //구분, 항목, 대상 옵션 데이터를 받아오기
   useEffect(() => {
-    fetch('http://10.58.52.92:8000/flow-type', {
+    // fetch('http://10.58.52.92:8000/flow-type', {
+    fetch('/data/type.json', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -129,7 +108,19 @@ const Setting = () => {
       .then((res) => res.json())
       .then((result) => setTypeList(result.type));
 
-    fetch('http://10.58.52.92:8000/family/user', {
+    // fetch('http://10.58.52.92:8000/family/user', {
+    // fetch('/data/userList.json', {
+    //   method: 'get',
+    //   headers: {
+    //     'content-type': 'application/json',
+    //     Authorization: `Bearer ${token}`,
+    //   },
+    // })
+    //   .then((res) => res.json())
+    //   .then((result) => setUserList(result.familyUsers));
+
+    // fetch('http://10.58.52.92:8000/category', {
+    fetch('/data/category.json', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -137,23 +128,8 @@ const Setting = () => {
       },
     })
       .then((res) => res.json())
-      .then((result) => setUserList(result.familyUsers));
-  }, [token]);
-
-  //항목 데이터 받아오기
-  useEffect(() => {
-    if (!settingInfo.type) return;
-
-    fetch('http://10.58.52.92:8000/category', {
-      method: 'get',
-      headers: {
-        'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
-      },
-    })
-      .then((res) => res.json())
-      .then((result) => setFilteredCategoryList(result.category));
-  }, [settingInfo.type, token]);
+      .then((result) => setCategoryList(result.category));
+  }, []);
 
   //그룹관리 인증번호 받아오기
   useEffect(() => {
@@ -168,6 +144,12 @@ const Setting = () => {
       .then((result) => setAuthCode(result.authCode));
   }, [token]);
 
+  const filteredCategoryList = categoryList.filter(
+    (category) => category.type === settingInfo.type,
+  );
+
+  // console.log(settingInfo);
+
   return (
     <div className="settingAll">
       <div className="settingTitle">
@@ -178,21 +160,27 @@ const Setting = () => {
             <p className="settingPwNum">{authCode}</p>
           </div>
           <div className="infoContainer">
-            <button className="budgetBtn" onClick={toggleBudgetModal}>
+            <button
+              className="budgetBtn"
+              onClick={() => setCurrentModal('budget')}
+            >
               예산등록하기
             </button>
             <BudgetModal
               className="BudgetModal"
-              isOpen={budgetModalOpen}
-              onClose={toggleBudgetModal}
+              isOpen={currentModal === 'budget'}
+              onClose={() => setCurrentModal('')}
             />
-            <button className="allowanceBtn" onClick={toggleAllowanceModal}>
+            <button
+              className="allowanceBtn"
+              onClick={() => setCurrentModal('allowance')}
+            >
               용돈 등록하기
             </button>
             <AllowanceModal
               className="AllowanceModal"
-              isOpen={allowanceModalOpen}
-              onClose={toggleAllowanceModal}
+              isOpen={currentModal === 'allowance'}
+              onClose={() => setCurrentModal('')}
             />
           </div>
           <div className="settingSecondInfo">
@@ -205,25 +193,22 @@ const Setting = () => {
                 />
                 <SelectDropdown
                   text="구분"
-                  name="type"
                   options={typeList}
                   handleSelect={(e) => handleInfo('type', e.target.value)}
                 />
                 <SelectDropdown
                   text="항목"
-                  name="category"
                   options={filteredCategoryList}
                   handleSelect={(e) => handleInfo('category', e.target.value)}
-                  onClick={handleSort}
+                  disabled={!settingInfo.type}
                 />
               </div>
               <div className="contentListSort">
-                <SelectDropdown
+                {/* <SelectDropdown
                   text="대상 선택"
-                  name="name"
                   options={userList}
                   handleSelect={(e) => handleInfo('name', e.target.value)}
-                />
+                /> */}
                 <div className="amountInput">
                   <label className="amountName">금액</label>
                   <input

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { splitDate } from '../../../utils/convert';
 import CalenderInput from './calenderInput';
 import CompleteBtn from './completeBtn';
@@ -11,10 +11,11 @@ const BudgetModal = ({ isOpen, onClose }) => {
     setBudget(e.target.value);
   };
 
-  const { year, month, date } = splitDate(new Date());
+  const { year, month } = splitDate(new Date());
 
   const token = localStorage.getItem('token');
-  useEffect(() => {
+
+  const handleClick = () => {
     fetch('API', {
       method: 'post',
       headers: {
@@ -22,13 +23,14 @@ const BudgetModal = ({ isOpen, onClose }) => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        date: '',
-        budget: '',
+        year: year,
+        month: month,
+        budget: budget,
       }),
     })
       .then((res) => res.json())
       .then((result) => result);
-  }, [token]);
+  };
 
   return (
     <div className={`modal${isOpen ? ' open' : ''}`}>
@@ -47,7 +49,7 @@ const BudgetModal = ({ isOpen, onClose }) => {
           </div>
         </div>
         <div className="btn">
-          <CompleteBtn className="completeBtnContainer" />
+          <CompleteBtn className="completeBtnContainer" onClick={handleClick} />
           <button className="closeBtn" onClick={onClose}>
             닫기
           </button>

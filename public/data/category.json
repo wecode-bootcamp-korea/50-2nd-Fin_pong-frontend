@@ -2,27 +2,27 @@
   "category": [
     {
       "id": 1,
-      "category": "생활비",
+      "option": "생활비",
       "type": "지출"
     },
     {
       "id": 2,
-      "category": "공과금",
+      "option": "공과금",
       "type": "지출"
     },
     {
       "id": 3,
-      "category": "기타",
+      "option": "기타",
       "type": "지출"
     },
     {
       "id": 4,
-      "category": "용돈",
+      "option": "용돈",
       "type": "수입"
     },
     {
       "id": 5,
-      "category": "월급",
+      "option": "월급",
       "type": "수입"
     }
   ]

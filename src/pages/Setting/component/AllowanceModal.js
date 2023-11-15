@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { splitDate } from '../../../utils/convert';
 import SelectDropdown from './SelectDropdown';
 import CalenderInput from './calenderInput';
 import CompleteBtn from './completeBtn';
@@ -7,12 +8,13 @@ import './AllowanceModal.scss';
 const AllowanceModal = ({ isOpen, onClose }) => {
   const [userList, setUserList] = useState([]);
   const [allowance, setAllowance] = useState();
-  const token = localStorage.getItem('token');
   const [settingInfo, setSettingInfo] = useState({
     date: '',
     name: '',
     allowance: '',
   });
+
+  const token = localStorage.getItem('token');
 
   const handleInfo = (name, value) => {
     setSettingInfo({ ...settingInfo, [name]: value });
@@ -20,6 +22,25 @@ const AllowanceModal = ({ isOpen, onClose }) => {
 
   const handleAllowance = (e) => {
     setAllowance(e.target.value);
+  };
+
+  const { year, month } = splitDate(new Date());
+
+  const handleClick = () => {
+    fetch('API', {
+      method: 'post',
+      headers: {
+        'content-type': 'application/json',
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        year: year,
+        month: month,
+        allowance: allowance,
+      }),
+    })
+      .then((res) => res.json())
+      .then((result) => result);
   };
 
   useEffect(() => {
@@ -57,7 +78,7 @@ const AllowanceModal = ({ isOpen, onClose }) => {
           </div>
         </div>
         <div className="btn">
-          <CompleteBtn className="completeBtnContainer" />
+          <CompleteBtn className="completeBtnContainer" onClick={handleClick} />
           <button className="closeBtn" onClick={onClose}>
             닫기
           </button>
