@@ -9,15 +9,15 @@ const MenuBar = () => {
   const navigate = useNavigate();
   // 메인 페이지
   const goToMain = () => {
-    navigate('./');
+    navigate('/');
   };
   // 설정 페이지
   const goToSetting = () => {
-    navigate('./setting');
+    navigate('/setting');
   };
   // 가계부 페이지
   const goToTable = () => {
-    navigate('./table');
+    navigate('/table');
   };
   return (
     <div className="menuBarFrame">

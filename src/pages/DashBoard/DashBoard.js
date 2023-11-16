@@ -102,7 +102,7 @@ const DashBoard = () => {
       .then((data) => {
         if (data.message === 'SUCCESS') {
           alert('설정 페이지로 이동합니다.');
-          navigate('./setting');
+          navigate('/setting');
         } else {
           alert('생성에 실패했습니다. 다시 시도해주세요.');
         }
