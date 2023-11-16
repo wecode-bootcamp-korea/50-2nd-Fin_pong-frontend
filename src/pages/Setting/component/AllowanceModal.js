@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { splitDate } from '../../../utils/convert';
 import SelectDropdown from './SelectDropdown';
 import CalenderInput from './CalenderInput';
@@ -6,35 +7,19 @@ import CompleteBtn from './CompleteBtn';
 import './AllowanceModal.scss';
 
 const AllowanceModal = ({ isOpen, onClose }) => {
+  const navigate = useNavigate();
   const [userList, setUserList] = useState([]);
-  const [allowance, setAllowance] = useState();
-  const [startDate, setStartDate] = useState(new Date());
   const [settingInfo, setSettingInfo] = useState({
-    date: '',
+    date: new Date(),
     name: '',
     allowance: '',
   });
 
   const token = localStorage.getItem('token');
+  const { year, month, date } = splitDate(new Date(settingInfo.date));
 
   const handleInfo = (name, value) => {
     setSettingInfo({ ...settingInfo, [name]: value });
-  };
-
-  const handleAllowance = (e) => {
-    setAllowance(e.target.value);
-  };
-
-  const { year, month } = splitDate(new Date());
-  const handleDateChange = (date) => {
-    const startYear = date.getFullYear();
-    const startMonth = date.getMonth();
-
-    setSettingInfo({
-      ...settingInfo,
-      date: `${startYear}-${startMonth}-${startDate}`,
-    });
-    setStartDate(date);
   };
 
   const handleClick = () => {
@@ -47,11 +32,17 @@ const AllowanceModal = ({ isOpen, onClose }) => {
       body: JSON.stringify({
         year: year,
         month: month,
-        allowance: allowance,
+        date: date,
+        allowance: settingInfo.allowance,
       }),
     })
       .then((res) => res.json())
-      .then((result) => result);
+      .then((data) => {
+        if (data.message === 'POST_SUCCESS') {
+          alert(' 내역 등록이 완료되었습니다! ');
+          navigate('/setting');
+        } else alert('빈 칸 없이 작성해 주세요! ');
+      });
   };
 
   useEffect(() => {
@@ -71,7 +62,11 @@ const AllowanceModal = ({ isOpen, onClose }) => {
       <div className="allowanceInfo">
         <h2 className="allowanceContentName">🗓️ 용돈 등록</h2>
         <div className="allowanceContentList">
-          <CalenderInput text="일자" handleDateChange={handleDateChange} />
+          <CalenderInput
+            text="일자"
+            handleDateChange={(date) => handleInfo('date', date)}
+            date={settingInfo.date}
+          />
           <SelectDropdown
             text="대상 선택"
             name="name"
@@ -83,8 +78,8 @@ const AllowanceModal = ({ isOpen, onClose }) => {
             <input
               className="allowanceInput"
               type="text"
-              onChange={(e) => handleAllowance(e)}
-              value={allowance}
+              onChange={(e) => handleInfo('allowance', e.target.value)}
+              value={settingInfo.allowance}
             />
           </div>
         </div>

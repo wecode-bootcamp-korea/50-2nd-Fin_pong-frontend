@@ -1,10 +1,12 @@
 import React from 'react';
 import './CompleteBtn.scss';
 
-const CompleteBtn = () => {
+const CompleteBtn = ({ onClick }) => {
   return (
     <div className="submitBtn">
-      <button className="completeBtn">완료</button>
+      <button className="completeBtn" onClick={onClick}>
+        완료
+      </button>
     </div>
   );
 };
