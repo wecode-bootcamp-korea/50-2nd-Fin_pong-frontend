@@ -44,37 +44,45 @@ const UserSignUp = () => {
     setUserInfo({ ...userInfo, [name]: value });
   };
 
+  const INPUT_DATA = [
+    { id: 1, placeholder: '이름', name: 'name', label: '이름' },
+    {
+      id: 2,
+      placeholder: '숫자만 입력하세요(예: 01012345678)',
+      name: 'phoneNumber',
+      label: '전화번호',
+    },
+    {
+      id: 3,
+      placeholder: '숫자만 입력하세요(예: 19990113)',
+      name: 'birthdate',
+      label: '생년월일',
+    },
+  ];
+
   return (
     <div className="UserDetail">
       <div className="userDetailWrapperText">
         <h1>추가 정보 등록하기</h1>
       </div>
-      <div className="userInfoWrapper">
-        <label for="userName">이름</label>
-        <input
-          className="userName"
-          name="name"
-          placeholder="이름"
-          type="text"
-          onChange={handleInputChange}
-        />
-        <label for="userPhoneNumber">전화번호</label>
-        <input
-          className="userPhoneNumber"
-          name="phoneNumber"
-          placeholder="숫자만 입력하세요(예: 01012345678)"
-          type="text"
-          onChange={handleInputChange}
-        />
-        <label for="userBirthDate">생년월일</label>
-        <input
-          className="userBirthDate"
-          name="birthdate"
-          placeholder="숫자만 입력하세요(예: 19990113)"
-          type="text"
-          onChange={handleInputChange}
-        />
+      <div className="userInfoInput" onChange={handleInputChange}>
+        {INPUT_DATA.map((input) => (
+          <div key={input.id}>
+            <div className="labelWrapper">
+              <label className="labelInfo" for={input.name}>
+                {input.label}
+              </label>
+            </div>
+            <input
+              key={input.id}
+              placeholder={input.placeholder}
+              className="inputInfo"
+              name={input.name}
+            />
+          </div>
+        ))}
       </div>
+
       <div className="btn">
         <button
           className={`buttonSignUp ${isInputValid ? 'active' : 'disabled'}`}
