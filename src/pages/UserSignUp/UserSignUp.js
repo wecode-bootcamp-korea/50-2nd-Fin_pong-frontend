@@ -32,7 +32,6 @@ const UserSignUp = () => {
       })
         .then((res) => res.json())
         .then((response) => {
-          console.log(response);
           if (response.message === 'ADD_INFORMATION_SUCCESS') {
             alert('환영합니다!');
             navigate('/');
