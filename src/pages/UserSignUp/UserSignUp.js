@@ -32,7 +32,8 @@ const UserSignUp = () => {
       })
         .then((res) => res.json())
         .then((response) => {
-          if (response.message === 'SIGN_IN_COMPLETED') {
+          console.log(response);
+          if (response.message === 'ADD_INFORMATION_SUCCESS') {
             alert('환영합니다!');
             navigate('/');
           }
