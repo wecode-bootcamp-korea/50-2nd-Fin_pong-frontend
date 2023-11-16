@@ -12,6 +12,7 @@ const UserSignUp = () => {
   const { name, phoneNumber, birthdate } = userInfo;
   const [isValid, setIsValid] = useState(false);
   const isInputValid = name && phoneNumber && birthdate;
+  const TOKEN = localStorage.getItem('TOKEN');
   useEffect(() => {}, []);
   const handleSubmit = () => {
     if (!name || !phoneNumber || !birthdate) {
@@ -21,11 +22,11 @@ const UserSignUp = () => {
     } else if (birthdate.length !== 8) {
       alert('생년월일을 정확히 입력해주세요!');
     } else {
-      fetch('http://10.58.52.156:3000/users/update', {
+      fetch('http://10.58.52.202:8000/users/update', {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json',
-          authorization: localStorage.getItem('TOKEN'),
+          authorization: `Bearer ${TOKEN}`,
         },
         body: JSON.stringify(userInfo),
       })
@@ -87,7 +88,7 @@ const UserSignUp = () => {
         <button
           className={`buttonSignUp ${isInputValid ? 'active' : 'disabled'}`}
           onClick={handleSubmit}
-          // disabled={!isInputValid}
+          disabled={!isInputValid}
         >
           회원 등록 완료
         </button>

@@ -1,12 +1,15 @@
 import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams, useLocation } from 'react-router-dom';
 
 const Auth = () => {
-  const codeKakao = new URL(window.location.href).searchParams.get('code');
-
   const navigate = useNavigate();
+  const location = useLocation();
+  const { code } = useParams();
 
-  fetch('http://10.58.52.156:3000/users/auth', {
+  const searchParams = new URLSearchParams(location.search);
+  const codeKakao = searchParams.get('code');
+
+  fetch('http://10.58.52.202:8000/users/auth', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',

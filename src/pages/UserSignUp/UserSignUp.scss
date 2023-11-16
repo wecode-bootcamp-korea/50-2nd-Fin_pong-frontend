@@ -40,7 +40,6 @@
   .buttonSignUp {
     display: block;
     position: relative;
-    float: right;
     width: 120px;
     padding: 0;
     margin: 10px 20px 10px 0;
@@ -51,14 +50,14 @@
     transition: all 0.2s;
     border: 0px;
     cursor: pointer;
-    .active {
-      background-color: #3dd980;
-      color: white;
-    }
-    .disabled {
-      background-color: #ecfbf2;
-      color: black;
-      cursor: not-allowed;
-    }
+  }
+  .active {
+    background-color: #3dd980;
+    color: white;
+  }
+  .disabled {
+    background-color: #ecfbf2;
+    color: black;
+    cursor: not-allowed;
   }
 }
