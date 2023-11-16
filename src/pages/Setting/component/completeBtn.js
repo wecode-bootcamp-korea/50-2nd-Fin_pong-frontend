@@ -1,5 +1,5 @@
 import React from 'react';
-import './completeBtn.scss';
+import './CompleteBtn.scss';
 
 const CompleteBtn = () => {
   return (

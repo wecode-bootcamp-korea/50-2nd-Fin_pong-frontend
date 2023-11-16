@@ -4,8 +4,8 @@ import { ko } from 'date-fns/esm/locale';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
 import SelectDropdown from './component/SelectDropdown';
-import CalenderInput from './component/calenderInput';
-import CompleteBtn from './component/completeBtn';
+import CalenderInput from './component/CalenderInput';
+import CompleteBtn from './component/CompleteBtn';
 import BudgetModal from './component/BudgetModal'; // 예산 모달 컴포넌트 import
 import AllowanceModal from './component/AllowanceModal'; // 용돈 모달 컴포넌트 import
 import './Setting.scss';
@@ -45,7 +45,6 @@ const Setting = () => {
     setMemo(e.target.value);
   };
 
-  // 항목을 state에 저장하는 로직!
   const navigate = useNavigate();
 
   const handleDateChange = (date) => {
@@ -91,7 +90,7 @@ const Setting = () => {
         if (data.message === 'POST_SUCCESS') {
           alert(' 내역 등록이 완료되었습니다! ');
           navigate('/Setting');
-        }
+        } else alert('빈칸없이 작성해주세요! ');
       });
   };
 
@@ -102,7 +101,7 @@ const Setting = () => {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
@@ -124,7 +123,7 @@ const Setting = () => {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
@@ -137,7 +136,7 @@ const Setting = () => {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())

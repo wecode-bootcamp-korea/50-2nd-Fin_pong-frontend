@@ -1,7 +1,7 @@
 import React from 'react';
 import './SelectDropdown.scss';
 
-const Dropdown = ({ text, options, handleSelect, disabled }) => {
+const SelectDropdown = ({ text, options, handleSelect, disabled }) => {
   return (
     <div className="selectDropdown">
       <label className="selectName">{text}</label>
@@ -21,4 +21,4 @@ const Dropdown = ({ text, options, handleSelect, disabled }) => {
   );
 };
 
-export default Dropdown;
+export default SelectDropdown;

@@ -2,14 +2,14 @@ import React, { useState } from 'react';
 import { ko } from 'date-fns/esm/locale';
 import DatePicker from 'react-datepicker';
 import 'react-datepicker/dist/react-datepicker.css';
-import './calenderInput.scss';
+import './CalenderInput.scss';
 
-const CalenderInput = ({ text }) => {
-  const [startDate, setStartDate] = useState(new Date());
+const CalenderInput = ({ text, handleDateChange, date }) => {
+  const [startDate, setStartDate] = useState(date);
 
   const handleDateChangeWrapper = (date) => {
     setStartDate(date);
-    handleDateChangeWrapper(date);
+    handleDateChange(date);
   };
 
   return (

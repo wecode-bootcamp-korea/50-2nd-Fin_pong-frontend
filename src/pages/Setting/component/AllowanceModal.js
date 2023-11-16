@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { splitDate } from '../../../utils/convert';
 import SelectDropdown from './SelectDropdown';
-import CalenderInput from './calenderInput';
-import CompleteBtn from './completeBtn';
+import CalenderInput from './CalenderInput';
+import CompleteBtn from './CompleteBtn';
 import './AllowanceModal.scss';
 
 const AllowanceModal = ({ isOpen, onClose }) => {
   const [userList, setUserList] = useState([]);
   const [allowance, setAllowance] = useState();
+  const [startDate, setStartDate] = useState(new Date());
   const [settingInfo, setSettingInfo] = useState({
     date: '',
     name: '',
@@ -25,13 +26,23 @@ const AllowanceModal = ({ isOpen, onClose }) => {
   };
 
   const { year, month } = splitDate(new Date());
+  const handleDateChange = (date) => {
+    const startYear = date.getFullYear();
+    const startMonth = date.getMonth();
+
+    setSettingInfo({
+      ...settingInfo,
+      date: `${startYear}-${startMonth}-${startDate}`,
+    });
+    setStartDate(date);
+  };
 
   const handleClick = () => {
-    fetch('API', {
+    fetch('http://10.58.52.92:8000/allowance', {
       method: 'post',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         year: year,
@@ -44,7 +55,7 @@ const AllowanceModal = ({ isOpen, onClose }) => {
   };
 
   useEffect(() => {
-    fetch('/data/userList.json', {
+    fetch('http://10.58.52.92:8000/family/user', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -53,14 +64,14 @@ const AllowanceModal = ({ isOpen, onClose }) => {
     })
       .then((res) => res.json())
       .then((result) => setUserList(result.familyUsers));
-  }, [token]);
+  }, []);
 
   return (
-    <div className={`modal ${isOpen ? 'modal open' : 'modal'}`}>
+    <div className={`modal ${isOpen ? 'open' : ''}`}>
       <div className="allowanceInfo">
         <h2 className="allowanceContentName">🗓️ 용돈 등록</h2>
         <div className="allowanceContentList">
-          <CalenderInput text="일자" />
+          <CalenderInput text="일자" handleDateChange={handleDateChange} />
           <SelectDropdown
             text="대상 선택"
             name="name"
