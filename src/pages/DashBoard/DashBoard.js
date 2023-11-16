@@ -9,6 +9,10 @@ import './DashBoard.scss';
 const DashBoard = () => {
   // 모달창 노출 여부 확인
   const [currentModal, setCurrentModal] = useState('');
+  // 참여하기 체크박스 체크시 입력창 활성화 여부 확인
+  const [isParticChecked, setIsParticChecked] = useState(false);
+  // 생성하기 체크박스 체크시 입력창 활성화 여부 확인
+  const [isCreatingChecked, setIsCreatingChecked] = useState(false);
   // 완료 버튼 활성화, 비활성화 여부 확인
   const [isCompleteEnabled, setIsCompleteEnabled] = useState(false);
   // 선택된 메뉴 상태 저장
@@ -52,14 +56,30 @@ const DashBoard = () => {
       setIsCompleteEnabled(isVerificationCodeValid);
     } else {
       // 다른 필드의 입력값 업데이트
-      setInputValues({ ...inputValues, [fieldName]: value });
-
+      const updatedInputValues = { ...inputValues, [fieldName]: value };
+      setInputValues(updatedInputValues);
       // 완료 버튼 활성화 여부 업데이트
-      const { divide, category, day, price, memo } = {
-        ...inputValues,
-        [fieldName]: value,
-      };
+      const { divide, category, day, price, memo } = updatedInputValues;
       setIsCompleteEnabled(divide && category && day && price && memo);
+      // 체크박스 클릭시 비활성화
+      if (
+        (fieldName === 'partic' && checkedMenu === 'partic') ||
+        (fieldName === 'creating' && checkedMenu === 'creating')
+      ) {
+        resetInputStates();
+      }
+    }
+  };
+  // 체크박스 활성화/비활성화 여부
+  const handleCheckboxChange = (checkboxType) => {
+    if (checkboxType === 'partic') {
+      setIsParticChecked((prevIsChecked) => !prevIsChecked);
+      setIsCreatingChecked(false); // 생성하기 체크 해제
+      setCheckedMenu((prev) => (prev === 'partic' ? '' : 'partic')); // 체크메뉴 변경
+    } else if (checkboxType === 'creating') {
+      setIsCreatingChecked((prevIsChecked) => !prevIsChecked);
+      setIsParticChecked(false); // 참여하기 체크 해제
+      setCheckedMenu((prev) => (prev === 'creating' ? '' : 'creating')); // 체크메뉴 변경
     }
   };
   // 페이지 이동
@@ -186,12 +206,24 @@ const DashBoard = () => {
           <div className="mainFrame">
             <div
               className={`partic${checkedMenu === 'partic' ? ' selected' : ''}`}
+              // onClick={() => handleCheckboxChange('partic')}
+              onClick={() => {
+                if (checkedMenu === 'partic') {
+                  setIsParticChecked(false);
+                  setCheckedMenu('');
+                } else {
+                  setIsParticChecked(true);
+                  setIsCreatingChecked(false);
+                  setCheckedMenu('partic');
+                }
+              }}
             >
               <input
                 className="clickBox"
                 type="checkbox"
-                onChange={() => setCheckedMenu('partic')}
+                onChange={() => {}}
                 checked={checkedMenu === 'partic'}
+                readOnly
               />
               <p className="clickText">참여하기</p>
               <span className="womanEmoji" role="img" aria-label="Emoji">
@@ -203,6 +235,7 @@ const DashBoard = () => {
                 placeholder="계정인증번호를 입력해주세요"
                 maxLength={6}
                 disabled={checkedMenu !== 'partic'}
+                onClick={(event) => event.stopPropagation()}
                 onChange={(event) =>
                   handleInputChange('verifiInput', event.target.value)
                 }
@@ -212,11 +245,22 @@ const DashBoard = () => {
               className={`creating${
                 checkedMenu === 'creating' ? ' selected' : ''
               }`}
+              onClick={() => {
+                if (checkedMenu === 'creating') {
+                  setIsCreatingChecked(false);
+                  setCheckedMenu('');
+                } else {
+                  setIsCreatingChecked(true);
+                  setIsParticChecked(false);
+                  setCheckedMenu('creating');
+                }
+              }}
             >
               <input
                 className="clickBox"
                 type="checkbox"
-                onChange={() => setCheckedMenu('creating')}
+                onChange={() => {}}
+                // checked={isCreatingChecked}
                 checked={checkedMenu === 'creating'}
               />
               <p className="creatingText">생성하기</p>
