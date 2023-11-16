@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import GraphBarChart from './GraphBarChart';
 import Modal from 'react-modal';
 import close from './close.svg';
 import './DashBoard.scss';
-import { useNavigate } from 'react-router-dom';
 
 const DashBoard = () => {
   // 모달창 노출 여부 확인
@@ -15,6 +16,9 @@ const DashBoard = () => {
   const [verificationCode, setVerificationCode] = useState('');
   // 필수 입력 값 여부 확인
   const [inputValues, setInputValues] = useState(INITIAL_INPUT_VALUES);
+  // 막대그래프 데이터
+  const [chartData, setChartData] = useState([]);
+
   // 모달창 닫기
   const closeModal = () => {
     setCurrentModal('');
@@ -55,8 +59,65 @@ const DashBoard = () => {
   };
   // 생성하기 체크박스 클릭 : 설정 페이지 이동
   const navigate = useNavigate();
-  const goToSetting = () => {
-    navigate('./setting');
+  // 가계부 참여하기
+  const token = localStorage.getItem('token');
+  const goToJoin = () => {
+    const authcode = '1234ig-ex45-664p-4674';
+    fetch('http://127.0.0.1:3000/family/join', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify({ authcode }),
+    })
+      .then((response) => {
+        if (response.ok === true) {
+          return response.json();
+        }
+        throw new Error('네트워크가 원활하지 않습니다. 다시 시도해주세요');
+      })
+      .catch((error) => console.error(error))
+      .then((data) => {
+        if (data.message === 'SUCCESS') {
+          localStorage.getItem('token', data.token);
+          alert('가계부 참여가 완료되었습니다.');
+        } else {
+          alert('계정인증번호를 다시한번 입력해주세요.');
+        }
+      });
+  };
+
+  // 가계부 생성하기
+  const goToCreating = () => {
+    fetch('http://127.0.0.1:3000/family/book', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .catch((error) => console.error(error))
+      .then((data) => {
+        if (data.message === 'SUCCESS') {
+          alert('설정 페이지로 이동합니다.');
+          navigate('./setting');
+        } else {
+          alert('생성에 실패했습니다. 다시 시도해주세요.');
+        }
+      });
+  };
+
+  // 완료 버튼 클릭시 실행되는 함수
+  const handleComplete = () => {
+    // 생성하기
+    if (checkedMenu === 'creating') {
+      goToCreating();
+      // 참여하기
+    } else if (checkedMenu === 'partic') {
+      goToJoin();
+    }
   };
 
   return (
@@ -123,7 +184,7 @@ const DashBoard = () => {
             <button
               className={'completeButton'}
               disabled={!isCompleteEnabled}
-              onClick={goToSetting}
+              onClick={handleComplete}
             >
               완료
             </button>
@@ -233,10 +294,11 @@ const DashBoard = () => {
         </Modal>
       </div>
       <div className="dashboardMainGraph">
-        <div className="graphChart">
-          <p className="monthText">1년 지출/수입 비교</p>
+        <div className="graphBarChart">
+          <p className="yearText">1년 수입/지출 비교</p>
+          <GraphBarChart data={chartData} />
         </div>
-        <div className="graphChart">
+        <div className="graphCirculChart">
           <p className="monthText">월별-카테고리별 현황(%)</p>
         </div>
       </div>
