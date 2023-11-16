@@ -11,9 +11,9 @@ const SelectDropdown = ({ text, options, handleSelect, disabled }) => {
         disabled={disabled}
       >
         <option value="">Select an option</option>
-        {options?.map((option) => (
-          <option key={option} value={option.option}>
-            {option.option}
+        {options?.map(({ option }) => (
+          <option key={option} value={option}>
+            {option}
           </option>
         ))}
       </select>
