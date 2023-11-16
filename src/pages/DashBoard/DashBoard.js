@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import GraphBarChart from './GraphBarChart';
+import GraphCircularChart from './GraphCircularChart';
 import Modal from 'react-modal';
 import close from './close.svg';
 import './DashBoard.scss';
@@ -16,8 +17,12 @@ const DashBoard = () => {
   const [verificationCode, setVerificationCode] = useState('');
   // 필수 입력 값 여부 확인
   const [inputValues, setInputValues] = useState(INITIAL_INPUT_VALUES);
-  // 막대그래프 데이터
-  const [chartData, setChartData] = useState([]);
+  // 1년 수입/지출 비교
+  const [yearlyData, setYearlyData] = useState(null);
+  const selectedYear = 2023;
+  // 월별 - 카테고리 현황(%)
+  const [monthlyData, setMonthlyData] = useState(null);
+  const selectedMonth = 11;
 
   // 모달창 닫기
   const closeModal = () => {
@@ -57,11 +62,13 @@ const DashBoard = () => {
       setIsCompleteEnabled(divide && category && day && price && memo);
     }
   };
-  // 생성하기 체크박스 클릭 : 설정 페이지 이동
+  // 페이지 이동
   const navigate = useNavigate();
-  // 가계부 참여하기
+  // 토큰
   const token = localStorage.getItem('token');
+  // 가계부 참여하기
   const goToJoin = () => {
+    // 가족 인증 코드
     const authcode = '1234ig-ex45-664p-4674';
     fetch('http://127.0.0.1:3000/family/join', {
       method: 'POST',
@@ -119,6 +126,45 @@ const DashBoard = () => {
       goToJoin();
     }
   };
+
+  useEffect(() => {
+    // 1년 수입/지출(막대그래프)
+    fetch(
+      `http://10.58.52.199:8000/flow/view?rule=year&year=${selectedYear}&unit=family`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          authorization: `Bearer ${token}`,
+        },
+      },
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setYearlyData(data);
+      })
+      .catch((error) =>
+        console.error('1년 수입/지출 데이터를 가져오는 중 에러:', error),
+      );
+    // 월별 - 카테고리별(원형차트)
+    fetch(
+      `http://10.58.52.199:8000/flow/view?rule=category&year=${selectedYear}&month=${selectedMonth}&unit=family`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json;charset=utf-8',
+          authorization: `Bearer ${token}`,
+        },
+      },
+    )
+      .then((response) => response.json())
+      .then((data) => {
+        setMonthlyData(data); // 가져온 데이터를 상태로 설정합니다.
+      })
+      .catch((error) =>
+        console.error('월별-카테고리별 현황 데이터를 가져오는 중 에러:', error),
+      );
+  }, [selectedYear, selectedMonth]);
 
   return (
     <>
@@ -296,10 +342,25 @@ const DashBoard = () => {
       <div className="dashboardMainGraph">
         <div className="graphBarChart">
           <p className="yearText">1년 수입/지출 비교</p>
-          <GraphBarChart data={chartData} />
+          {yearlyData && <GraphBarChart data={yearlyData} />}
         </div>
         <div className="graphCirculChart">
           <p className="monthText">월별-카테고리별 현황(%)</p>
+          {monthlyData && <GraphCircularChart data={monthlyData} />}
+        </div>
+      </div>
+      <div className="dashboardPersonalGraph">
+        <div className="graphPersonalChart">
+          <p className="personalText">개인별 사용현황(%)</p>
+        </div>
+        <div className="graphPersonalChart">
+          <p className="personalText">개인별 사용현황(%)</p>
+        </div>
+        <div className="graphPersonalChart">
+          <p className="personalText">개인별 사용현황(%)</p>
+        </div>
+        <div className="graphPersonalChart">
+          <p className="personalText">개인별 사용현황(%)</p>
         </div>
       </div>
     </>
