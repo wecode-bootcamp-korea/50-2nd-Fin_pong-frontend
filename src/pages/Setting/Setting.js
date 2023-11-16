@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import DatePicker from 'react-datepicker';
 import { ko } from 'date-fns/esm/locale';
-import { id } from 'date-fns/locale';
 import 'react-datepicker/dist/react-datepicker.css';
 import SelectDropdown from './component/SelectDropdown';
 import CalenderInput from './component/CalenderInput';
@@ -59,7 +58,6 @@ const Setting = () => {
         Authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        userId: id,
         type: settingInfo.type,
         category: settingInfo.category,
         memo: settingInfo.memo,
