@@ -12,7 +12,7 @@ const Login = () => {
       <div className="serviceInfoContainer">
         <img
           className="onebookLogo"
-          src="../images/OneBook_Logo.png"
+          src="/images/OneBook_Logo.png"
           alt="OneBook"
         />
       </div>

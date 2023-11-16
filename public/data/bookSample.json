@@ -1,0 +1,84 @@
+{
+  "bookList": [
+    {
+      "user_id": 3,
+      "name": "김지영",
+      "status": "지출",
+      "date": 1,
+      "category": "용돈",
+      "memo": "탕후루",
+      "amount": 8000,
+      "fixed_status": 0
+    },
+    {
+      "user_id": 2,
+      "name": "이아영",
+      "status": "지출",
+      "date": 8,
+      "category": "생활비",
+      "memo": "식재료",
+      "amount": 120000,
+      "fixed_status": 0
+    },
+    {
+      "user_id": 1,
+      "name": "김지훈",
+      "status": "지출",
+      "date": 8,
+      "category": "공과금",
+      "memo": "보험료",
+      "amount": 398000,
+      "fixed_status": 1
+    },
+    {
+      "user_id": 1,
+      "name": "김지훈",
+      "status": "지출",
+      "date": 9,
+      "category": "용돈",
+      "memo": "실내낚시",
+      "amount": 6000,
+      "fixed_status": 0
+    },
+    {
+      "user_id": 2,
+      "name": "이아영",
+      "status": "지출",
+      "date": 15,
+      "category": "생활비",
+      "memo": "식재료",
+      "amount": 120000,
+      "fixed_status": 0
+    },
+    {
+      "user_id": 3,
+      "name": "김지영",
+      "status": "지출",
+      "date": 16,
+      "category": "용돈",
+      "memo": "탕후루",
+      "amount": 8000,
+      "fixed_status": 0
+    },
+    {
+      "user_id": 2,
+      "name": "이아영",
+      "status": "지출",
+      "date": 22,
+      "category": "생활비",
+      "memo": "식재료",
+      "amount": 120000,
+      "fixed_status": 0
+    },
+    {
+      "user_id": 2,
+      "name": "이아영",
+      "status": "지출",
+      "date": 29,
+      "category": "생활비",
+      "memo": "식재료",
+      "amount": 120000,
+      "fixed_status": 0
+    }
+  ]
+}
