@@ -27,9 +27,7 @@ const Setting = () => {
   });
   const navigate = useNavigate();
 
-  // const token = localStorage.getItem('token');
-  const token =
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp3azIzNDVAbmF2ZXIuY29tIiwiaWQiOjEzLCJpYXQiOjE3MDAxOTM4Nzl9.VeySoz1M8GYV_u1mUAQX_sI7ebWKdwOASm54n6MYQDE';
+  const token = localStorage.getItem('token');
 
   const handleInfo = (name, value) => {
     setSettingInfo({ ...settingInfo, [name]: value });
@@ -53,12 +51,11 @@ const Setting = () => {
       return;
     }
 
-    // authorization: `Bearer ${token}`,
     fetch('http://10.58.52.147:8000/flow/fixed', {
       method: 'post',
       headers: {
         'content-type': 'application/json',
-        authorization: token,
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
         type: settingInfo.type,
@@ -83,23 +80,21 @@ const Setting = () => {
 
   //구분, 항목, 대상 옵션 데이터를 받아오기
   useEffect(() => {
-    // fetch('http://10.58.52.92:8000/flow-type', {
     fetch('http://10.58.52.147:8000/flow-type', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        authorization: token,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
       .then((result) => setTypeList(result.types));
 
-    // fetch('http://10.58.52.92:8000/category', {
     fetch(`http://10.58.52.147:8000/category?type=${settingInfo.type}`, {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        authorization: token,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
@@ -112,7 +107,7 @@ const Setting = () => {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        authorization: token,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
