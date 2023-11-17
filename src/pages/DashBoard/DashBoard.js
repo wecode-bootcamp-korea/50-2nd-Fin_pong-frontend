@@ -229,7 +229,7 @@ const DashBoard = () => {
                 className="verifiInput"
                 type="text"
                 placeholder="인증번호를 입력해주세요"
-                // maxLength={6}
+                maxLength={8}
                 disabled={checkedMenu !== 'partic'}
                 onClick={(event) => event.stopPropagation()}
                 onChange={(event) =>
