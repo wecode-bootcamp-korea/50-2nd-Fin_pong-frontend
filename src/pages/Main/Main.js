@@ -4,9 +4,9 @@ import GraphBarChart from './GraphBarChart';
 import GraphCircularChart from './GraphCircularChart';
 import Modal from 'react-modal';
 import close from './close.svg';
-import './DashBoard.scss';
+import './Main.scss';
 
-const DashBoard = () => {
+const Main = () => {
   // 모달창 노출 여부 확인
   const [currentModal, setCurrentModal] = useState('');
   // 참여하기 체크박스 체크시 입력창 활성화 여부 확인
@@ -406,7 +406,7 @@ const DashBoard = () => {
   );
 };
 
-export default DashBoard;
+export default Main;
 
 const DIVIDE_LIST = ['-', '수입', '지출'];
 const CATEGORY_LIST = ['-', '생활비', '식비', '고정비', '기타'];
