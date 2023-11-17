@@ -5,20 +5,21 @@ import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
 import Setting from './pages/Setting/Setting';
 import Table from './pages/Table/Table';
-import UserDetail from './pages/UserDetail/UserDetail';
+import UserSignUp from './pages/UserSignUp/UserSignUp';
+import Auth from './pages/Auth/Auth';
 
 const Router = () => {
   return (
     <BrowserRouter>
-      <MenuWrapper>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/setting" element={<Setting />} />
-          <Route path="/table" element={<Table />} />
-          <Route path="/user-detail" element={<UserDetail />} />
-        </Routes>
-      </MenuWrapper>
+      <Nav />
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/setting" element={<Setting />} />
+        <Route path="/table" element={<Table />} />
+        <Route path="/user-signup" element={<UserSignUp />} />
+        <Route path="/users/auth" element={<Auth />} />
+      </Routes>
     </BrowserRouter>
   );
 };
