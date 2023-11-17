@@ -27,7 +27,9 @@ const Setting = () => {
   });
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
+  const token =
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp3azIzNDVAbmF2ZXIuY29tIiwiaWQiOjEzLCJpYXQiOjE3MDAxOTM4Nzl9.VeySoz1M8GYV_u1mUAQX_sI7ebWKdwOASm54n6MYQDE';
 
   const handleInfo = (name, value) => {
     setSettingInfo({ ...settingInfo, [name]: value });
@@ -51,11 +53,12 @@ const Setting = () => {
       return;
     }
 
-    fetch('http://10.58.52.92:8000/flow/fixed', {
+    // authorization: `Bearer ${token}`,
+    fetch('http://10.58.52.147:8000/flow/fixed', {
       method: 'post',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        authorization: token,
       },
       body: JSON.stringify({
         type: settingInfo.type,
@@ -74,42 +77,42 @@ const Setting = () => {
         if (data.message === 'POST_SUCCESS') {
           alert(' 내역 등록이 완료되었습니다! ');
           navigate('/setting');
-        } else alert('빈칸없이 작성해주세요! ');
+        } else alert('다시 확인해주세요! ');
       });
   };
 
   //구분, 항목, 대상 옵션 데이터를 받아오기
   useEffect(() => {
     // fetch('http://10.58.52.92:8000/flow-type', {
-    fetch('/data/type.json', {
+    fetch('http://10.58.52.147:8000/flow-type', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: token,
       },
     })
       .then((res) => res.json())
-      .then((result) => setTypeList(result.type));
+      .then((result) => setTypeList(result.types));
 
     // fetch('http://10.58.52.92:8000/category', {
-    fetch('/data/category.json', {
+    fetch(`http://10.58.52.147:8000/category?type=${settingInfo.type}`, {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: token,
       },
     })
       .then((res) => res.json())
       .then((result) => setCategoryList(result.category));
-  }, []);
+  }, [settingInfo.type]);
 
   //그룹관리 인증번호 받아오기
   useEffect(() => {
-    fetch('/data/category.json', {
+    fetch('http://10.58.52.143:8000/family/auth-code', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: token,
       },
     })
       .then((res) => res.json())
@@ -126,7 +129,7 @@ const Setting = () => {
         <h1 className="settingTitleName">설정✏️</h1>
         <div className="settingInfo">
           <div className="settingFirstInfo">
-            <h2 className="settingPwName">️🏷️ 그룹관리 인증번호 : </h2>
+            <h2 className="settingPwName">️🏷️ 그룹 관리 인증번호 : </h2>
             <p className="settingPwNum">{authCode}</p>
           </div>
           <div className="infoContainer">
@@ -134,7 +137,7 @@ const Setting = () => {
               className="budgetBtn"
               onClick={() => setCurrentModal('budget')}
             >
-              예산등록하기
+              예산 등록하기
             </button>
             <BudgetModal
               className="BudgetModal"

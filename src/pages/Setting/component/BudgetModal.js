@@ -12,19 +12,22 @@ const BudgetModal = ({ isOpen, onClose }) => {
     budget: '',
   });
 
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
   const { year, month, date } = splitDate(new Date(settingInfo.date));
 
   const handleInfo = (name, value) => {
     setSettingInfo({ ...settingInfo, [name]: value });
   };
 
+  const token =
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRocmVlc2xAZ21haWwuY29tIiwiaWF0IjoxNzAwMTI4ODExLCJleHAiOjE3MDg3Njg4MTF9.a8jm42FaiAwRdy_hkOFgXo8iNh10kZzEDbg_EjkKNBg';
+
   const handleClick = () => {
-    fetch('http://10.58.52.92:8000/budget', {
+    fetch('http://10.58.52.147:8000/budget', {
       method: 'post',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: token,
       },
       body: JSON.stringify({
         year: year,
