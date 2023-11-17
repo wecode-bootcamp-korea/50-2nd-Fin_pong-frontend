@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import Modal from 'react-modal';
 import GraphBarChart from './GraphBarChart';
 import GraphCircularChart from './GraphCircularChart';
+import Modal from 'react-modal';
 import close from './close.svg';
-import './Main.scss';
+import './DashBoard.scss';
 
-const Main = () => {
+const DashBoard = () => {
   // 모달창 노출 여부 확인
   const [currentModal, setCurrentModal] = useState('');
   // 참여하기 체크박스 체크시 입력창 활성화 여부 확인
@@ -86,6 +86,7 @@ const Main = () => {
   // 페이지 이동
   const navigate = useNavigate();
   // 토큰
+  // const token = localStorage.getItem('token');
   const token =
     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp3azIzNDVAbmF2ZXIuY29tIiwiaWQiOjEzLCJpYXQiOjE3MDAxOTM4Nzl9.VeySoz1M8GYV_u1mUAQX_sI7ebWKdwOASm54n6MYQDE';
   // 가계부 참여하기
@@ -405,7 +406,7 @@ const Main = () => {
   );
 };
 
-export default Main;
+export default DashBoard;
 
 const DIVIDE_LIST = ['-', '수입', '지출'];
 const CATEGORY_LIST = ['-', '생활비', '식비', '고정비', '기타'];

@@ -17,7 +17,7 @@ const GraphCircularChart = () => {
         data={data}
         dataKey="value"
         isAnimationActive={true}
-        cx={180}
+        cx={300}
         cy={140}
         innerRadius={45}
         outerRadius={110}
@@ -25,7 +25,6 @@ const GraphCircularChart = () => {
         paddingAngle={5}
         label
       >
-        <Label value="11월" position="center" fontSize={20} />
         {data.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
