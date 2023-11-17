@@ -11,7 +11,7 @@ const AllowanceModal = ({ isOpen, onClose }) => {
   const [userList, setUserList] = useState([]);
   const [settingInfo, setSettingInfo] = useState({
     date: new Date(),
-    name: '',
+    userName: '',
     allowance: '',
   });
 
@@ -23,7 +23,7 @@ const AllowanceModal = ({ isOpen, onClose }) => {
   };
 
   const handleClick = () => {
-    fetch('http://10.58.52.92:8000/allowance', {
+    fetch('http://10.58.52.147:8000/allowance', {
       method: 'post',
       headers: {
         'content-type': 'application/json',
@@ -33,6 +33,7 @@ const AllowanceModal = ({ isOpen, onClose }) => {
         year: year,
         month: month,
         date: date,
+        userName: settingInfo.userName,
         allowance: settingInfo.allowance,
       }),
     })
@@ -41,16 +42,16 @@ const AllowanceModal = ({ isOpen, onClose }) => {
         if (data.message === 'POST_SUCCESS') {
           alert(' 내역 등록이 완료되었습니다! ');
           navigate('/setting');
-        } else alert('빈 칸 없이 작성해 주세요! ');
+        } else alert('다시 확인해주세요! ');
       });
   };
 
   useEffect(() => {
-    fetch('http://10.58.52.92:8000/family/user', {
+    fetch('http://10.58.52.147:8000/family/user', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        Authorization: `Bearer ${token}`,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((res) => res.json())
@@ -69,9 +70,9 @@ const AllowanceModal = ({ isOpen, onClose }) => {
           />
           <SelectDropdown
             text="대상 선택"
-            name="name"
+            name="userName"
             options={userList}
-            handleSelect={(e) => handleInfo('name', e.target.value)}
+            handleSelect={(e) => handleInfo('userName', e.target.value)}
           />
           <div className="allowance">
             <label className="allowanceName">금액</label>

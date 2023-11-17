@@ -20,7 +20,7 @@ const BudgetModal = ({ isOpen, onClose }) => {
   };
 
   const handleClick = () => {
-    fetch('http://10.58.52.92:8000/budget', {
+    fetch('http://10.58.52.147:8000/budget', {
       method: 'post',
       headers: {
         'content-type': 'application/json',
