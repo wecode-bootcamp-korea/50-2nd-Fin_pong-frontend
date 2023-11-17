@@ -52,7 +52,8 @@ const DashBoard = () => {
       setVerificationCode(value);
       // 참여하기 체크박스가 활성화되면서 인증번호를 입력되면 완료 버튼 활성화
       const isVerificationCodeValid =
-        checkedMenu === 'partic' && value.length === 6;
+        checkedMenu === 'partic' && value.length === 8;
+
       setIsCompleteEnabled(isVerificationCodeValid);
     } else {
       // 다른 필드의 입력값 업데이트
@@ -85,52 +86,48 @@ const DashBoard = () => {
   // 페이지 이동
   const navigate = useNavigate();
   // 토큰
-  const token = localStorage.getItem('token');
+  // const token = localStorage.getItem('token');
+  const token =
+    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp3azIzNDVAbmF2ZXIuY29tIiwiaWQiOjEzLCJpYXQiOjE3MDAxOTM4Nzl9.VeySoz1M8GYV_u1mUAQX_sI7ebWKdwOASm54n6MYQDE';
   // 가계부 참여하기
   const goToJoin = () => {
     // 가족 인증 코드
-    const authcode = '1234ig-ex45-664p-4674';
-    fetch('http://127.0.0.1:3000/family/join', {
+    const auth_code = '077db0f7';
+    fetch('http://10.58.52.143:8000/family/join', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: `Bearer ${token}`,
+        authorization: token,
       },
-      body: JSON.stringify({ authcode }),
+      body: JSON.stringify({ auth_code }),
     })
-      .then((response) => {
-        if (response.ok === true) {
-          return response.json();
-        }
-        throw new Error('네트워크가 원활하지 않습니다. 다시 시도해주세요');
-      })
-      .catch((error) => console.error(error))
+      .then((res) => res.json())
+      // .catch((error) => console.error(error))
       .then((data) => {
-        if (data.message === 'SUCCESS') {
-          localStorage.getItem('token', data.token);
+        if (data.message === 'JOIN_SUCCESS') {
           alert('가계부 참여가 완료되었습니다.');
         } else {
-          alert('계정인증번호를 다시한번 입력해주세요.');
+          alert('인증번호를 다시 한번 확인해주세요.');
         }
       });
   };
 
   // 가계부 생성하기
   const goToCreating = () => {
-    fetch('http://127.0.0.1:3000/family/book', {
+    fetch('http://10.58.52.143:8000/family/book', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: `Bearer ${token}`,
+        authorization: token,
       },
     })
       .then((response) => response.json())
-      .catch((error) => console.error(error))
+      // .catch((error) => console.error(error))
       .then((data) => {
-        if (data.message === 'SUCCESS') {
+        if (data.message === 'AUTH_CODE_CREATED_SUCCESS') {
           alert('설정 페이지로 이동합니다.');
           navigate('/setting');
-        } else {
+        } else if (data.message === 'INTERNAL_SERVER_ERROR') {
           alert('생성에 실패했습니다. 다시 시도해주세요.');
         }
       });
@@ -150,7 +147,7 @@ const DashBoard = () => {
   useEffect(() => {
     // 1년 수입/지출(막대그래프)
     fetch(
-      `http://10.58.52.199:8000/flow/view?rule=year&year=${selectedYear}&unit=family`,
+      `http://10.58.52.138:8000/flow/view?rule=year&year=${selectedYear}&unit=family`,
       {
         method: 'GET',
         headers: {
@@ -168,7 +165,7 @@ const DashBoard = () => {
       );
     // 월별 - 카테고리별(원형차트)
     fetch(
-      `http://10.58.52.199:8000/flow/view?rule=category&year=${selectedYear}&month=${selectedMonth}&unit=family`,
+      `http://10.58.52.138:8000/flow/view?rule=category&year=${selectedYear}&month=${selectedMonth}&unit=family`,
       {
         method: 'GET',
         headers: {
@@ -179,7 +176,7 @@ const DashBoard = () => {
     )
       .then((response) => response.json())
       .then((data) => {
-        setMonthlyData(data); // 가져온 데이터를 상태로 설정합니다.
+        setMonthlyData(data);
       })
       .catch((error) =>
         console.error('월별-카테고리별 현황 데이터를 가져오는 중 에러:', error),
@@ -206,7 +203,6 @@ const DashBoard = () => {
           <div className="mainFrame">
             <div
               className={`partic${checkedMenu === 'partic' ? ' selected' : ''}`}
-              // onClick={() => handleCheckboxChange('partic')}
               onClick={() => {
                 if (checkedMenu === 'partic') {
                   setIsParticChecked(false);
@@ -232,8 +228,8 @@ const DashBoard = () => {
               <input
                 className="verifiInput"
                 type="text"
-                placeholder="계정인증번호를 입력해주세요"
-                maxLength={6}
+                placeholder="인증번호를 입력해주세요"
+                // maxLength={6}
                 disabled={checkedMenu !== 'partic'}
                 onClick={(event) => event.stopPropagation()}
                 onChange={(event) =>
@@ -260,7 +256,6 @@ const DashBoard = () => {
                 className="clickBox"
                 type="checkbox"
                 onChange={() => {}}
-                // checked={isCreatingChecked}
                 checked={checkedMenu === 'creating'}
               />
               <p className="creatingText">생성하기</p>
