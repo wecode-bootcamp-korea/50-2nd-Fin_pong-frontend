@@ -10,7 +10,7 @@ const MenuBar = () => {
   // 토큰
   const token =
     'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp3azIzNDVAbmF2ZXIuY29tIiwiaWQiOjEsImlhdCI6MTcwMDIxNjc5NX0.e2jdqf0UD-W8J7VmiEpgO18WgyDEkydWC50DZmWHRvM';
-
+  // 버튼 데이터
   const BUTTONS = [
     { text: 'Main', onClick: () => navigate('/') },
     { text: '가계부', onClick: () => navigate('/table') },
@@ -38,10 +38,20 @@ const MenuBar = () => {
       });
   }, []);
 
+  // 로고 클릭시 메인페이지로 이동
+  const goToMain = () => {
+    navigate('/');
+  };
+
   return (
     <div className="menuBarFrame">
       <div className="logoFrame">
-        <img className="wonBookLogo" src={wonBookLogo1} alt="WonBook 로고" />
+        <img
+          className="wonBookLogo"
+          src={wonBookLogo1}
+          alt="WonBook 로고"
+          onClick={goToMain}
+        />
       </div>
       <div className="userInfoFrame">
         <p className="nameText">{userName}</p>
@@ -52,7 +62,7 @@ const MenuBar = () => {
           {BUTTONS.map((button, index) => (
             <li key={index} className="buttonList">
               <button
-                className={`menuBarButton${button.isRed ? ' red' : ''}`} // 빨간색 클래스 추가
+                className={`menuBarButton${button.isRed ? ' red' : ''}`}
                 onClick={button.onClick}
               >
                 {button.text}

@@ -71,18 +71,6 @@ const Main = () => {
       }
     }
   };
-  // 체크박스 활성화/비활성화 여부
-  const handleCheckboxChange = (checkboxType) => {
-    if (checkboxType === 'partic') {
-      setIsParticChecked((prevIsChecked) => !prevIsChecked);
-      setIsCreatingChecked(false); // 생성하기 체크 해제
-      setCheckedMenu((prev) => (prev === 'partic' ? '' : 'partic')); // 체크메뉴 변경
-    } else if (checkboxType === 'creating') {
-      setIsCreatingChecked((prevIsChecked) => !prevIsChecked);
-      setIsParticChecked(false); // 참여하기 체크 해제
-      setCheckedMenu((prev) => (prev === 'creating' ? '' : 'creating')); // 체크메뉴 변경
-    }
-  };
   // 페이지 이동
   const navigate = useNavigate();
   // 토큰
@@ -132,15 +120,23 @@ const Main = () => {
       });
   };
 
-  // 완료 버튼 클릭시 실행되는 함수
-  const handleComplete = () => {
-    // 생성하기
-    if (checkedMenu === 'creating') {
-      goToCreating();
-      // 참여하기
-    } else if (checkedMenu === 'partic') {
-      goToJoin();
-    }
+  // 수입/지출 등록하기 (모달창)
+  const goToIncomeExpend = () => {
+    fetch('http://10.58.52.138:8000/flow', {
+      method: 'POST',
+      headers: {
+        'Content-type': 'application/json;charset=utf-8',
+        authorization: token,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message === 'SUCCESS') {
+          alert('등록이 완료되었습니다.');
+        } else {
+          alert('등록에 실패했습니다. 다시 한번 확인해주세요');
+        }
+      });
   };
 
   useEffect(() => {
@@ -181,6 +177,21 @@ const Main = () => {
         console.error('월별-카테고리별 현황 데이터를 가져오는 중 에러:', error),
       );
   }, [selectedYear, selectedMonth]);
+
+  // 완료 버튼 클릭시 실행되는 함수
+  const handleComplete = () => {
+    // 생성하기
+    if (checkedMenu === 'creating') {
+      goToCreating();
+      // 참여하기
+    } else if (checkedMenu === 'partic') {
+      goToJoin();
+    }
+  };
+  // 월별 - 카테고리별 현황 클릭 -> table 페이지 이동
+  const goToTable = () => {
+    navigate('/table');
+  };
 
   return (
     <>
@@ -371,7 +382,11 @@ const Main = () => {
             </select>
           </div>
           <div className="buttonFrame">
-            <button className="completeButton" disabled={!isCompleteEnabled}>
+            <button
+              className="completeButton"
+              disabled={!isCompleteEnabled}
+              onClick={goToIncomeExpend}
+            >
               완료
             </button>
           </div>
@@ -382,7 +397,7 @@ const Main = () => {
           <p className="yearText">1년 수입/지출 비교</p>
           {yearlyData && <GraphBarChart data={yearlyData} />}
         </div>
-        <div className="graphCirculChart">
+        <div className="graphCirculChart" onClick={goToTable}>
           <p className="monthText">월별-카테고리별 현황(%)</p>
           {monthlyData && <GraphCircularChart data={monthlyData} />}
         </div>

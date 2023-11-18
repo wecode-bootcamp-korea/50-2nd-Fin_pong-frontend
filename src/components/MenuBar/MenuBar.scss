@@ -11,10 +11,11 @@
     align-items: center;
 
     .wonBookLogo {
-      width: 180px;
-      height: 130px;
       position: relative;
       bottom: -5px;
+      width: 180px;
+      height: 130px;
+      cursor: pointer;
     }
   }
 
@@ -62,7 +63,7 @@
       }
 
       .menuBarButton {
-        width: 170px;
+        width: 150px;
         height: 40px;
         font-size: 16px;
         font-weight: 700;
