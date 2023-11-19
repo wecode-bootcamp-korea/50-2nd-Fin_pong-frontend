@@ -20,6 +20,8 @@ const MenuBar = () => {
   // 로그아웃
   const logout = () => {
     localStorage.removeItem('token');
+    localStorage.removeItem('userName');
+    localStorage.removeItem('userRole');
     alert('로그아웃 되었습니다.');
     navigate('/login');
   };
