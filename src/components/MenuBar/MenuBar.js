@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import wonBookLogo1 from './onebooklogo_preview_rev_1.png';
 import './MenuBar.scss';
 
 const MenuBar = () => {
@@ -59,7 +58,7 @@ const MenuBar = () => {
       <div className="logoFrame">
         <img
           className="wonBookLogo"
-          src={wonBookLogo1}
+          src="/../images/onebooklogo_preview_rev_1.png"
           alt="WonBook 로고"
           onClick={goToMain}
         />

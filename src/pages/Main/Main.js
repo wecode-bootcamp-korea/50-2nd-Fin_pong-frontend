@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import Modal from 'react-modal';
 import GraphBarChart from './GraphBarChart';
 import GraphCircularChart from './GraphCircularChart';
-import close from './close.svg';
 import './Main.scss';
 
 const Main = () => {
@@ -208,7 +207,7 @@ const Main = () => {
           className="modal"
         >
           <button className="closeBtn" onClick={closeModal}>
-            <img src={close} alt="닫기버튼" />
+            <img src="/../images/close.svg" alt="닫기버튼" />
           </button>
           <div className="mainFrame">
             <div
@@ -297,7 +296,7 @@ const Main = () => {
           className="modal"
         >
           <button className="closeBtn" onClick={closeModal}>
-            <img src={close} alt="닫기버튼" />
+            <img src="/../images/close.svg" alt="닫기버튼" />
           </button>
           <div className="requiredTextMain">
             <p className="divideText">구분</p>
