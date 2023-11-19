@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useMediaQuery } from 'react-responsive';
 import Modal from 'react-modal';
 import GraphBarChart from './GraphBarChart';
 import GraphCircularChart from './GraphCircularChart';
