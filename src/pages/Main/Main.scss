@@ -49,12 +49,12 @@
   .graphPersonal {
     display: flex;
     flex-direction: row;
-    margin-top: 20px; /* 그래프 간의 간격 조정 */
+    margin-top: 20px;
 
     .graphPersonalChart {
       width: 294px;
-      height: 300px;
-      margin: 0 0 0 43px; /* 왼쪽 여백만 조정 */
+      height: 320px;
+      margin: 0 0 0 43px;
       border: none;
       border-radius: 5px;
       box-shadow: 0 0.5px 3px 3px #a6a6a6;

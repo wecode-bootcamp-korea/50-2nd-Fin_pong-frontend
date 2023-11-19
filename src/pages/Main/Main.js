@@ -32,7 +32,7 @@ const Main = () => {
     setCurrentModal('');
     resetInputStates();
   };
-  // 입력 값 초기화
+  // 입력 값 초기화(모달창 닫았을때)
   const resetInputStates = () => {
     setCheckedMenu('');
     setInputValues(INITIAL_INPUT_VALUES);
@@ -137,7 +137,7 @@ const Main = () => {
         }
       });
   };
-
+  // 차트(막대, 원형)
   useEffect(() => {
     // 1년 수입/지출(막대그래프)
     fetch(

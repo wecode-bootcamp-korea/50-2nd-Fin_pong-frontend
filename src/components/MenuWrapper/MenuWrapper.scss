@@ -3,6 +3,8 @@
   align-items: flex-start;
 
   .mainContent {
+    max-width: 1170px;
+    min-width: 570px;
     flex: 1;
   }
 }
