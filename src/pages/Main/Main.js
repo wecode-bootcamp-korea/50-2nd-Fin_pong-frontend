@@ -403,18 +403,11 @@ const Main = () => {
           </div>
         </div>
         <div className="graphPersonal">
-          <div className="graphPersonalChart" onClick={goToTable}>
-            <p className="personalText">개인별 사용현황(%)</p>
-          </div>
-          <div className="graphPersonalChart" onClick={goToTable}>
-            <p className="personalText">개인별 사용현황(%)</p>
-          </div>
-          <div className="graphPersonalChart" onClick={goToTable}>
-            <p className="personalText">개인별 사용현황(%)</p>
-          </div>
-          <div className="graphPersonalChart" onClick={goToTable}>
-            <p className="personalText">개인별 사용현황(%)</p>
-          </div>
+          {[1, 2, 3, 4].map((item, index) => (
+            <div className="graphPersonalChart" key={index} onClick={goToTable}>
+              <p className="personalText">개인별 사용현황(%)</p>
+            </div>
+          ))}
         </div>
       </div>
     </>
