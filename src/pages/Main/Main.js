@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useMediaQuery } from 'react-responsive';
 import Modal from 'react-modal';
 import GraphBarChart from './GraphBarChart';
 import GraphCircularChart from './GraphCircularChart';
@@ -392,28 +393,30 @@ const Main = () => {
           </div>
         </Modal>
       </div>
-      <div className="dashboardMainGraph">
-        <div className="graphBarChart">
-          <p className="yearText">1년 수입/지출 비교</p>
-          {yearlyData && <GraphBarChart data={yearlyData} />}
+      <div className="dashboardContainer">
+        <div className="graphMain">
+          <div className="graphBarChart">
+            <p className="yearText">1년 수입/지출 비교</p>
+            {yearlyData && <GraphBarChart data={yearlyData} />}
+          </div>
+          <div className="graphCirculChart" onClick={goToTable}>
+            <p className="monthText">월별-카테고리별 현황(%)</p>
+            {monthlyData && <GraphCircularChart data={monthlyData} />}
+          </div>
         </div>
-        <div className="graphCirculChart" onClick={goToTable}>
-          <p className="monthText">월별-카테고리별 현황(%)</p>
-          {monthlyData && <GraphCircularChart data={monthlyData} />}
-        </div>
-      </div>
-      <div className="dashboardPersonalGraph">
-        <div className="graphPersonalChart">
-          <p className="personalText">개인별 사용현황(%)</p>
-        </div>
-        <div className="graphPersonalChart">
-          <p className="personalText">개인별 사용현황(%)</p>
-        </div>
-        <div className="graphPersonalChart">
-          <p className="personalText">개인별 사용현황(%)</p>
-        </div>
-        <div className="graphPersonalChart">
-          <p className="personalText">개인별 사용현황(%)</p>
+        <div className="graphPersonal">
+          <div className="graphPersonalChart" onClick={goToTable}>
+            <p className="personalText">개인별 사용현황(%)</p>
+          </div>
+          <div className="graphPersonalChart" onClick={goToTable}>
+            <p className="personalText">개인별 사용현황(%)</p>
+          </div>
+          <div className="graphPersonalChart" onClick={goToTable}>
+            <p className="personalText">개인별 사용현황(%)</p>
+          </div>
+          <div className="graphPersonalChart" onClick={goToTable}>
+            <p className="personalText">개인별 사용현황(%)</p>
+          </div>
         </div>
       </div>
     </>
