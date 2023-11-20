@@ -163,42 +163,6 @@ const Main = () => {
         }
       });
   };
-  // 수입/지출 여부 드롭다운(구분), (카테고리) 목록 조회
-  // useEffect(() => {
-  //   // 구분
-  //   fetch('http://10.58.52.109:8000/flow-type', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-type': 'application/json;charset=utf-8',
-  //       authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.message === 'GET_SUCCESS') {
-  //         alert('수입/지출 목록을 성공적으로 가져왔습니다.');
-  //       } else {
-  //         alert('수입/지출 목록을 가져오는데 실패했습니다.');
-  //       }
-  //     });
-
-  //   // 카테고리
-  //   fetch('http://10.58.52.109:8000/category', {
-  //     method: 'GET',
-  //     headers: {
-  //       'Content-type': 'application/json;charset=utf-8',
-  //       authorization: `Bearer ${token}`,
-  //     },
-  //   })
-  //     .then((response) => response.json())
-  //     .then((data) => {
-  //       if (data.message === 'GET_SUCCESS') {
-  //         alert('카테고리 목록을 성공적으로 가져왔습니다.');
-  //       } else {
-  //         alert('카테고리 목록을 가져오는데 실패했습니다.');
-  //       }
-  //     });
-  // }, []);
 
   // 차트(막대, 원형)
   useEffect(() => {
