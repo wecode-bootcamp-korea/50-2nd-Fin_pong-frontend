@@ -7,6 +7,16 @@ import GraphCircularChart from './GraphCircularChart';
 import ko from 'date-fns/locale/ko';
 import './Main.scss';
 
+const INITIAL_INPUT_VALUES = {
+  divide: '', // 구분
+  category: '', // 카테고리
+  year: '', // 년(일자)
+  month: '', // 월(일자)
+  day: '', // 일(일자)
+  price: '', // 금액
+  memo: '', // 메모
+};
+
 const Main = () => {
   // 모달창 노출 여부 확인
   const [currentModal, setCurrentModal] = useState('');
@@ -28,6 +38,8 @@ const Main = () => {
   // 월별 - 카테고리 현황(%)
   const [monthlyData, setMonthlyData] = useState(null);
   const selectedMonth = 11;
+
+  const { divide, category, day, price, memo, year, month } = inputValues;
 
   // 모달창 닫기
   const closeModal = () => {
@@ -61,7 +73,8 @@ const Main = () => {
       const updatedInputValues = { ...inputValues, [fieldName]: value };
       setInputValues(updatedInputValues);
       // 완료 버튼 활성화 여부 업데이트
-      const { divide, category, day, price, memo } = updatedInputValues;
+      const { divide, category, day, price, memo, year, month } =
+        updatedInputValues;
       setIsCompleteEnabled(divide && category && day && price && memo);
       // 체크박스 클릭시 비활성화
       if (
@@ -75,9 +88,9 @@ const Main = () => {
   // 페이지 이동
   const navigate = useNavigate();
   // 토큰
-  const token = localStorage.getItem('token');
-  // const token =
-  //   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRocmVlc2xAZ21haWwuY29tIiwiaWF0IjoxNzAwMTI4ODExLCJleHAiOjE3MDg3Njg4MTF9.a8jm42FaiAwRdy_hkOFgXo8iNh10kZzEDbg_EjkKNBg';
+  // const token = localStorage.getItem('token');
+  const token =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp3azIzNDVAbmF2ZXIuY29tIiwiaWQiOjEsImlhdCI6MTcwMDIwMjIwM30.ZHLV5b0pDYzaMbdlQtIVqTT63hy02eOi1pZNuE4_qx4';
   // 가계부 참여하기
   const goToJoin = () => {
     // 가족 인증 코드
@@ -131,17 +144,18 @@ const Main = () => {
         authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({
-        type: INITIAL_INPUT_VALUES.divide,
-        category: INITIAL_INPUT_VALUES.category,
-        memo: INITIAL_INPUT_VALUES.memo,
-        amount: INITIAL_INPUT_VALUES.price,
-        year: INITIAL_INPUT_VALUES.year,
-        month: INITIAL_INPUT_VALUES.month,
-        date: INITIAL_INPUT_VALUES.date,
+        type: divide,
+        category: category,
+        memo: memo,
+        amount: price,
+        year: day.getFullYear(),
+        month: day.getMonth() + 1,
+        date: day.getDate(),
       }),
     })
       .then((response) => response.json())
       .then((data) => {
+        console.log(data.message);
         if (data.message === 'POST_SUCCESS') {
           alert('등록이 완료되었습니다.');
         } else {
@@ -150,41 +164,41 @@ const Main = () => {
       });
   };
   // 수입/지출 여부 드롭다운(구분), (카테고리) 목록 조회
-  useEffect(() => {
-    // 구분
-    fetch('http://10.58.52.147:8000/flow-type', {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json;charset=utf-8',
-        authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message === 'GET_SUCCESS') {
-          alert('수입/지출 목록을 성공적으로 가져왔습니다.');
-        } else {
-          alert('수입/지출 목록을 가져오는데 실패했습니다.');
-        }
-      });
+  // useEffect(() => {
+  //   // 구분
+  //   fetch('http://10.58.52.109:8000/flow-type', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-type': 'application/json;charset=utf-8',
+  //       authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       if (data.message === 'GET_SUCCESS') {
+  //         alert('수입/지출 목록을 성공적으로 가져왔습니다.');
+  //       } else {
+  //         alert('수입/지출 목록을 가져오는데 실패했습니다.');
+  //       }
+  //     });
 
-    // 카테고리
-    fetch('http://10.58.52.147:8000/category', {
-      method: 'GET',
-      headers: {
-        'Content-type': 'application/json;charset=utf-8',
-        authorization: `Bearer ${token}`,
-      },
-    })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.message === 'GET_SUCCESS') {
-          alert('카테고리 목록을 성공적으로 가져왔습니다.');
-        } else {
-          alert('카테고리 목록을 가져오는데 실패했습니다.');
-        }
-      });
-  }, []);
+  //   // 카테고리
+  //   fetch('http://10.58.52.109:8000/category', {
+  //     method: 'GET',
+  //     headers: {
+  //       'Content-type': 'application/json;charset=utf-8',
+  //       authorization: `Bearer ${token}`,
+  //     },
+  //   })
+  //     .then((response) => response.json())
+  //     .then((data) => {
+  //       if (data.message === 'GET_SUCCESS') {
+  //         alert('카테고리 목록을 성공적으로 가져왔습니다.');
+  //       } else {
+  //         alert('카테고리 목록을 가져오는데 실패했습니다.');
+  //       }
+  //     });
+  // }, []);
 
   // 차트(막대, 원형)
   useEffect(() => {
@@ -446,6 +460,7 @@ const Main = () => {
           <div className="graphBarChart">
             <p className="yearText">1년 수입/지출 비교</p>
             {yearlyData && <GraphBarChart data={yearlyData} />}
+            {/* <GraphBarChart data={yearlyData} /> */}
           </div>
           <div className="graphCirculChart" onClick={goToTable}>
             <p className="monthText">월별-카테고리별 현황(%)</p>
@@ -470,12 +485,3 @@ const DIVIDE_LIST = ['Select an Option', '수입', '지출'];
 const CATEGORY_LIST = ['Select an Option', '생활비', '식비', '고정비', '기타'];
 const YEAR_LIST = Array.from({ length: 20 }, (_, i) => `${i + 2020}년`);
 const MONTH_LIST = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
-const INITIAL_INPUT_VALUES = {
-  divide: '', // 구분
-  category: '', // 카테고리
-  year: '', // 년(일자)
-  month: '', // 월(일자)
-  day: '', // 일(일자)
-  price: '', // 금액
-  memo: '', // 메모
-};

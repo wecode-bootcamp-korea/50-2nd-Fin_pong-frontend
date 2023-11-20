@@ -1,12 +1,27 @@
 import React, { PureComponent } from 'react';
 import { PieChart, Pie, Cell, Tooltip, LabelList, Label, Bar } from 'recharts';
 
-const GraphCircularChart = () => {
+const GraphCircularChart = ({ data }) => {
+  const transformedData = [];
+
+  data.forEach((item) => {
+    let value = 0;
+    if (item.spending !== '0%') {
+      const percentage = parseInt(item.spending);
+      value = Math.round((percentage / 100) * 100);
+    }
+
+    transformedData.push({
+      name: item.category,
+      value: value,
+    });
+  });
+
   const total = data.reduce((acc, entry) => acc + entry.value, 0);
   return (
     <PieChart width={900} height={500}>
       <Pie
-        data={data}
+        data={transformedData}
         dataKey="value"
         isAnimationActive={true}
         cx={300}
@@ -17,7 +32,7 @@ const GraphCircularChart = () => {
         paddingAngle={5}
         label
       >
-        {data.map((entry, index) => (
+        {transformedData.map((entry, index) => (
           <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
         ))}
         <LabelList dataKey="name" position="inside" />
@@ -34,10 +49,4 @@ const GraphCircularChart = () => {
 
 export default GraphCircularChart;
 
-const data = [
-  { name: '생활비', value: 31 },
-  { name: '공과금', value: 51 },
-  { name: '용돈', value: 18 },
-  { name: '기타', value: 0 },
-];
 const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
