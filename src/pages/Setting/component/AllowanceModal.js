@@ -59,36 +59,42 @@ const AllowanceModal = ({ isOpen, onClose }) => {
   }, []);
 
   return (
-    <div className={`modal ${isOpen ? 'open' : ''}`}>
-      <div className="allowanceInfo">
-        <h2 className="allowanceContentName">🗓️ 용돈 등록</h2>
-        <div className="allowanceContentList">
-          <CalenderInput
-            text="일자"
-            handleDateChange={(date) => handleInfo('date', date)}
-            date={settingInfo.date}
-          />
-          <SelectDropdown
-            text="대상 선택"
-            name="userName"
-            options={userList}
-            handleSelect={(e) => handleInfo('userName', e.target.value)}
-          />
-          <div className="allowance">
-            <label className="allowanceName">금액</label>
-            <input
-              className="allowanceInput"
-              type="text"
-              onChange={(e) => handleInfo('allowance', e.target.value)}
-              value={settingInfo.allowance}
+    <div className="allowanceModal">
+      <div className={`${isOpen ? 'backDrop' : ''}`} />
+      <div className={`modal ${isOpen ? 'open' : ''}`}>
+        <div className="allowanceInfo">
+          <h2 className="allowanceContentName">🗓️ 용돈 등록</h2>
+          <div className="allowanceContentList">
+            <CalenderInput
+              text="일자"
+              handleDateChange={(date) => handleInfo('date', date)}
+              date={settingInfo.date}
             />
+            <SelectDropdown
+              text="대상 선택"
+              name="userName"
+              options={userList}
+              handleSelect={(e) => handleInfo('userName', e.target.value)}
+            />
+            <div className="allowance">
+              <label className="allowanceName">금액</label>
+              <input
+                className="allowanceInput"
+                type="text"
+                onChange={(e) => handleInfo('allowance', e.target.value)}
+                value={settingInfo.allowance}
+              />
+            </div>
           </div>
-        </div>
-        <div className="btn">
-          <CompleteBtn className="completeBtnContainer" onClick={handleClick} />
-          <button className="closeBtn" onClick={onClose}>
-            닫기
-          </button>
+          <div className="btn">
+            <CompleteBtn
+              className="completeBtnContainer"
+              onClick={handleClick}
+            />
+            <button className="closeBtn" onClick={onClose}>
+              닫기
+            </button>
+          </div>
         </div>
       </div>
     </div>

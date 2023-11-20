@@ -43,30 +43,36 @@ const BudgetModal = ({ isOpen, onClose }) => {
   };
 
   return (
-    <div className={`modal${isOpen ? ' open' : ''}`}>
-      <div className="budgetInfo">
-        <h2 className="budgetContentName">🗓️ 예산 등록</h2>
-        <div className="budgetContentList">
-          <CalenderInput
-            text="일자"
-            handleDateChange={(date) => handleInfo('date', date)}
-            date={settingInfo.date}
-          />
-          <div className="budget">
-            <label className="budgetName">금액</label>
-            <input
-              className="budgetInput"
-              type="text"
-              onChange={(e) => handleInfo('budget', e.target.value)}
-              value={settingInfo.budget}
+    <div className="budgetModal">
+      <div className={`${isOpen ? 'backDrop' : ''}`} />
+      <div className={`modal ${isOpen ? 'open' : ''}`}>
+        <div className="budgetInfo">
+          <h2 className="budgetContentName">🗓️ 예산 등록</h2>
+          <div className="budgetContentList">
+            <CalenderInput
+              text="일자"
+              handleDateChange={(date) => handleInfo('date', date)}
+              date={settingInfo.date}
             />
+            <div className="budget">
+              <label className="budgetName">금액</label>
+              <input
+                className="budgetInput"
+                type="text"
+                onChange={(e) => handleInfo('budget', e.target.value)}
+                value={settingInfo.budget}
+              />
+            </div>
           </div>
-        </div>
-        <div className="btn">
-          <CompleteBtn className="completeBtnContainer" onClick={handleClick} />
-          <button className="closeBtn" onClick={onClose}>
-            닫기
-          </button>
+          <div className="btn">
+            <CompleteBtn
+              className="completeBtnContainer"
+              onClick={handleClick}
+            />
+            <button className="closeBtn" onClick={onClose}>
+              닫기
+            </button>
+          </div>
         </div>
       </div>
     </div>
