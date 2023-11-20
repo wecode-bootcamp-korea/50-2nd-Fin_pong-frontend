@@ -54,7 +54,7 @@ const MenuBar = () => {
   }, []);
 
   return (
-    <div className={`menuBarFrame`}>
+    <div className={'menuBarFrame'}>
       <div className="logoFrame">
         <img
           className="wonBookLogo"

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
+import DatePicker from 'react-datepicker';
 import Modal from 'react-modal';
 import GraphBarChart from './GraphBarChart';
 import GraphCircularChart from './GraphCircularChart';
+import ko from 'date-fns/locale/ko';
 import './Main.scss';
 
 const Main = () => {
@@ -73,8 +75,9 @@ const Main = () => {
   // 페이지 이동
   const navigate = useNavigate();
   // 토큰
-  const token =
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp3azIzNDVAbmF2ZXIuY29tIiwiaWQiOjEzLCJpYXQiOjE3MDAxOTM4Nzl9.VeySoz1M8GYV_u1mUAQX_sI7ebWKdwOASm54n6MYQDE';
+  const token = localStorage.getItem('token');
+  // const token =
+  //   'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InRocmVlc2xAZ21haWwuY29tIiwiaWF0IjoxNzAwMTI4ODExLCJleHAiOjE3MDg3Njg4MTF9.a8jm42FaiAwRdy_hkOFgXo8iNh10kZzEDbg_EjkKNBg';
   // 가계부 참여하기
   const goToJoin = () => {
     // 가족 인증 코드
@@ -83,7 +86,7 @@ const Main = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: token,
+        authorization: `Bearer ${token}`,
       },
       body: JSON.stringify({ auth_code }),
     })
@@ -104,7 +107,7 @@ const Main = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: token,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -119,29 +122,75 @@ const Main = () => {
       });
   };
 
-  // 수입/지출 등록하기 (모달창)
+  // 개인 수입/지출 등록하기 (모달창)
   const goToIncomeExpend = () => {
-    fetch('http://10.58.52.138:8000/flow', {
+    fetch('http://10.58.52.109:8000/flow', {
       method: 'POST',
       headers: {
         'Content-type': 'application/json;charset=utf-8',
-        authorization: token,
+        authorization: `Bearer ${token}`,
       },
+      body: JSON.stringify({
+        type: INITIAL_INPUT_VALUES.divide,
+        category: INITIAL_INPUT_VALUES.category,
+        memo: INITIAL_INPUT_VALUES.memo,
+        amount: INITIAL_INPUT_VALUES.price,
+        year: INITIAL_INPUT_VALUES.year,
+        month: INITIAL_INPUT_VALUES.month,
+        date: INITIAL_INPUT_VALUES.date,
+      }),
     })
       .then((response) => response.json())
       .then((data) => {
-        if (data.message === 'SUCCESS') {
+        if (data.message === 'POST_SUCCESS') {
           alert('등록이 완료되었습니다.');
         } else {
           alert('등록에 실패했습니다. 다시 한번 확인해주세요');
         }
       });
   };
+  // 수입/지출 여부 드롭다운(구분), (카테고리) 목록 조회
+  useEffect(() => {
+    // 구분
+    fetch('http://10.58.52.147:8000/flow-type', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=utf-8',
+        authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message === 'GET_SUCCESS') {
+          alert('수입/지출 목록을 성공적으로 가져왔습니다.');
+        } else {
+          alert('수입/지출 목록을 가져오는데 실패했습니다.');
+        }
+      });
+
+    // 카테고리
+    fetch('http://10.58.52.147:8000/category', {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json;charset=utf-8',
+        authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        if (data.message === 'GET_SUCCESS') {
+          alert('카테고리 목록을 성공적으로 가져왔습니다.');
+        } else {
+          alert('카테고리 목록을 가져오는데 실패했습니다.');
+        }
+      });
+  }, []);
+
   // 차트(막대, 원형)
   useEffect(() => {
     // 1년 수입/지출(막대그래프)
     fetch(
-      `http://10.58.52.138:8000/flow/view?rule=year&year=${selectedYear}&unit=family`,
+      `http://10.58.52.104:8000/flow/view?rule=year&year=${selectedYear}&unit=family`,
       {
         method: 'GET',
         headers: {
@@ -159,7 +208,7 @@ const Main = () => {
       );
     // 월별 - 카테고리별(원형차트)
     fetch(
-      `http://10.58.52.138:8000/flow/view?rule=category&year=${selectedYear}&month=${selectedMonth}&unit=family`,
+      `http://10.58.52.104:8000/flow/view?rule=category&year=${selectedYear}&month=${selectedMonth}&unit=family`,
       {
         method: 'GET',
         headers: {
@@ -331,23 +380,23 @@ const Main = () => {
             <p className="priceText">금액</p>
           </div>
           <div className="divideFrame">
-            <select
+            <DatePicker
               className="selectBox"
-              value={inputValues.day}
-              onChange={(event) => handleInputChange('day', event.target.value)}
-            >
-              {DAY_LIST.map((day, index) => (
-                <option key={index}>{day}</option>
-              ))}
-            </select>
+              selected={inputValues.day}
+              onChange={(date) => handleInputChange('day', date)}
+              selectsEnd
+              dateFormat="yyyy년MM월dd일"
+              locale={ko}
+            ></DatePicker>
             <input
               type="text"
               className="priceInput"
               placeholder="금액을 입력해주세요"
               value={inputValues.price}
-              onChange={(event) =>
-                handleInputChange('price', event.target.value)
-              }
+              onChange={(event) => {
+                const onlyNumbers = event.target.value.replace(/[^0-9]/g, '');
+                handleInputChange('price', onlyNumbers);
+              }}
             />
           </div>
           <div className="memoTextMain">
@@ -357,7 +406,8 @@ const Main = () => {
             <input
               className="memoInput"
               type="text"
-              placeholder="25자 내외로 작성해주세요"
+              maxLength={25}
+              placeholder="25자 내로 작성해주세요"
               value={inputValues.memo}
               onChange={(event) =>
                 handleInputChange('memo', event.target.value)
@@ -416,15 +466,16 @@ const Main = () => {
 
 export default Main;
 
-const DIVIDE_LIST = ['-', '수입', '지출'];
-const CATEGORY_LIST = ['-', '생활비', '식비', '고정비', '기타'];
+const DIVIDE_LIST = ['Select an Option', '수입', '지출'];
+const CATEGORY_LIST = ['Select an Option', '생활비', '식비', '고정비', '기타'];
 const YEAR_LIST = Array.from({ length: 20 }, (_, i) => `${i + 2020}년`);
 const MONTH_LIST = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
-const DAY_LIST = Array.from({ length: 31 }, (_, i) => `${i + 1}일`);
 const INITIAL_INPUT_VALUES = {
-  divide: '',
-  category: '',
-  day: '',
-  price: '',
-  memo: '',
+  divide: '', // 구분
+  category: '', // 카테고리
+  year: '', // 년(일자)
+  month: '', // 월(일자)
+  day: '', // 일(일자)
+  price: '', // 금액
+  memo: '', // 메모
 };

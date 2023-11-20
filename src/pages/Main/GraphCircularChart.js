@@ -1,14 +1,6 @@
 import React, { PureComponent } from 'react';
 import { PieChart, Pie, Cell, Tooltip, LabelList, Label, Bar } from 'recharts';
 
-const data = [
-  { name: '생활비', value: 31 },
-  { name: '공과금', value: 51 },
-  { name: '용돈', value: 18 },
-  { name: '기타', value: 0 },
-];
-const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
-
 const GraphCircularChart = () => {
   const total = data.reduce((acc, entry) => acc + entry.value, 0);
   return (
@@ -41,3 +33,11 @@ const GraphCircularChart = () => {
 };
 
 export default GraphCircularChart;
+
+const data = [
+  { name: '생활비', value: 31 },
+  { name: '공과금', value: 51 },
+  { name: '용돈', value: 18 },
+  { name: '기타', value: 0 },
+];
+const COLORS = ['#0088FE', '#00C49F', '#FFBB28', '#FF8042'];
