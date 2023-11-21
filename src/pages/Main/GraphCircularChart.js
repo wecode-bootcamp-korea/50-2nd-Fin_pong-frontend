@@ -37,7 +37,6 @@ const GraphCircularChart = ({ data }) => {
   });
 
   const total = data.reduce((acc, entry) => acc + entry.value, 0);
-  console.log('total', total);
 
   return (
     <PieChart width={900} height={500}>
