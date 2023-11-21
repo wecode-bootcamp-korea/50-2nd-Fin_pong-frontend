@@ -168,7 +168,7 @@ const Main = () => {
   useEffect(() => {
     // 1년 수입/지출(막대그래프)
     fetch(
-      `http://10.58.52.104:8000/flow/view?rule=year&year=${selectedYear}&unit=family`,
+      `http://10.58.52.244:8000/flow/view?rule=year&year=${selectedYear}&unit=family`,
       {
         method: 'GET',
         headers: {
@@ -186,7 +186,7 @@ const Main = () => {
       );
     // 월별 - 카테고리별(원형차트)
     fetch(
-      `http://10.58.52.104:8000/flow/view?rule=category&year=${selectedYear}&month=${selectedMonth}&unit=family`,
+      `http://10.58.52.244:8000/flow/view?rule=category&year=${selectedYear}&month=${selectedMonth}&unit=family`,
       {
         method: 'GET',
         headers: {
