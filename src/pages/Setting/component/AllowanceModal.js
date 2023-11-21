@@ -47,7 +47,7 @@ const AllowanceModal = ({ isOpen, onClose }) => {
   };
 
   useEffect(() => {
-    fetch('http://10.58.52.147:8000/family/user', {
+    fetch('http://10.58.52.109:8000/family/user', {
       method: 'get',
       headers: {
         'content-type': 'application/json',

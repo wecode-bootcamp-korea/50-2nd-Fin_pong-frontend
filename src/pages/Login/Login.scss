@@ -1,17 +1,26 @@
 .Login {
   height: 100vh;
   width: 100vw;
+  background-color: #fcfcfc;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #fcfcfc;
   margin: 0 auto;
+  flex-direction: column-reverse;
 
   .loginWrapper {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 300px;
+    width: 50%;
+  }
+
+  .serviceInfoContainer {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    width: 80%;
   }
 
   .onebookLogo {
@@ -19,5 +28,6 @@
     object-fit: contain;
     flex-shrink: 1;
     width: 480px;
+    margin-bottom: 30px;
   }
 }

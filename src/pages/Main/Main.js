@@ -20,24 +20,18 @@ const INITIAL_INPUT_VALUES = {
 const Main = () => {
   // 모달창 노출 여부 확인
   const [currentModal, setCurrentModal] = useState('');
-  // 참여하기 체크박스 체크시 입력창 활성화 여부 확인
-  const [isParticChecked, setIsParticChecked] = useState(false);
-  // 생성하기 체크박스 체크시 입력창 활성화 여부 확인
-  const [isCreatingChecked, setIsCreatingChecked] = useState(false);
   // 완료 버튼 활성화, 비활성화 여부 확인
   const [isCompleteEnabled, setIsCompleteEnabled] = useState(false);
   // 선택된 메뉴 상태 저장
   const [checkedMenu, setCheckedMenu] = useState('');
   // 인증번호 입력값 상태 추가
-  const [verificationCode, setVerificationCode] = useState('');
+  const [verifycationCode, setVerifycationCode] = useState('');
   // 필수 입력 값 여부 확인
   const [inputValues, setInputValues] = useState(INITIAL_INPUT_VALUES);
   // 1년 수입/지출 비교
   const [yearlyData, setYearlyData] = useState(null);
-  const selectedYear = 2023;
   // 월별 - 카테고리 현황(%)
   const [monthlyData, setMonthlyData] = useState(null);
-  const selectedMonth = 11;
 
   const { divide, category, day, price, memo, year, month } = inputValues;
 
@@ -60,21 +54,20 @@ const Main = () => {
 
   // input, selectBox 값 변경 여부
   const handleInputChange = (fieldName, value) => {
-    if (fieldName === 'verifiInput') {
+    if (fieldName === 'verifyInput') {
       // 인증번호 입력값 업데이트
-      setVerificationCode(value);
+      setVerifycationCode(value);
       // 참여하기 체크박스가 활성화되면서 인증번호를 입력되면 완료 버튼 활성화
-      const isVerificationCodeValid =
+      const isVerifycationCodeValid =
         checkedMenu === 'partic' && value.length === 8;
 
-      setIsCompleteEnabled(isVerificationCodeValid);
+      setIsCompleteEnabled(isVerifycationCodeValid);
     } else {
       // 다른 필드의 입력값 업데이트
       const updatedInputValues = { ...inputValues, [fieldName]: value };
       setInputValues(updatedInputValues);
       // 완료 버튼 활성화 여부 업데이트
-      const { divide, category, day, price, memo, year, month } =
-        updatedInputValues;
+      const { divide, category, day, price, memo } = updatedInputValues;
       setIsCompleteEnabled(divide && category && day && price && memo);
       // 체크박스 클릭시 비활성화
       if (
@@ -88,20 +81,17 @@ const Main = () => {
   // 페이지 이동
   const navigate = useNavigate();
   // 토큰
-  // const token = localStorage.getItem('token');
-  const token =
-    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp3azIzNDVAbmF2ZXIuY29tIiwiaWQiOjEsImlhdCI6MTcwMDIwMjIwM30.ZHLV5b0pDYzaMbdlQtIVqTT63hy02eOi1pZNuE4_qx4';
+  const token = localStorage.getItem('token');
+
   // 가계부 참여하기
   const goToJoin = () => {
-    // 가족 인증 코드
-    const auth_code = '077db0f7';
     fetch('http://10.58.52.143:8000/family/join', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
         authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify({ auth_code }),
+      body: JSON.stringify({ auth_code: verifycationCode }),
     })
       .then((res) => res.json())
       // .catch((error) => console.error(error))
@@ -155,7 +145,6 @@ const Main = () => {
     })
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.message);
         if (data.message === 'POST_SUCCESS') {
           alert('등록이 완료되었습니다.');
         } else {
@@ -168,7 +157,7 @@ const Main = () => {
   useEffect(() => {
     // 1년 수입/지출(막대그래프)
     fetch(
-      `http://10.58.52.104:8000/flow/view?rule=year&year=${selectedYear}&unit=family`,
+      `http://10.58.52.104:8000/flow/view?rule=year&year=${year}&unit=family`,
       {
         method: 'GET',
         headers: {
@@ -186,7 +175,7 @@ const Main = () => {
       );
     // 월별 - 카테고리별(원형차트)
     fetch(
-      `http://10.58.52.104:8000/flow/view?rule=category&year=${selectedYear}&month=${selectedMonth}&unit=family`,
+      `http://10.58.52.104:8000/flow/view?rule=category&year=${year}&month=${month}&unit=family`,
       {
         method: 'GET',
         headers: {
@@ -202,7 +191,7 @@ const Main = () => {
       .catch((error) =>
         console.error('월별-카테고리별 현황 데이터를 가져오는 중 에러:', error),
       );
-  }, [selectedYear, selectedMonth]);
+  }, [year, month]);
 
   // 완료 버튼 클릭시 실행되는 함수
   const handleComplete = () => {
@@ -220,7 +209,7 @@ const Main = () => {
   };
 
   return (
-    <>
+    <div className="dashboardAll">
       <div className="dashboard">
         <button
           className="actionButton"
@@ -241,11 +230,8 @@ const Main = () => {
               className={`partic${checkedMenu === 'partic' ? ' selected' : ''}`}
               onClick={() => {
                 if (checkedMenu === 'partic') {
-                  setIsParticChecked(false);
                   setCheckedMenu('');
                 } else {
-                  setIsParticChecked(true);
-                  setIsCreatingChecked(false);
                   setCheckedMenu('partic');
                 }
               }}
@@ -262,14 +248,14 @@ const Main = () => {
                 💁🏻‍♀️
               </span>
               <input
-                className="verifiInput"
+                className="verifyInput"
                 type="text"
                 placeholder="인증번호를 입력해주세요"
                 maxLength={8}
                 disabled={checkedMenu !== 'partic'}
                 onClick={(event) => event.stopPropagation()}
                 onChange={(event) =>
-                  handleInputChange('verifiInput', event.target.value)
+                  handleInputChange('verifyInput', event.target.value)
                 }
               />
             </div>
@@ -279,11 +265,8 @@ const Main = () => {
               }`}
               onClick={() => {
                 if (checkedMenu === 'creating') {
-                  setIsCreatingChecked(false);
                   setCheckedMenu('');
                 } else {
-                  setIsCreatingChecked(true);
-                  setIsParticChecked(false);
                   setCheckedMenu('creating');
                 }
               }}
@@ -303,7 +286,7 @@ const Main = () => {
           </div>
           <div className="buttonFrame">
             <button
-              className={'completeButton'}
+              className="completeButton"
               disabled={!isCompleteEnabled}
               onClick={handleComplete}
             >
@@ -365,7 +348,7 @@ const Main = () => {
               selectsEnd
               dateFormat="yyyy년MM월dd일"
               locale={ko}
-            ></DatePicker>
+            />
             <input
               type="text"
               className="priceInput"
@@ -439,7 +422,7 @@ const Main = () => {
           ))}
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
