@@ -6,6 +6,7 @@ import GraphBarChart from './GraphBarChart';
 import GraphCircularChart from './GraphCircularChart';
 import ko from 'date-fns/locale/ko';
 import './Main.scss';
+import API from '../../config';
 
 const INITIAL_INPUT_VALUES = {
   divide: '', // 구분
@@ -85,7 +86,7 @@ const Main = () => {
 
   // 가계부 참여하기
   const goToJoin = () => {
-    fetch('http://10.58.52.143:8000/family/join', {
+    fetch(`${API.MainJoin}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -106,7 +107,7 @@ const Main = () => {
 
   // 가계부 생성하기
   const goToCreating = () => {
-    fetch('http://10.58.52.143:8000/family/book', {
+    fetch(`${API.MainCreate}`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -127,7 +128,7 @@ const Main = () => {
 
   // 개인 수입/지출 등록하기 (모달창)
   const goToIncomeExpend = () => {
-    fetch('http://10.58.52.109:8000/flow', {
+    fetch(`${API.MainFlow}`, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json;charset=utf-8',
@@ -156,16 +157,13 @@ const Main = () => {
   // 차트(막대, 원형)
   useEffect(() => {
     // 1년 수입/지출(막대그래프)
-    fetch(
-      `http://10.58.52.104:8000/flow/view?rule=year&year=${year}&unit=family`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json;charset=utf-8',
-          authorization: `Bearer ${token}`,
-        },
+    fetch(`${API.MainBarChart}?rule=year&year=${year}&unit=family`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json;charset=utf-8',
+        authorization: `Bearer ${token}`,
       },
-    )
+    })
       .then((response) => response.json())
       .then((data) => {
         setYearlyData(data);
@@ -175,7 +173,7 @@ const Main = () => {
       );
     // 월별 - 카테고리별(원형차트)
     fetch(
-      `http://10.58.52.104:8000/flow/view?rule=category&year=${year}&month=${month}&unit=family`,
+      `${API.MainPieChart}?rule=category&year=${year}&month=${month}&unit=family`,
       {
         method: 'GET',
         headers: {
