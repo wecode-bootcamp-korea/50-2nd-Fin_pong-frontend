@@ -11,7 +11,6 @@ import Auth from './pages/Auth/Auth';
 const Router = () => {
   return (
     <BrowserRouter>
-      <Nav />
       <Routes>
         <Route path="/" element={<Main />} />
         <Route path="/login" element={<Login />} />
