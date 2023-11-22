@@ -10,15 +10,14 @@ import Auth from './pages/Auth/Auth';
 const Router = () => {
   return (
     <BrowserRouter>
-      <MenuWrapper>
-        <Routes>
-          <Route path="/" element={<Main />} />
-          <Route path="/Setting" element={<Setting />} />
-          <Route path="/user-signup" element={<UserSignUp />} />
-          <Route path="/users/auth" element={<Auth />} />
-          <Route path="/login" element={<Login />} />
-        </Routes>
-      </MenuWrapper>
+      <Routes>
+        <Route path="/" element={<Main />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/setting" element={<Setting />} />
+        <Route path="/table" element={<Table />} />
+        <Route path="/user-signup" element={<UserSignUp />} />
+        <Route path="/users/auth" element={<Auth />} />
+      </Routes>
     </BrowserRouter>
   );
 };
