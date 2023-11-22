@@ -5,8 +5,18 @@
   border-radius: 6px;
 
   .mainContent {
-    max-width: 1170px;
-    min-width: 570px;
     flex: 1;
+  }
+}
+
+@media screen and (max-width: 1170px) {
+  .mainContent {
+    max-width: 90%;
+  }
+}
+
+@media screen and (min-width: 570px) {
+  .mainContent {
+    max-width: 82%;
   }
 }
