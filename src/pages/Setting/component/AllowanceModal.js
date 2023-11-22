@@ -47,7 +47,7 @@ const AllowanceModal = ({ isOpen, onClose }) => {
   };
 
   useEffect(() => {
-    fetch('http://10.58.52.147:8000/family/user', {
+    fetch('http://10.58.52.109:8000/family/user', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -57,6 +57,32 @@ const AllowanceModal = ({ isOpen, onClose }) => {
       .then((res) => res.json())
       .then((result) => setUserList(result.familyUsers));
   }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('click', handleBackdropClick);
+    } else {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+      window.removeEventListener('click', handleBackdropClick);
+    }; //cleanup함수
+  }, [isOpen, onClose]);
+
+  const handleKeyDown = (e) => {
+    if (e && e.key === 'Escape') {
+      onClose();
+    }
+  };
+
+  const handleBackdropClick = (e) => {
+    if (e.target.classList.contains('backDrop')) {
+      onClose();
+    }
+  };
 
   return (
     <div className="allowanceModal">

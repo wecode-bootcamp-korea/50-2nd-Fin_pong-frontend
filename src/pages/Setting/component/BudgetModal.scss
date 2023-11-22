@@ -8,6 +8,7 @@
     z-index: 10;
     background-color: rgba(0, 0, 0, 0.5);
     backdrop-filter: blur(5px);
+    // overflow: hidden;
   }
 
   .modal {
@@ -69,8 +70,10 @@
         display: flex;
         justify-content: flex-end;
         width: 100%;
+
         &:focus {
           background-color: #3dd980;
+          outline-color: none;
         }
 
         .closeBtn {
@@ -78,6 +81,7 @@
           height: 40px;
           color: #14213d;
           font-size: 20px;
+          font-weight: 700;
           margin: 5px;
           margin-left: 10px;
           border-radius: 6px;

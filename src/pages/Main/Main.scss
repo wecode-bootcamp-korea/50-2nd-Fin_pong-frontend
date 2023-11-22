@@ -1,287 +1,291 @@
-.dashboard {
-  display: flex;
-  flex-direction: row;
-  justify-content: flex-end;
+.dashboardAll {
+  background-color: #fcfcfcfc;
 
-  .actionButton {
-    width: 150px;
-    padding: 15px;
-    margin: 25px 20px 0 0;
-    font-weight: 600;
-    border: none;
-    color: white;
-    border-radius: 5px;
-    background-color: #028174;
-    cursor: pointer;
-  }
-}
-
-.dashboardContainer {
-  display: flex;
-  flex-direction: column;
-
-  .graphMain {
+  .dashboard {
     display: flex;
     flex-direction: row;
+    justify-content: flex-end;
 
-    .graphBarChart,
-    .graphCirculChart {
-      width: 635px;
-      height: 325px;
-      margin: 55px 0 0 43px;
+    .actionButton {
+      width: 150px;
+      padding: 15px;
+      margin: 25px 20px 0 0;
+      font-weight: 600;
       border: none;
+      color: white;
       border-radius: 5px;
-      box-shadow: 0 0.5px 3px 3px #a6a6a6;
-
-      &.graphCirculChart {
-        cursor: pointer;
-      }
-
-      .monthText,
-      .yearText {
-        font-weight: 700;
-        font-size: 18px;
-        margin: 15px 0 0 15px;
-      }
-    }
-  }
-
-  .graphPersonal {
-    display: flex;
-    flex-direction: row;
-    margin-top: 20px;
-
-    .graphPersonalChart {
-      width: 296px;
-      height: 320px;
-      margin: 0 0 0 43px;
-      border: none;
-      border-radius: 5px;
-      box-shadow: 0 0.5px 3px 3px #a6a6a6;
+      background-color: #028174;
       cursor: pointer;
-
-      .personalText {
-        font-weight: 700;
-        font-size: 18px;
-        margin: 15px 0 0 15px;
-      }
     }
   }
-}
 
-.overlay {
-  background-color: rgba(196, 196, 196, 0.7);
-  position: fixed;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  .dashboardContainer {
+    display: flex;
+    flex-direction: column;
 
-  .modal {
-    display: block;
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    width: 600px;
-    height: 650px;
-    transform: translate(-50%, -50%);
-    background-color: #fff;
-    border: none;
-    padding: 30px;
-    border-radius: 10px;
-
-    .mainFrame {
+    .graphMain {
       display: flex;
       flex-direction: row;
-      margin-top: 100px;
 
-      .partic {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 250px;
-        height: 270px;
-        border: 2px solid #7777;
-        background-color: #f8f8f8;
+      .graphBarChart,
+      .graphCirculChart {
+        width: 630px;
+        height: 325px;
+        margin: 55px 0 0 43px;
+        border: none;
         border-radius: 5px;
-        margin-left: 12px;
+        box-shadow: 0 0.5px 3px 3px #a6a6a6;
 
-        &.selected {
-          border-color: #028174;
+        &.graphCirculChart {
+          cursor: pointer;
         }
 
-        .clickBox {
-          margin-top: 20px;
+        .monthText,
+        .yearText {
+          font-weight: 700;
+          font-size: 18px;
+          margin: 15px 0 0 15px;
         }
+      }
+    }
 
-        .clickText {
-          margin-top: 10px;
-          font-weight: 600;
+    .graphPersonal {
+      display: flex;
+      flex-direction: row;
+      margin-top: 20px;
+
+      .graphPersonalChart {
+        width: 294px;
+        height: 320px;
+        margin: 0 0 0 43px;
+        border: none;
+        border-radius: 5px;
+        box-shadow: 0 0.5px 3px 3px #a6a6a6;
+        cursor: pointer;
+
+        .personalText {
+          font-weight: 700;
+          font-size: 18px;
+          margin: 15px 0 0 15px;
         }
+      }
+    }
+  }
 
-        .womanEmoji {
-          transform: translate(8px, 40px);
-          font-size: 80px;
-        }
+  .overlay {
+    background-color: rgba(196, 196, 196, 0.7);
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-        .verifiInput {
-          transform: translate(-4px, 65px);
-          width: 200px;
-          height: 34px;
-          margin-left: 10px;
+    .modal {
+      display: block;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      width: 600px;
+      height: 650px;
+      transform: translate(-50%, -50%);
+      background-color: #fff;
+      border: none;
+      padding: 30px;
+      border-radius: 10px;
+
+      .mainFrame {
+        display: flex;
+        flex-direction: row;
+        margin-top: 100px;
+
+        .partic {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 250px;
+          height: 270px;
           border: 2px solid #7777;
+          background-color: #f8f8f8;
+          border-radius: 5px;
+          margin-left: 12px;
+
+          &.selected {
+            border-color: #028174;
+          }
+
+          .clickBox {
+            margin-top: 20px;
+          }
+
+          .clickText {
+            margin-top: 10px;
+            font-weight: 600;
+          }
+
+          .womanEmoji {
+            transform: translate(8px, 40px);
+            font-size: 80px;
+          }
+
+          .verifyInput {
+            transform: translate(-4px, 65px);
+            width: 200px;
+            height: 34px;
+            margin-left: 10px;
+            border: 2px solid #7777;
+            border-radius: 5px;
+          }
+        }
+
+        .creating {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          width: 250px;
+          height: 270px;
+          border: 2px solid #7777;
+          background-color: #f8f8f8;
+          border-radius: 5px;
+          margin-left: 15px;
+
+          &.selected {
+            border-color: #028174;
+          }
+
+          .clickBox {
+            margin-top: 20px;
+          }
+
+          .creatingText {
+            margin-top: 10px;
+            font-weight: 600;
+          }
+
+          .manEmoji {
+            transform: translate(0, 40px);
+            font-size: 80px;
+          }
+
+          .settingText {
+            position: relative;
+            bottom: -75px;
+          }
+        }
+      }
+
+      .buttonFrame {
+        display: flex;
+        justify-content: flex-end;
+
+        .completeButton {
+          width: 120px;
+          padding: 13px;
+          margin-top: 45px;
+          margin-right: 16px;
+          border: none;
+          border-radius: 5px;
+          background-color: #028174;
+          font-weight: 600;
+          color: #fff;
+          cursor: pointer;
+
+          &:disabled {
+            background-color: #7777;
+            cursor: default;
+          }
+        }
+      }
+
+      .requiredTextMain {
+        display: flex;
+        justify-content: flex-start;
+
+        .divideText,
+        .categoryText,
+        .dayText,
+        .priceText {
+          font-weight: 700;
+          margin: 30px 200px 0 25px;
+        }
+      }
+
+      .memoTextMain {
+        display: flex;
+        justify-content: flex-start;
+
+        .memoText {
+          font-weight: 700;
+          margin: 30px 0 0 23px;
+        }
+      }
+
+      .yearTextMain {
+        display: flex;
+        justify-content: space-between;
+
+        .yearText {
+          font-weight: 700;
+          margin: 30px 0 0 23px;
+        }
+
+        .optionalText {
+          font-weight: 500;
+          font-size: 14px;
+          color: rgb(55, 156, 251);
+          margin: 32px 23px 0 0;
+        }
+      }
+
+      .divideFrame {
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        margin-top: 20px;
+
+        .selectBox {
+          width: 240px;
+          padding: 15px;
+          border-radius: 5px;
+          border: 1px solid gray;
+          color: gray;
+        }
+
+        .priceInput {
+          width: 240px;
+          padding: 15px;
+          border: 1px solid gray;
+          border-radius: 5px;
+        }
+
+        .memoInput {
+          width: 500px;
+          padding: 15px;
+          border: 1px solid gray;
           border-radius: 5px;
         }
       }
-
-      .creating {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        width: 250px;
-        height: 270px;
-        border: 2px solid #7777;
-        background-color: #f8f8f8;
-        border-radius: 5px;
-        margin-left: 15px;
-
-        &.selected {
-          border-color: #028174;
-        }
-
-        .clickBox {
-          margin-top: 20px;
-        }
-
-        .creatingText {
-          margin-top: 10px;
-          font-weight: 600;
-        }
-
-        .manEmoji {
-          transform: translate(0, 40px);
-          font-size: 80px;
-        }
-
-        .settingText {
-          position: relative;
-          bottom: -75px;
-        }
-      }
     }
 
-    .buttonFrame {
-      display: flex;
-      justify-content: flex-end;
-
-      .completeButton {
-        width: 120px;
-        padding: 13px;
-        margin-top: 45px;
-        margin-right: 16px;
-        border: none;
-        border-radius: 5px;
-        background-color: #028174;
-        font-weight: 600;
-        color: #fff;
-        cursor: pointer;
-
-        &:disabled {
-          background-color: #7777;
-          cursor: default;
-        }
-      }
-    }
-
-    .requiredTextMain {
-      display: flex;
-      justify-content: flex-start;
-
-      .divideText,
-      .categoryText,
-      .dayText,
-      .priceText {
-        font-weight: 700;
-        margin: 30px 200px 0 25px;
-      }
-    }
-
-    .memoTextMain {
-      display: flex;
-      justify-content: flex-start;
-
-      .memoText {
-        font-weight: 700;
-        margin: 30px 0 0 23px;
-      }
-    }
-
-    .yearTextMain {
-      display: flex;
-      justify-content: space-between;
-
-      .yearText {
-        font-weight: 700;
-        margin: 30px 0 0 23px;
-      }
-
-      .optionalText {
-        font-weight: 500;
-        font-size: 14px;
-        color: rgb(55, 156, 251);
-        margin: 32px 23px 0 0;
-      }
-    }
-
-    .divideFrame {
-      display: flex;
-      flex-direction: row;
-      justify-content: space-evenly;
-      margin-top: 20px;
-
-      .selectBox {
-        width: 240px;
-        padding: 15px;
-        border-radius: 5px;
-        border: 1px solid gray;
-        color: gray;
-      }
-
-      .priceInput {
-        width: 240px;
-        padding: 15px;
-        border: 1px solid gray;
-        border-radius: 5px;
-      }
-
-      .memoInput {
-        width: 500px;
-        padding: 15px;
-        border: 1px solid gray;
-        border-radius: 5px;
-      }
-    }
-  }
-
-  .closeBtn {
-    position: absolute;
-    top: 15px;
-    right: 10px;
-    font-size: 16px;
-    padding: 18px;
-    border: none;
-    background: none;
-    cursor: pointer;
-
-    img {
+    .closeBtn {
       position: absolute;
-      top: 1px;
-      right: 1px;
-      width: 35px;
-      height: 35px;
+      top: 15px;
+      right: 10px;
+      font-size: 16px;
+      padding: 18px;
+      border: none;
+      background: none;
+      cursor: pointer;
+
+      img {
+        position: absolute;
+        top: 1px;
+        right: 1px;
+        width: 35px;
+        height: 35px;
+      }
     }
   }
 }

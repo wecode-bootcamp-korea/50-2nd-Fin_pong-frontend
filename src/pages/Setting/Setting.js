@@ -51,7 +51,7 @@ const Setting = () => {
       return;
     }
 
-    fetch('http://10.58.52.147:8000/flow/fixed', {
+    fetch('http://10.58.52.109:8000/flow/fixed', {
       method: 'post',
       headers: {
         'content-type': 'application/json',
@@ -80,7 +80,7 @@ const Setting = () => {
 
   //구분, 항목, 대상 옵션 데이터를 받아오기
   useEffect(() => {
-    fetch('http://10.58.52.147:8000/flow-type', {
+    fetch('http://10.58.52.109:8000/flow-type', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -90,7 +90,7 @@ const Setting = () => {
       .then((res) => res.json())
       .then((result) => setTypeList(result.types));
 
-    fetch(`http://10.58.52.147:8000/category?type=${settingInfo.type}`, {
+    fetch(`http://10.58.52.109:8000/category?type=${settingInfo.type}`, {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -103,7 +103,7 @@ const Setting = () => {
 
   //그룹관리 인증번호 받아오기
   useEffect(() => {
-    fetch('http://10.58.52.143:8000/family/auth-code', {
+    fetch('http://10.58.52.107:8000/family/auth-code', {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -134,11 +134,14 @@ const Setting = () => {
             >
               예산 등록하기
             </button>
-            <BudgetModal
-              className="BudgetModal"
-              isOpen={currentModal === 'budget'}
-              onClose={() => setCurrentModal('')}
-            />
+            <div className="modal">
+              <BudgetModal
+                className="BudgetModal"
+                isOpen={currentModal === 'budget'}
+                onClose={() => setCurrentModal('')}
+              />
+            </div>
+
             <button
               className="allowanceBtn"
               onClick={() => setCurrentModal('allowance')}

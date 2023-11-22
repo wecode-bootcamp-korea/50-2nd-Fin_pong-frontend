@@ -9,13 +9,13 @@ const MenuBar = () => {
   const [userName, setUserName] = useState('');
   const [userRole, setUserRole] = useState('');
 
-  // 토큰
-  const token =
-    'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp3azIzNDVAbmF2ZXIuY29tIiwiaWQiOjEsImlhdCI6MTcwMDIxNjc5NX0.e2jdqf0UD-W8J7VmiEpgO18WgyDEkydWC50DZmWHRvM';
   // 로고 클릭시 메인페이지로 이동
   const goToMain = () => {
     navigate('/');
   };
+
+  const token = localStorage.getItem('token');
+
   // 로그아웃
   const logout = () => {
     localStorage.removeItem('token');
@@ -27,11 +27,11 @@ const MenuBar = () => {
 
   // 버튼 데이터
   const BUTTONS = [
-    { text: 'Main', onClick: () => navigate('/') },
-    { text: '가계부', onClick: () => navigate('/table') },
-    { text: '커뮤니티', onClick: () => {} },
-    { text: '상품 안내(가입)', onClick: () => {} },
-    { text: '설정', onClick: () => navigate('/setting') },
+    { text: 'Home', onClick: () => navigate('/') },
+    { text: '가계부 조회', onClick: () => navigate('/table') },
+    { text: '가계부 설정', onClick: () => navigate('/setting') },
+    { text: '금융상품 안내', onClick: () => {} },
+    { text: '개인정보 수정', onClick: () => {} },
     { text: '로그아웃', onClick: logout, isRed: true },
   ];
   // 사용자 정보(이름, 권한)
@@ -40,7 +40,7 @@ const MenuBar = () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: token,
+        authorization: `Bearer ${token}`,
       },
     })
       .then((response) => response.json())
@@ -58,7 +58,7 @@ const MenuBar = () => {
       <div className="logoFrame">
         <img
           className="wonBookLogo"
-          src="/../images/onebooklogo_preview_rev_1.png"
+          src="/../images/OneBook_Logo_Small.png"
           alt="WonBook 로고"
           onClick={goToMain}
         />

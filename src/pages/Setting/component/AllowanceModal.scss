@@ -13,6 +13,7 @@
   .modal {
     z-index: 11;
     display: none;
+    // overflow: unset;
     /* 기본적으로 모달을 감추기 */
 
     &.open {
@@ -26,6 +27,7 @@
       margin-top: 20px;
       border-radius: 6px;
       border: 2px solid black;
+      // overflow: hidden;
     }
 
     .allowanceInfo {
@@ -77,6 +79,7 @@
           height: 40px;
           color: #14213d;
           font-size: 20px;
+          font-weight: 700;
           margin: 5px;
           margin-left: 10px;
           border-radius: 6px;
