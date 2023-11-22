@@ -8,6 +8,7 @@
 import React, { useState, useEffect } from 'react';
 import AccountBook from './component/AccountBook';
 import TransactionModifyModal from './component/TransactionModifyModal';
+import API from '../../config';
 
 const Table = () => {
   const [transactions, setTransactions] = useState([]);
@@ -16,7 +17,7 @@ const Table = () => {
   const TOKEN = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNpeHNsQGdtYWlsLmNvbSIsImlhdCI6MTcwMDY0NjMzMCwiZXhwIjo4NjQwMDE3MDA2NDYzMzB9.2O2PmUUJYAX3kG3_JYhfrXYhhv8CnilM5sx_qnDRu-g`;
 
   useEffect(() => {
-    fetch('http:/43.202.56.239:8000/flow', {
+    fetch(`${API.TableFlow}`, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -29,7 +30,7 @@ const Table = () => {
   }, []);
 
   const deleteTransaction = (id) => {
-    fetch(`http:/43.202.56.239:8000/flow/${id}`, {
+    fetch(`${API.TableFlow}/${id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',

@@ -82,7 +82,7 @@ const Main = () => {
   // 페이지 이동
   const navigate = useNavigate();
   // 토큰
-  const token = localStorage.getItem('token');
+  const TOKEN = localStorage.getItem('TOKEN');
 
   // 가계부 참여하기
   const goToJoin = () => {
@@ -90,7 +90,7 @@ const Main = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
       body: JSON.stringify({ auth_code: verifycationCode }),
     })
@@ -111,7 +111,7 @@ const Main = () => {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((response) => response.json())
@@ -132,7 +132,7 @@ const Main = () => {
       method: 'POST',
       headers: {
         'Content-type': 'application/json;charset=utf-8',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
       body: JSON.stringify({
         type: divide,
@@ -161,7 +161,7 @@ const Main = () => {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((response) => response.json())
@@ -178,7 +178,7 @@ const Main = () => {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json;charset=utf-8',
-          authorization: `Bearer ${token}`,
+          authorization: `Bearer ${TOKEN}`,
         },
       },
     )

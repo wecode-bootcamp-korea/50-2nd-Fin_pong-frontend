@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API from '../../config';
 import './MenuBar.scss';
 
 const MenuBar = () => {
@@ -14,11 +15,11 @@ const MenuBar = () => {
     navigate('/');
   };
 
-  const token = localStorage.getItem('token');
+  const TOKEN = localStorage.getItem('TOKEN');
 
   // 로그아웃
   const logout = () => {
-    localStorage.removeItem('token');
+    localStorage.removeItem('TOKEN');
     localStorage.removeItem('userName');
     localStorage.removeItem('userRole');
     alert('로그아웃 되었습니다.');
@@ -36,11 +37,11 @@ const MenuBar = () => {
   ];
   // 사용자 정보(이름, 권한)
   useEffect(() => {
-    fetch('http://10.58.52.143:8000/users/info', {
+    fetch(`${API.UserInfo}`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((response) => response.json())
