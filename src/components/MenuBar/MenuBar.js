@@ -27,11 +27,11 @@ const MenuBar = () => {
 
   // 버튼 데이터
   const BUTTONS = [
-    { text: 'Main', onClick: () => navigate('/') },
-    { text: '가계부', onClick: () => navigate('/table') },
-    { text: '커뮤니티', onClick: () => {} },
-    { text: '상품 안내(가입)', onClick: () => {} },
-    { text: '설정', onClick: () => navigate('/setting') },
+    { text: 'Home', onClick: () => navigate('/') },
+    { text: '가계부 조회', onClick: () => navigate('/table') },
+    { text: '가계부 설정', onClick: () => navigate('/setting') },
+    { text: '금융상품 안내', onClick: () => {} },
+    { text: '개인정보 수정', onClick: () => {} },
     { text: '로그아웃', onClick: logout, isRed: true },
   ];
   // 사용자 정보(이름, 권한)

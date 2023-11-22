@@ -58,6 +58,32 @@ const AllowanceModal = ({ isOpen, onClose }) => {
       .then((result) => setUserList(result.familyUsers));
   }, []);
 
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+      document.addEventListener('keydown', handleKeyDown);
+      window.addEventListener('click', handleBackdropClick);
+    } else {
+      document.removeEventListener('keydown', handleKeyDown);
+    }
+    return () => {
+      document.body.style.overflow = 'auto';
+      window.removeEventListener('click', handleBackdropClick);
+    }; //cleanup함수
+  }, [isOpen, onClose]);
+
+  const handleKeyDown = (e) => {
+    if (e && e.key === 'Escape') {
+      onClose();
+    }
+  };
+
+  const handleBackdropClick = (e) => {
+    if (e.target.classList.contains('backDrop')) {
+      onClose();
+    }
+  };
+
   return (
     <div className="allowanceModal">
       <div className={`${isOpen ? 'backDrop' : ''}`} />

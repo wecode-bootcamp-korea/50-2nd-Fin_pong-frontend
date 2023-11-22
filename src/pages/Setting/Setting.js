@@ -134,11 +134,14 @@ const Setting = () => {
             >
               예산 등록하기
             </button>
-            <BudgetModal
-              className="BudgetModal"
-              isOpen={currentModal === 'budget'}
-              onClose={() => setCurrentModal('')}
-            />
+            <div className="modal">
+              <BudgetModal
+                className="BudgetModal"
+                isOpen={currentModal === 'budget'}
+                onClose={() => setCurrentModal('')}
+              />
+            </div>
+
             <button
               className="allowanceBtn"
               onClick={() => setCurrentModal('allowance')}
