@@ -10,7 +10,6 @@ const UserSignUp = () => {
     birthdate: '',
   });
   const { name, phoneNumber, birthdate } = userInfo;
-  const [isValid, setIsValid] = useState(false);
   const isInputValid = name && phoneNumber && birthdate;
   // const TOKEN = localStorage.getItem('TOKEN');
   const TOKEN = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNpeHNsQGdtYWlsLmNvbSIsImlhdCI6MTcwMDY0NjMzMCwiZXhwIjo4NjQwMDE3MDA2NDYzMzB9.2O2PmUUJYAX3kG3_JYhfrXYhhv8CnilM5sx_qnDRu-g`;

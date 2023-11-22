@@ -4,7 +4,6 @@ import MenuWrapper from './components/MenuWrapper/MenuWrapper';
 import Main from './pages/Main/Main';
 import Login from './pages/Login/Login';
 import Setting from './pages/Setting/Setting';
-import Table from './pages/Table/Table';
 import UserSignUp from './pages/UserSignUp/UserSignUp';
 import Auth from './pages/Auth/Auth';
 
