@@ -28,7 +28,7 @@ const Setting = () => {
   });
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('token');
+  const TOKEN = localStorage.getItem('TOKEN');
 
   const handleInfo = (name, value) => {
     setSettingInfo({ ...settingInfo, [name]: value });
@@ -56,7 +56,7 @@ const Setting = () => {
       method: 'post',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
       body: JSON.stringify({
         type: settingInfo.type,
@@ -85,7 +85,7 @@ const Setting = () => {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((res) => res.json())
@@ -95,7 +95,7 @@ const Setting = () => {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((res) => res.json())
@@ -108,12 +108,12 @@ const Setting = () => {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((res) => res.json())
       .then((result) => setAuthCode(result.authCode));
-  }, [token]);
+  }, [TOKEN]);
 
   const filteredCategoryList = categoryList.filter(
     (category) => category.type === settingInfo.type,

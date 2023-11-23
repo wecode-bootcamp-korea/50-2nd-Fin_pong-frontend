@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import API from '../../config';
 import './UserSignUp.scss';
 
 const UserSignUp = () => {
@@ -23,7 +24,7 @@ const UserSignUp = () => {
     } else if (birthdate.length !== 8) {
       alert('생년월일을 정확히 입력해주세요!');
     } else {
-      fetch('http:/43.202.56.239:8000/users/update', {
+      fetch(`${API.UserAuth}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json',
