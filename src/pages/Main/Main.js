@@ -11,8 +11,6 @@ import API from '../../config';
 const INITIAL_INPUT_VALUES = {
   divide: '', // 구분
   category: '', // 카테고리
-  year: '', // 년(일자)
-  month: '', // 월(일자)
   day: '', // 일(일자)
   price: '', // 금액
   memo: '', // 메모
@@ -34,7 +32,10 @@ const Main = () => {
   // 월별 - 카테고리 현황(%)
   const [monthlyData, setMonthlyData] = useState(null);
 
-  const { divide, category, day, price, memo, year, month } = inputValues;
+  const { divide, category, day, price, memo } = inputValues;
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth() + 1;
 
   // 모달창 닫기
   const closeModal = () => {
@@ -86,7 +87,7 @@ const Main = () => {
 
   // 가계부 참여하기
   const goToJoin = () => {
-    fetch(`${API.MainJoin}`, {
+    fetch(API.MainJoin, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -107,7 +108,7 @@ const Main = () => {
 
   // 가계부 생성하기
   const goToCreating = () => {
-    fetch(`${API.MainCreate}`, {
+    fetch(API.MainCreate, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -128,7 +129,7 @@ const Main = () => {
 
   // 개인 수입/지출 등록하기 (모달창)
   const goToIncomeExpend = () => {
-    fetch(`${API.MainFlow}`, {
+    fetch(API.MainFlow, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json;charset=utf-8',
@@ -157,7 +158,7 @@ const Main = () => {
   // 차트(막대, 원형)
   useEffect(() => {
     // 1년 수입/지출(막대그래프)
-    fetch(`${API.MainBarChart}?rule=year&year=${year}&unit=family`, {
+    fetch(`${API.MainBarChart}?rule=year&year=${currentYear}&unit=family`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -173,7 +174,7 @@ const Main = () => {
       );
     // 월별 - 카테고리별(원형차트)
     fetch(
-      `${API.MainPieChart}?rule=category&year=${year}&month=${month}&unit=family`,
+      `${API.MainPieChart}?rule=category&year=${currentYear}&month=${currentMonth}&unit=family`,
       {
         method: 'GET',
         headers: {
@@ -189,7 +190,7 @@ const Main = () => {
       .catch((error) =>
         console.error('월별-카테고리별 현황 데이터를 가져오는 중 에러:', error),
       );
-  }, [year, month]);
+  }, []);
 
   // 완료 버튼 클릭시 실행되는 함수
   const handleComplete = () => {
@@ -219,6 +220,7 @@ const Main = () => {
           isOpen={currentModal === '참여'}
           overlayClassName="overlay"
           className="modal"
+          ariaHideApp={false}
         >
           <button className="closeBtn" onClick={closeModal}>
             <img src="/../images/close.svg" alt="닫기버튼" />
@@ -237,7 +239,6 @@ const Main = () => {
               <input
                 className="clickBox"
                 type="checkbox"
-                onChange={() => {}}
                 checked={checkedMenu === 'partic'}
                 readOnly
               />
@@ -272,7 +273,6 @@ const Main = () => {
               <input
                 className="clickBox"
                 type="checkbox"
-                onChange={() => {}}
                 checked={checkedMenu === 'creating'}
               />
               <p className="creatingText">생성하기</p>
@@ -302,6 +302,7 @@ const Main = () => {
           isOpen={currentModal === '수입'}
           overlayClassName="overlay"
           className="modal"
+          ariaHideApp={false}
         >
           <button className="closeBtn" onClick={closeModal}>
             <img src="/../images/close.svg" alt="닫기버튼" />

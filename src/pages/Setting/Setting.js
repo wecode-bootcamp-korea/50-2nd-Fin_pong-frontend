@@ -52,7 +52,7 @@ const Setting = () => {
       return;
     }
 
-    fetch(`${API.SettingFixed}`, {
+    fetch(API.SettingFixed, {
       method: 'post',
       headers: {
         'content-type': 'application/json',
@@ -81,7 +81,7 @@ const Setting = () => {
 
   //구분, 항목, 대상 옵션 데이터를 받아오기
   useEffect(() => {
-    fetch(`${API.SettingFlowType}`, {
+    fetch(API.SettingFlowType, {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -90,6 +90,10 @@ const Setting = () => {
     })
       .then((res) => res.json())
       .then((result) => setTypeList(result.types));
+  }, []);
+
+  useEffect(() => {
+    if (!settingInfo.type) return;
 
     fetch(`${API.SettingCategory}?type=${settingInfo.type}`, {
       method: 'get',
@@ -104,7 +108,7 @@ const Setting = () => {
 
   //그룹관리 인증번호 받아오기
   useEffect(() => {
-    fetch(`${API.authCode}`, {
+    fetch(API.SettingAuthCode, {
       method: 'get',
       headers: {
         'content-type': 'application/json',

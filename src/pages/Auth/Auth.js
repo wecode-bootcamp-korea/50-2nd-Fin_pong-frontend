@@ -10,7 +10,7 @@ const Auth = () => {
   const searchParams = new URLSearchParams(location.search);
   const codeKakao = searchParams.get('code');
 
-  fetch(`${API.UserAuth}`, {
+  fetch(API.UserSignUp, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
