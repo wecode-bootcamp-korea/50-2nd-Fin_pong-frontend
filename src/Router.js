@@ -13,8 +13,9 @@ const Router = () => {
     <BrowserRouter>
       <MenuWrapper>
         <Routes>
-          <Route path="/" element={<Main />} />
+          <Route path="/" element={<Login />} />
           <Route path="/login" element={<Login />} />
+          <Route path="/main" element={<Main />} />
           <Route path="/setting" element={<Setting />} />
           <Route path="/table" element={<Table />} />
           <Route path="/user-signup" element={<UserSignUp />} />

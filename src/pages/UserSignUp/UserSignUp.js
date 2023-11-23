@@ -24,7 +24,7 @@ const UserSignUp = () => {
     } else if (birthdate.length !== 8) {
       alert('생년월일을 정확히 입력해주세요!');
     } else {
-      fetch(`${API.UserSignUp}`, {
+      fetch(`${API.UserAuth}`, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json',
