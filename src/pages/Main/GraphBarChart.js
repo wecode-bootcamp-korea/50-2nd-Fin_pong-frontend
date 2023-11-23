@@ -43,8 +43,19 @@ const GraphBarChart = ({ data }) => {
       <YAxis />
       <Tooltip />
       <Legend />
-      <Bar dataKey="수입" fill="#8884d8" />
-      <Bar dataKey="지출" fill="#82ca9d" />
+      <Bar
+        dataKey="수입"
+        fill="#8884d8"
+        position="top"
+        formatter={(value) => new Intl.NumberFormat('ko-KR').format(value)}
+      />
+
+      <Bar
+        dataKey="지출"
+        fill="#82ca9d"
+        position="top"
+        formatter={(value) => new Intl.NumberFormat('ko-KR').format(value)}
+      />
     </BarChart>
   );
 };

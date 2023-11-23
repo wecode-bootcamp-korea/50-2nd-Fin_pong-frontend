@@ -12,8 +12,7 @@ const UserSignUp = () => {
   });
   const { name, phoneNumber, birthdate } = userInfo;
   const isInputValid = name && phoneNumber && birthdate;
-  // const TOKEN = localStorage.getItem('TOKEN');
-  const TOKEN = `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6InNpeHNsQGdtYWlsLmNvbSIsImlhdCI6MTcwMDY0NjMzMCwiZXhwIjo4NjQwMDE3MDA2NDYzMzB9.2O2PmUUJYAX3kG3_JYhfrXYhhv8CnilM5sx_qnDRu-g`;
+  const TOKEN = localStorage.getItem('TOKEN');
 
   useEffect(() => {}, []);
   const handleSubmit = () => {
@@ -24,7 +23,7 @@ const UserSignUp = () => {
     } else if (birthdate.length !== 8) {
       alert('생년월일을 정확히 입력해주세요!');
     } else {
-      fetch(API.UserAuth, {
+      fetch(API.UserSignUp, {
         method: 'PUT',
         headers: {
           'Content-type': 'application/json',
@@ -36,7 +35,7 @@ const UserSignUp = () => {
         .then((response) => {
           if (response.message === 'ADD_INFORMATION_SUCCESS') {
             alert('환영합니다!');
-            navigate('/');
+            navigate('/main');
           }
         });
     }

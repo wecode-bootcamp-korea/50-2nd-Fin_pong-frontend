@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import Modal from 'react-modal';
 import GraphBarChart from './GraphBarChart';
 import GraphCircularChart from './GraphCircularChart';
+import AccountBook from '../Table/component/AccountBook';
 import ko from 'date-fns/locale/ko';
 import './Main.scss';
 import API from '../../config';
@@ -31,6 +32,8 @@ const Main = () => {
   const [yearlyData, setYearlyData] = useState(null);
   // 월별 - 카테고리 현황(%)
   const [monthlyData, setMonthlyData] = useState(null);
+
+  const [transactions, setTransactions] = useState([]);
 
   const { divide, category, day, price, memo } = inputValues;
   const today = new Date();
@@ -207,6 +210,23 @@ const Main = () => {
     navigate('/table');
   };
 
+  const fetchTransactions = (user = '') => {
+    fetch(API.TableFlow, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        authorization: `Bearer ${TOKEN}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTransactions(data.flows);
+      });
+  };
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
   return (
     <div className="dashboardAll">
       <div className="dashboard">
@@ -223,7 +243,7 @@ const Main = () => {
           ariaHideApp={false}
         >
           <button className="closeBtn" onClick={closeModal}>
-            <img src="/../images/close.svg" alt="닫기버튼" />
+            <img src="/../images/closeMark.png" alt="닫기버튼" />
           </button>
           <div className="mainFrame">
             <div
@@ -305,7 +325,7 @@ const Main = () => {
           ariaHideApp={false}
         >
           <button className="closeBtn" onClick={closeModal}>
-            <img src="/../images/close.svg" alt="닫기버튼" />
+            <img src="/../images/closeMark.png" alt="닫기버튼" />
           </button>
           <div className="requiredTextMain">
             <p className="divideText">구분</p>
@@ -413,12 +433,9 @@ const Main = () => {
             {monthlyData && <GraphCircularChart data={monthlyData} />}
           </div>
         </div>
+
         <div className="graphPersonal">
-          {[1, 2, 3, 4].map((item, index) => (
-            <div className="graphPersonalChart" key={index} onClick={goToTable}>
-              <p className="personalText">개인별 사용현황(%)</p>
-            </div>
-          ))}
+          <AccountBook transactions={transactions} />
         </div>
       </div>
     </div>
@@ -428,6 +445,6 @@ const Main = () => {
 export default Main;
 
 const DIVIDE_LIST = ['Select an Option', '수입', '지출'];
-const CATEGORY_LIST = ['Select an Option', '생활비', '식비', '고정비', '기타'];
+const CATEGORY_LIST = ['Select an Option', '생활비', '공과금', '기타'];
 const YEAR_LIST = Array.from({ length: 20 }, (_, i) => `${i + 2020}년`);
 const MONTH_LIST = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);
