@@ -9,13 +9,6 @@ const Login = () => {
       <div className="loginWrapper">
         <KakaoLogin />
       </div>
-      <div className="serviceInfoContainer">
-        <img
-          className="onebookLogo"
-          src="/images/OneBook_Logo_Small.png"
-          alt="OneBook"
-        />
-      </div>
     </div>
   );
 };

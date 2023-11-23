@@ -1,5 +1,6 @@
 import React from 'react';
 import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import API from '../../config';
 
 const Auth = () => {
   const navigate = useNavigate();
@@ -9,7 +10,7 @@ const Auth = () => {
   const searchParams = new URLSearchParams(location.search);
   const codeKakao = searchParams.get('code');
 
-  fetch('http://10.58.52.202:8000/users/auth', {
+  fetch(`${API.UserAuth}`, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
