@@ -2,6 +2,13 @@ import React from 'react';
 import './AccountBook.scss';
 
 const AccountBook = ({ transactions, deleteTransaction }) => {
+  const numWithComma = (a) => {
+    if (a === undefined) {
+      return '';
+    }
+    return a.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  };
+
   return (
     <div className="AccountBook">
       <table className="tableWrapper">
@@ -30,7 +37,7 @@ const AccountBook = ({ transactions, deleteTransaction }) => {
                 {transaction.flowType}
               </td>
               <td>{transaction.category}</td>
-              <td>{transaction.amount}</td>
+              <td>{numWithComma(transaction.amount)}</td>
               <td>{transaction.userName}</td>
               <td>{transaction.memo}</td>
               <td>
