@@ -26,6 +26,8 @@ const GraphBarChart = ({ data }) => {
     transformedData.push(newData);
   }
 
+  const tickFormatY = (tickItem) => tickItem.toLocaleString();
+
   return (
     <BarChart
       width={580}
@@ -40,7 +42,7 @@ const GraphBarChart = ({ data }) => {
     >
       <CartesianGrid strokeDasharray="3 3" />
       <XAxis dataKey="name" />
-      <YAxis />
+      <YAxis tickFormatter={tickFormatY} />
       <Tooltip />
       <Legend />
       <Bar

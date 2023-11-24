@@ -47,7 +47,7 @@ const MenuBar = () => {
       .then((response) => response.json())
       .then((data) => {
         setUserName(data.userName);
-        setUserRole(data.userRole === '1' ? '참여자' : '관리자');
+        setUserRole(data.userRole === 1 ? '관리자' : '참여자');
       })
       .catch((error) => {
         console.error('로그인 정보를 불러오는 중 에러:', error);
@@ -72,7 +72,7 @@ const MenuBar = () => {
         <ul>
           {BUTTONS.map(
             (button, index) =>
-              !(userRole === '0' && button.text === '가계부 설정') && ( //userRole이 0이면서, button.text가 가계부 설정이면 렌더링하지않음
+              !(setUserRole === 0 && button.text === '가계부 설정') && ( //userRole이 0이면서, button.text가 가계부 설정이면 렌더링하지않음
                 <li key={index} className="buttonList">
                   <button
                     className={`menuBarButton${button.isRed ? ' red' : ''}`}
