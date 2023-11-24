@@ -3,7 +3,13 @@ import { useLocation } from 'react-router-dom';
 import MenuBar from '../MenuBar/MenuBar';
 import './MenuWrapper.scss';
 
-const EXCEPTIONAL_PATH = ['/login', '/users/auth', '/Setting', '/'];
+const EXCEPTIONAL_PATH = [
+  '/login',
+  '/users/auth',
+  '/Setting',
+  '/',
+  '/user-signup',
+];
 
 const MenuWrapper = ({ children }) => {
   const { pathname } = useLocation();

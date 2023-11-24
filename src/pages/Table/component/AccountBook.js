@@ -41,7 +41,12 @@ const AccountBook = ({ transactions, deleteTransaction }) => {
               <td>{transaction.userName}</td>
               <td>{transaction.memo}</td>
               <td>
-                <button onClick={() => deleteTransaction(index)}>삭제</button>
+                <button
+                  className="btnDelete"
+                  onClick={() => deleteTransaction(transaction.id)}
+                >
+                  삭제
+                </button>
               </td>
             </tr>
           ))}

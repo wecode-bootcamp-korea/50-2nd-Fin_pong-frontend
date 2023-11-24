@@ -36,7 +36,7 @@ const GraphCircularChart = ({ data }) => {
     });
   });
 
-  const total = data.reduce((acc, entry) => acc + entry.value, 0);
+  // const total = data.reduce((acc, entry) => acc + entry.value, 0);
 
   return (
     <PieChart width={900} height={500}>

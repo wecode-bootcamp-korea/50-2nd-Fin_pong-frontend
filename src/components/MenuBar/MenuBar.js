@@ -12,10 +12,10 @@ const MenuBar = () => {
 
   // 로고 클릭시 메인페이지로 이동
   const goToMain = () => {
-    navigate('/');
+    navigate('/main');
   };
 
-  const TOKEN = localStorage.getItem('TOKEN');
+  const TOKEN = localStorage.getItem('TOKEN') || '';
 
   // 로그아웃
   const logout = () => {
@@ -28,7 +28,7 @@ const MenuBar = () => {
 
   // 버튼 데이터
   const BUTTONS = [
-    { text: 'Home', onClick: () => navigate('/') },
+    { text: 'Home', onClick: () => navigate('/main') },
     { text: '가계부 조회', onClick: () => navigate('/table') },
     { text: '가계부 설정', onClick: () => navigate('/setting') },
     { text: '금융상품 안내', onClick: () => {} },
@@ -37,7 +37,7 @@ const MenuBar = () => {
   ];
   // 사용자 정보(이름, 권한)
   useEffect(() => {
-    fetch(`${API.UserInfo}`, {
+    fetch(API.UserInfo, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -70,16 +70,19 @@ const MenuBar = () => {
       </div>
       <div className="menuBarButtonFrame">
         <ul>
-          {BUTTONS.map((button, index) => (
-            <li key={index} className="buttonList">
-              <button
-                className={`menuBarButton${button.isRed ? ' red' : ''}`}
-                onClick={button.onClick}
-              >
-                {button.text}
-              </button>
-            </li>
-          ))}
+          {BUTTONS.map(
+            (button, index) =>
+              !(setUserRole === 0 && button.text === '가계부 설정') && ( //userRole이 0이면서, button.text가 가계부 설정이면 렌더링하지않음
+                <li key={index} className="buttonList">
+                  <button
+                    className={`menuBarButton${button.isRed ? ' red' : ''}`}
+                    onClick={button.onClick}
+                  >
+                    {button.text}
+                  </button>
+                </li>
+              ),
+          )}
         </ul>
       </div>
     </div>

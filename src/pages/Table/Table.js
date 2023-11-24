@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import AccountBook from './component/AccountBook';
+import API from '../../config';
 import './Table.scss';
 
 // 4. 테이블 각 row에서 수정, 삭제 할 수 있도록 설정
@@ -7,10 +8,9 @@ import './Table.scss';
 
 const Table = () => {
   const [transactions, setTransactions] = useState([]);
-  // const TOKEN = localStorage.getItem('TOKEN');
-  const TOKEN = `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imp3azIzNDVAbmF2ZXIuY29tIiwiaWF0IjoxNzAwNjU1MjI5LCJleHAiOjg2NDAwMTcwMDY1NTIyOX0.CRdwvSjbRbNrstmfhF5jJg_HaGieL8wO-TH12JVfUUA`;
+  const TOKEN = localStorage.getItem('TOKEN');
   const fetchTransactions = (user = '') => {
-    fetch(`http://43.202.56.239:8000/flow?user=${user}`, {
+    fetch(API.TableFlow, {
       method: 'GET',
       headers: {
         'Content-type': 'application/json',
@@ -32,7 +32,7 @@ const Table = () => {
   };
 
   const deleteTransaction = (id) => {
-    fetch(`http://43.202.56.239:8000/flow/${id}`, {
+    fetch(`${API.TableFlow}/?id=${id}`, {
       method: 'DELETE',
       headers: {
         'Content-type': 'application/json',

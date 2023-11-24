@@ -4,6 +4,7 @@ import DatePicker from 'react-datepicker';
 import Modal from 'react-modal';
 import GraphBarChart from './GraphBarChart';
 import GraphCircularChart from './GraphCircularChart';
+import AccountBook from '../Table/component/AccountBook';
 import ko from 'date-fns/locale/ko';
 import './Main.scss';
 import API from '../../config';
@@ -11,8 +12,6 @@ import API from '../../config';
 const INITIAL_INPUT_VALUES = {
   divide: '', // 구분
   category: '', // 카테고리
-  year: '', // 년(일자)
-  month: '', // 월(일자)
   day: '', // 일(일자)
   price: '', // 금액
   memo: '', // 메모
@@ -34,7 +33,12 @@ const Main = () => {
   // 월별 - 카테고리 현황(%)
   const [monthlyData, setMonthlyData] = useState(null);
 
-  const { divide, category, day, price, memo, year, month } = inputValues;
+  const [transactions, setTransactions] = useState([]);
+
+  const { divide, category, day, price, memo } = inputValues;
+  const today = new Date();
+  const currentYear = today.getFullYear();
+  const currentMonth = today.getMonth() + 1;
 
   // 모달창 닫기
   const closeModal = () => {
@@ -86,7 +90,7 @@ const Main = () => {
 
   // 가계부 참여하기
   const goToJoin = () => {
-    fetch(`${API.MainJoin}`, {
+    fetch(API.MainJoin, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -107,7 +111,7 @@ const Main = () => {
 
   // 가계부 생성하기
   const goToCreating = () => {
-    fetch(`${API.MainCreate}`, {
+    fetch(API.MainCreate, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -128,7 +132,7 @@ const Main = () => {
 
   // 개인 수입/지출 등록하기 (모달창)
   const goToIncomeExpend = () => {
-    fetch(`${API.MainFlow}`, {
+    fetch(API.MainFlow, {
       method: 'POST',
       headers: {
         'Content-type': 'application/json;charset=utf-8',
@@ -157,7 +161,7 @@ const Main = () => {
   // 차트(막대, 원형)
   useEffect(() => {
     // 1년 수입/지출(막대그래프)
-    fetch(`${API.MainBarChart}?rule=year&year=${year}&unit=family`, {
+    fetch(`${API.MainBarChart}?rule=year&year=${currentYear}&unit=family`, {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json;charset=utf-8',
@@ -173,7 +177,7 @@ const Main = () => {
       );
     // 월별 - 카테고리별(원형차트)
     fetch(
-      `${API.MainPieChart}?rule=category&year=${year}&month=${month}&unit=family`,
+      `${API.MainPieChart}?rule=category&year=${currentYear}&month=${currentMonth}&unit=family`,
       {
         method: 'GET',
         headers: {
@@ -189,7 +193,7 @@ const Main = () => {
       .catch((error) =>
         console.error('월별-카테고리별 현황 데이터를 가져오는 중 에러:', error),
       );
-  }, [year, month]);
+  }, []);
 
   // 완료 버튼 클릭시 실행되는 함수
   const handleComplete = () => {
@@ -206,6 +210,23 @@ const Main = () => {
     navigate('/table');
   };
 
+  const fetchTransactions = (user = '') => {
+    fetch(API.TableFlow, {
+      method: 'GET',
+      headers: {
+        'Content-type': 'application/json',
+        authorization: `Bearer ${TOKEN}`,
+      },
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        setTransactions(data.flows);
+      });
+  };
+  useEffect(() => {
+    fetchTransactions();
+  }, []);
+
   return (
     <div className="dashboardAll">
       <div className="dashboard">
@@ -219,9 +240,10 @@ const Main = () => {
           isOpen={currentModal === '참여'}
           overlayClassName="overlay"
           className="modal"
+          ariaHideApp={false}
         >
           <button className="closeBtn" onClick={closeModal}>
-            <img src="/../images/close.svg" alt="닫기버튼" />
+            <img src="/../images/closeMark.png" alt="닫기버튼" />
           </button>
           <div className="mainFrame">
             <div
@@ -237,7 +259,6 @@ const Main = () => {
               <input
                 className="clickBox"
                 type="checkbox"
-                onChange={() => {}}
                 checked={checkedMenu === 'partic'}
                 readOnly
               />
@@ -272,7 +293,6 @@ const Main = () => {
               <input
                 className="clickBox"
                 type="checkbox"
-                onChange={() => {}}
                 checked={checkedMenu === 'creating'}
               />
               <p className="creatingText">생성하기</p>
@@ -302,9 +322,10 @@ const Main = () => {
           isOpen={currentModal === '수입'}
           overlayClassName="overlay"
           className="modal"
+          ariaHideApp={false}
         >
           <button className="closeBtn" onClick={closeModal}>
-            <img src="/../images/close.svg" alt="닫기버튼" />
+            <img src="/../images/closeMark.png" alt="닫기버튼" />
           </button>
           <div className="requiredTextMain">
             <p className="divideText">구분</p>
@@ -412,12 +433,9 @@ const Main = () => {
             {monthlyData && <GraphCircularChart data={monthlyData} />}
           </div>
         </div>
+
         <div className="graphPersonal">
-          {[1, 2, 3, 4].map((item, index) => (
-            <div className="graphPersonalChart" key={index} onClick={goToTable}>
-              <p className="personalText">개인별 사용현황(%)</p>
-            </div>
-          ))}
+          <AccountBook transactions={transactions} />
         </div>
       </div>
     </div>
@@ -427,6 +445,6 @@ const Main = () => {
 export default Main;
 
 const DIVIDE_LIST = ['Select an Option', '수입', '지출'];
-const CATEGORY_LIST = ['Select an Option', '생활비', '식비', '고정비', '기타'];
+const CATEGORY_LIST = ['Select an Option', '생활비', '공과금', '기타'];
 const YEAR_LIST = Array.from({ length: 20 }, (_, i) => `${i + 2020}년`);
 const MONTH_LIST = Array.from({ length: 12 }, (_, i) => `${i + 1}월`);

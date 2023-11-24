@@ -52,7 +52,7 @@ const Setting = () => {
       return;
     }
 
-    fetch(`${API.SettingFixed}`, {
+    fetch(API.SettingFixed, {
       method: 'post',
       headers: {
         'content-type': 'application/json',
@@ -81,7 +81,7 @@ const Setting = () => {
 
   //구분, 항목, 대상 옵션 데이터를 받아오기
   useEffect(() => {
-    fetch(`${API.SettingFlowType}`, {
+    fetch(API.SettingFlowType, {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -90,6 +90,10 @@ const Setting = () => {
     })
       .then((res) => res.json())
       .then((result) => setTypeList(result.types));
+  }, []);
+
+  useEffect(() => {
+    if (!settingInfo.type) return;
 
     fetch(`${API.SettingCategory}?type=${settingInfo.type}`, {
       method: 'get',
@@ -104,7 +108,7 @@ const Setting = () => {
 
   //그룹관리 인증번호 받아오기
   useEffect(() => {
-    fetch(`${API.authCode}`, {
+    fetch(API.SettingAuthCode, {
       method: 'get',
       headers: {
         'content-type': 'application/json',
@@ -121,103 +125,97 @@ const Setting = () => {
 
   return (
     <div className="settingAll">
-      <div className="settingTitle">
-        <h1 className="settingTitleName">설정✏️</h1>
-        <div className="settingInfo">
-          <div className="settingFirstInfo">
-            <h2 className="settingPwName">️🏷️ 그룹 관리 인증번호 : </h2>
-            <p className="settingPwNum">{authCode}</p>
-          </div>
-          <div className="infoContainer">
-            <button
-              className="budgetBtn"
-              onClick={() => setCurrentModal('budget')}
-            >
-              예산 등록하기
-            </button>
-            <div className="modal">
-              <BudgetModal
-                className="BudgetModal"
-                isOpen={currentModal === 'budget'}
-                onClose={() => setCurrentModal('')}
-              />
-            </div>
-
-            <button
-              className="allowanceBtn"
-              onClick={() => setCurrentModal('allowance')}
-            >
-              용돈 등록하기
-            </button>
-            <AllowanceModal
-              className="AllowanceModal"
-              isOpen={currentModal === 'allowance'}
+      <div className="settingInfo">
+        <div className="settingFirstInfo">
+          <h2 className="settingPwName">️🏷️ 그룹 관리 인증번호 : </h2>
+          <p className="settingPwNum">{authCode}</p>
+        </div>
+        <div className="infoContainer">
+          <button
+            className="budgetBtn"
+            onClick={() => setCurrentModal('budget')}
+          >
+            예산 등록하기
+          </button>
+          <div className="modal">
+            <BudgetModal
+              className="BudgetModal"
+              isOpen={currentModal === 'budget'}
               onClose={() => setCurrentModal('')}
             />
           </div>
-          <div className="settingSecondInfo">
-            <h2 className="settingContentName">🗓️ 고정 수입&지출 내역 등록</h2>
-            <div className="fixContentList">
-              <div className="contentListDate">
-                <CalenderInput
-                  text="일자"
-                  handleDateChange={(date) => handleInfo('startDate', date)}
-                  date={settingInfo.startDate}
-                />
-                <SelectDropdown
-                  text="구분"
-                  options={typeList}
-                  handleSelect={(e) => handleInfo('type', e.target.value)}
-                />
-                <SelectDropdown
-                  text="항목"
-                  options={filteredCategoryList}
-                  handleSelect={(e) => handleInfo('category', e.target.value)}
-                  disabled={!settingInfo.type}
-                />
-              </div>
-              <div className="contentListSort">
-                <div className="amountInput">
-                  <label className="amountName">금액</label>
-                  <input
-                    className="amount"
-                    type="text"
-                    onChange={(e) => handleInfo('amount', e.target.value)}
-                    value={settingInfo.amount}
-                  />
-                </div>
-                <div className="selectYearMonth">
-                  <label className="selectName">반복 종료 년/월</label>
-                  <DatePicker
-                    className="yearMonth"
-                    selected={settingInfo.endDate || new Date()}
-                    locale={ko}
-                    onChange={(date) => {
-                      handleInfo('endDate', date);
-                    }}
-                    selectsEnd
-                    dateFormat="yyyy년MM월"
-                    showMonthYearPicker
-                  />
-                </div>
-              </div>
-              <div className="memoInput">
-                <label className="memoName">메모</label>
+
+          <button
+            className="allowanceBtn"
+            onClick={() => setCurrentModal('allowance')}
+          >
+            용돈 등록하기
+          </button>
+          <AllowanceModal
+            className="AllowanceModal"
+            isOpen={currentModal === 'allowance'}
+            onClose={() => setCurrentModal('')}
+          />
+        </div>
+        <div className="settingSecondInfo">
+          <h2 className="settingContentName">🗓️ 고정 수입&지출 내역 등록</h2>
+          <div className="fixContentList">
+            <div className="contentListDate">
+              <CalenderInput
+                text="일자"
+                handleDateChange={(date) => handleInfo('startDate', date)}
+                date={settingInfo.startDate}
+              />
+              <SelectDropdown
+                text="구분"
+                options={typeList}
+                handleSelect={(e) => handleInfo('type', e.target.value)}
+              />
+              <SelectDropdown
+                text="항목"
+                options={filteredCategoryList}
+                handleSelect={(e) => handleInfo('category', e.target.value)}
+                disabled={!settingInfo.type}
+              />
+            </div>
+            <div className="contentListSort">
+              <div className="amountInput">
+                <label className="amountName">금액</label>
                 <input
-                  className="memo"
+                  className="amount"
                   type="text"
-                  maxLength="25"
-                  placeholder="25자 내로 작성해주세요."
-                  onChange={(e) => handleInfo('memo', e.target.value)}
-                  value={settingInfo.memo}
+                  onChange={(e) => handleInfo('amount', e.target.value)}
+                  value={settingInfo.amount}
+                />
+              </div>
+              <div className="selectYearMonth">
+                <label className="selectName">반복 종료 년/월</label>
+                <DatePicker
+                  className="yearMonth"
+                  selected={settingInfo.endDate || new Date()}
+                  locale={ko}
+                  onChange={(date) => {
+                    handleInfo('endDate', date);
+                  }}
+                  selectsEnd
+                  dateFormat="yyyy년MM월"
+                  showMonthYearPicker
                 />
               </div>
             </div>
-            <CompleteBtn
-              className="completeBtnContainer"
-              onClick={handleClick}
-            />
+            <div className="memoInput">
+              <label className="memoName">메모</label>
+              <input
+                className="memo"
+                type="text"
+                maxLength="25"
+                placeholder="25자 내로 작성해주세요."
+                onChange={(e) => handleInfo('memo', e.target.value)}
+                value={settingInfo.memo}
+              />
+            </div>
           </div>
+          <CompleteBtn className="completeBtnContainer" onClick={handleClick} />
         </div>
       </div>
     </div>

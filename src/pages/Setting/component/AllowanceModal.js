@@ -5,6 +5,7 @@ import SelectDropdown from './SelectDropdown';
 import CalenderInput from './CalenderInput';
 import CompleteBtn from './CompleteBtn';
 import './AllowanceModal.scss';
+import API from '../../../config';
 
 const AllowanceModal = ({ isOpen, onClose }) => {
   const navigate = useNavigate();
@@ -15,7 +16,7 @@ const AllowanceModal = ({ isOpen, onClose }) => {
     allowance: '',
   });
 
-  const token = localStorage.getItem('token');
+  const TOKEN = localStorage.getItem('TOKEN');
   const { year, month, date } = splitDate(new Date(settingInfo.date));
 
   const handleInfo = (name, value) => {
@@ -23,11 +24,11 @@ const AllowanceModal = ({ isOpen, onClose }) => {
   };
 
   const handleClick = () => {
-    fetch('http://10.58.52.147:8000/allowance', {
+    fetch(API.Allowance, {
       method: 'post',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
       body: JSON.stringify({
         year: year,
@@ -47,11 +48,11 @@ const AllowanceModal = ({ isOpen, onClose }) => {
   };
 
   useEffect(() => {
-    fetch('http://10.58.52.109:8000/family/user', {
+    fetch(API.FamilyUser, {
       method: 'get',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
     })
       .then((res) => res.json())

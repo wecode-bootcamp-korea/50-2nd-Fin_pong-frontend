@@ -3,17 +3,17 @@ import { useNavigate } from 'react-router-dom';
 import { splitDate } from '../../../utils/convert';
 import CalenderInput from './CalenderInput';
 import CompleteBtn from './CompleteBtn';
+import API from '../../../config';
 import './BudgetModal.scss';
 
 const BudgetModal = ({ isOpen, onClose }) => {
-  console.log('isOpen', isOpen);
   const navigate = useNavigate();
   const [settingInfo, setSettingInfo] = useState({
     date: new Date(),
     budget: '',
   });
 
-  const token = localStorage.getItem('token');
+  const TOKEN = localStorage.getItem('TOKEN');
   const { year, month, date } = splitDate(new Date(settingInfo.date));
 
   const handleInfo = (name, value) => {
@@ -21,11 +21,11 @@ const BudgetModal = ({ isOpen, onClose }) => {
   };
 
   const handleClick = () => {
-    fetch('http://10.58.52.109:8000/budget', {
+    fetch(API.Budget, {
       method: 'post',
       headers: {
         'content-type': 'application/json',
-        authorization: `Bearer ${token}`,
+        authorization: `Bearer ${TOKEN}`,
       },
       body: JSON.stringify({
         year: year,

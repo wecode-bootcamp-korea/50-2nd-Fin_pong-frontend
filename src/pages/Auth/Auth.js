@@ -1,16 +1,13 @@
-import React from 'react';
-import { useNavigate, useParams, useLocation } from 'react-router-dom';
+import { useNavigate, useSearchParams } from 'react-router-dom';
 import API from '../../config';
 
 const Auth = () => {
   const navigate = useNavigate();
-  const location = useLocation();
-  const { code } = useParams();
+  const [searchParams] = useSearchParams();
 
-  const searchParams = new URLSearchParams(location.search);
   const codeKakao = searchParams.get('code');
 
-  fetch(`${API.UserAuth}`, {
+  fetch(API.UserAuth, {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
